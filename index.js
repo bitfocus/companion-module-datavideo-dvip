@@ -12,6 +12,13 @@ class instance extends instance_skel {
 		Object.assign(this, {
 			...actions
 		});
+		this.CHOICES_PORT = [
+			{ id: '5001', label: '5001'},
+			{ id: '5003', label: '5003'},
+			{ id: '5005', label: '5005'},
+			{ id: '5007', label: '5007'},
+			
+		];
 
 		// Switch 1200 Program Bus
 		this.CHOICES_SWITCH_PGM_1200 = [
@@ -291,10 +298,11 @@ class instance extends instance_skel {
 				regex: this.REGEX_IP
 			},
 			{
-				type: 'textinput',
+				type: 'dropdown',
 				id: 'port',
 				label: 'Port',
 				width: 6,
+				choices: this.CHOICES_PORT,
 				default: '5005',
 			},
 			{

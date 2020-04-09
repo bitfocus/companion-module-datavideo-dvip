@@ -164,7 +164,7 @@ if (this.config.modelID == 'se3200') {
 		]
 	};
 
-	if (this.config.modelID == 'se1200mu') {
+
 		actions['switch_hdmi1'] = {
 			label: 'Switch HDMI 1 Output',
 			options: [
@@ -172,13 +172,38 @@ if (this.config.modelID == 'se3200') {
 					type: 'dropdown',
 					label: 'Input',
 					id: 'switchhdmi1',
-					default: '27',
 					choices: this.model.hdmi1
 				}
 			]
 		};
-	}
-	if (this.config.modelID == 'se1200mu') {
+
+		if (this.config.modelID == 'se3200') {
+			actions['switch_hdmi2'] = {
+				label: 'Switch HDMI 2 Output',
+				options: [
+					{
+						type: 'dropdown',
+						label: 'Input',
+						id: 'switchhdmi2',
+						choices: this.model.hdmi2
+					}
+				]
+			};
+		}
+		if (this.config.modelID == 'se3200') {
+			actions['switch_hdmi3'] = {
+				label: 'Switch HDMI 3 Output',
+				options: [
+					{
+						type: 'dropdown',
+						label: 'Input',
+						id: 'switchhdmi3',
+						choices: this.model.hdmi3
+					}
+				]
+			};
+		}
+
 		actions['switch_sdi1'] = {
 			label: 'Switch SDI 1 Output',
 			options: [
@@ -186,13 +211,11 @@ if (this.config.modelID == 'se3200') {
 					type: 'dropdown',
 					label: 'Input',
 					id: 'switchsdi1',
-					default: '27',
 					choices: this.model.sdi1
 				}
 			]
 		};
-	}
-	if (this.config.modelID == 'se1200mu') {
+	
 		actions['switch_sdi2'] = {
 			label: 'Switch SDI 2 Output',
 			options: [
@@ -200,12 +223,11 @@ if (this.config.modelID == 'se3200') {
 					type: 'dropdown',
 					label: 'Input',
 					id: 'switchsdi2',
-					default: '27',
 					choices: this.model.sdi2
 				}
 			]
 		};
-	}
+	
 	actions['trans'] = {
 		label: 'Transition Controls',
 		options: [

@@ -69,6 +69,62 @@ exports.getActions = function () {
 }
 
 if (this.config.modelID == 'se3200') {
+	actions['switch_aux1'] = {
+		label: 'Switch Aux 1',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchaux1',
+				default: '0',
+				choices: this.model.aux1
+			}
+		]
+	};
+}
+if (this.config.modelID == 'se3200') {
+	actions['switch_aux2'] = {
+		label: 'Switch Aux 2',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchaux2',
+				default: '0',
+				choices: this.model.aux2
+			}
+		]
+	};
+}
+if (this.config.modelID == 'se3200') {
+	actions['switch_aux3'] = {
+		label: 'Switch Aux 3',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchaux3',
+				default: '0',
+				choices: this.model.aux3
+			}
+		]
+	};
+}
+if (this.config.modelID == 'se3200') {
+	actions['switch_aux4'] = {
+		label: 'Switch Aux 4',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchaux4',
+				default: '0',
+				choices: this.model.aux4
+			}
+		]
+	};
+}
+if (this.config.modelID == 'se3200') {
 	actions['switch_key4'] = {
 		label: 'Switch Key 4 Aux',
 		options: [
@@ -107,6 +163,49 @@ if (this.config.modelID == 'se3200') {
 			}
 		]
 	};
+
+	if (this.config.modelID == 'se1200mu') {
+		actions['switch_hdmi1'] = {
+			label: 'Switch HDMI 1 Output',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'switchhdmi1',
+					default: '27',
+					choices: this.model.hdmi1
+				}
+			]
+		};
+	}
+	if (this.config.modelID == 'se1200mu') {
+		actions['switch_sdi1'] = {
+			label: 'Switch SDI 1 Output',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'switchsdi1',
+					default: '27',
+					choices: this.model.sdi1
+				}
+			]
+		};
+	}
+	if (this.config.modelID == 'se1200mu') {
+		actions['switch_sdi2'] = {
+			label: 'Switch SDI 2 Output',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'switchsdi2',
+					default: '27',
+					choices: this.model.sdi2
+				}
+			]
+		};
+	}
 	actions['trans'] = {
 		label: 'Transition Controls',
 		options: [

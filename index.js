@@ -442,7 +442,12 @@ class instance extends instance_skel {
 				//var indata = buffer.toString('hex');
 				//future feedback can be added here
 				///console.log(indata);
-				console.log('Buffer:', buffer);
+				
+				//Filter the null packet from the console log
+				let null_packet = new Buffer([0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00]);
+				if(!buffer.equals(null_packet)){
+					console.log('Buffer:', buffer);
+				}
 			});
 
 		}

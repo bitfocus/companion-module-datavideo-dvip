@@ -360,7 +360,7 @@ class instance extends instance_skel {
 				id: 'info',
 				width: 12,
 				label: 'Information',
-				value: 'This module will control a Datavideo vision mixer'
+				value: 'This module will control a Datavideo vision mixer. Port 5001 can be used if a physical control panel is not connected.'
 			},
 			{
 				type: 'textinput',
@@ -456,7 +456,7 @@ class instance extends instance_skel {
 	updateConfig(config) {
 		var resetConnection = false;
 
-		if (this.config.host != config.host) {
+		if (this.config.host != config.host || this.config.port != config.port || this.config.modelID != config.modelID) {
 			resetConnection = true;
 		}
 
@@ -466,6 +466,7 @@ class instance extends instance_skel {
 
 		if (resetConnection === true || this.socket === undefined) {
 			this.initTCP();
+			console.log('Connection reset after update');
 		}
 	}
 }

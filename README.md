@@ -1,2 +1,4 @@
 # companion-module-datavideo-dvip
-Controls DataVideo products like the SE-1200 and SE-3200. 
+Controls datavideo products via the DVIP Protocol
+
+Currently work in progress support for the SE-1200MU and the SE-3200

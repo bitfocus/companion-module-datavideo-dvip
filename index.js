@@ -433,18 +433,11 @@ class instance extends instance_skel {
 
 			// if we get any data, display it to stdout
 			this.socket.on('data', (buffer) => {
-
-				//From my interpretation of the protocol we must reply with every packet we recieve, including null packets
-				//So we send back the buffer, I could be wrong and we may be able to just send the null packet back.
-				//This keeps us in sync with the realtime protocol (and sync'd with changes from other controllers) and should allow implementation of feedback
-				this.socket.send(buffer);
-
-				//var indata = buffer.toString('hex');
-				//future feedback can be added here
-				///console.log(indata);
-				
-				//Filter the null packet from the console log
 				let null_packet = new Buffer([0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00]);
+				//Reply with the null packet for the realtime protocol
+				this.socket.send(null_packet);
+				
+				//Filter the null packet from the console log				
 				if(!buffer.equals(null_packet)){
 					console.log('Buffer:', buffer);
 				}

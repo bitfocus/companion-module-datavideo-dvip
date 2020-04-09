@@ -53,6 +53,35 @@ exports.getActions = function () {
 			}
 		]
 	};
+	if (this.config.modelID == 'se3200') {
+	actions['switch_key3'] = {
+		label: 'Switch Key 3 Aux',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchkey3',
+				default: '0',
+				choices: this.model.key3
+			}
+		]
+	};
+}
+
+if (this.config.modelID == 'se3200') {
+	actions['switch_key4'] = {
+		label: 'Switch Key 4 Aux',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchkey4',
+				default: '0',
+				choices: this.model.key4
+			}
+		]
+	};
+}
 
 	actions['switch_dsk1'] = {
 		label: 'Switch DSK 1 Aux',

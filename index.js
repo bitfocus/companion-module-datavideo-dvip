@@ -17,7 +17,6 @@ class instance extends instance_skel {
 			{ id: '5003', label: '5003'},
 			{ id: '5005', label: '5005'},
 			{ id: '5007', label: '5007'},
-			
 		];
 
 		////3200/////
@@ -81,7 +80,7 @@ class instance extends instance_skel {
 			{ id: '14', label: 'KEY PRIORITY OFF', 	cmd: new Buffer([0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x90, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
 		];
 
-	    // 1200 Fade to Black
+	    // 3200 Fade to Black
 		this.CHOICES_FTB_3200 = [
 			{ id: '0', label: 'FTB ENABLE ON', 	cmd: new Buffer([0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc3, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
 			{ id: '1', label: 'FTB ENABLE OFF', cmd: new Buffer([0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc3, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00]) },
@@ -434,9 +433,15 @@ class instance extends instance_skel {
 
 			// if we get any data, display it to stdout
 			this.socket.on('data', (buffer) => {
+
+				//From my interpretation of the protocol we must reply with every packet we recieve, including null packets
+				//So we send back the buffer, I could be wrong and we may be able to just send the null packet back.
+				//This keeps us in sync with the realtime protocol (and sync'd with changes from other controllers) and should allow implementation of feedback
+				this.socket.send(buffer);
+
 				//var indata = buffer.toString('hex');
 				//future feedback can be added here
-				//console.log(indata);
+				///console.log(indata);
 				console.log('Buffer:', buffer);
 			});
 

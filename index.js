@@ -219,6 +219,7 @@ class instance extends instance_skel {
 			{ id: '31', label: 'Bars', 		cmd: new Buffer([0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xac, 0x00, 0x02, 0x00, 0x12, 0x00, 0x00, 0x00]) },
 		];
 
+		//3200 Keyer
 		this.CHOICES_KEYER_3200 = [
 			{ id: '0', label: 'DSK 1 PGM ON', 	cmd: new Buffer([0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x99, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
 			{ id: '1', label: 'DSK 1 PGM OFF', 	cmd: new Buffer([0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x99, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
@@ -423,7 +424,7 @@ class instance extends instance_skel {
 						key1: this.CHOICES_SWITCH_KEY1_3200, 
 						key2: this.CHOICES_SWITCH_KEY2_3200, 
 						key3: this.CHOICES_SWITCH_KEY3_3200,
-						key3: this.CHOICES_SWITCH_KEY4_3200,
+						key4: this.CHOICES_SWITCH_KEY4_3200,
 						dsk1: this.CHOICES_SWITCH_DSK1_3200, 
 						dsk2: this.CHOICES_SWITCH_DSK2_3200, 
 						trans: this.CHOICES_TRANS_3200, 

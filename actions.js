@@ -260,9 +260,9 @@ if (this.config.modelID == 'se3200') {
 			{
 				type: 'dropdown',
 				label: 'Action',
-				id: 'user',
+				id: 'streamer',
 				default: '0',
-				choices: this.model.user
+				choices: this.model.streamer
 			}
 		]
 	};

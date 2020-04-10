@@ -83,7 +83,47 @@ exports.getActions = function () {
 			]
 		};
 	}
+	if (this.config.modelID == 'se700' || this.config.modelID == 'se650') {
+		actions['switch_pip'] = {
+			label: 'Switch PIP Aux',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'switchpip',
+					default: '0',
+					choices: this.model.pip
+				}
+			]
+		};
+	}
+	actions['switch_dsk1'] = {
+		label: 'Switch DSK 1 Aux',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchdsk1',
+				default: '0',
+				choices: this.model.dsk1
+			}
+		]
+	};
 
+	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+		actions['switch_dsk2'] = {
+			label: 'Switch DSK 2 Aux',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'switchdsk2',
+					default: '0',
+					choices: this.model.dsk2
+				}
+			]
+		};
+	}
 	if (this.config.modelID == 'se3200') {
 		actions['switch_aux1'] = {
 			label: 'Switch Aux 1',
@@ -141,47 +181,7 @@ exports.getActions = function () {
 		};
 	}
 
-	if (this.config.modelID == 'se700' || this.config.modelID == 'se650') {
-		actions['switch_pip'] = {
-			label: 'Switch PIP Aux',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Input',
-					id: 'switchpip',
-					default: '0',
-					choices: this.model.pip
-				}
-			]
-		};
-	}
-	actions['switch_dsk1'] = {
-		label: 'Switch DSK 1 Aux',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'switchdsk1',
-				default: '0',
-				choices: this.model.dsk1
-			}
-		]
-	};
 
-	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
-		actions['switch_dsk2'] = {
-			label: 'Switch DSK 2 Aux',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Input',
-					id: 'switchdsk2',
-					default: '0',
-					choices: this.model.dsk2
-				}
-			]
-		};
-	}
 	actions['switch_hdmi1'] = {
 		label: 'Switch HDMI 1 Output',
 		options: [

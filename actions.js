@@ -70,6 +70,21 @@ exports.getActions = function () {
 }
 
 if (this.config.modelID == 'se3200') {
+	actions['switch_key4'] = {
+		label: 'Switch Key 4 Aux',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchkey4',
+				default: '0',
+				choices: this.model.key4
+			}
+		]
+	};
+}
+
+if (this.config.modelID == 'se3200') {
 	actions['switch_aux1'] = {
 		label: 'Switch Aux 1',
 		options: [
@@ -125,20 +140,7 @@ if (this.config.modelID == 'se3200') {
 		]
 	};
 }
-if (this.config.modelID == 'se3200') {
-	actions['switch_key4'] = {
-		label: 'Switch Key 4 Aux',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'switchkey4',
-				default: '0',
-				choices: this.model.key4
-			}
-		]
-	};
-}
+
 if (this.config.modelID == 'se700') {
 	actions['switch_pip'] = {
 		label: 'Switch PIP Aux',

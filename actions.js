@@ -327,10 +327,23 @@ exports.getActions = function () {
 			options: [
 				{
 					type: 'dropdown',
-					label: 'Input',
+					label: 'Action',
 					id: 'logo',
 					default: '0',
 					choices: this.model.logo
+				}
+			]
+		};
+	}
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+		actions['audio'] = {
+			label: 'Audio Controls',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select',
+					id: 'audio',
+					choices: this.model.audio
 				}
 			]
 		};

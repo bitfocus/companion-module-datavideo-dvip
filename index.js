@@ -913,7 +913,7 @@ class instance extends instance_skel {
 						keyer: this.CHOICES_KEYER_700, 
 						user: this.CHOICES_USER_1200, 
 					 },
-			se700: { id: 'se650', label: 'SE-650',
+			se650: { id: 'se650', label: 'SE-650',
 						pgm: this.CHOICES_SWITCH_PGM_700,
 						pvw: this.CHOICES_SWITCH_PVW_700, 
 						key1: this.CHOICES_SWITCH_KEY1_700, 

@@ -27,7 +27,6 @@ exports.getActions = function () {
 			}
 		]
 	};
-
 	actions['switch_key1'] = {
 		label: 'Switch Key 1 Aux',
 		options: [
@@ -40,7 +39,8 @@ exports.getActions = function () {
 			}
 		]
 	};
-
+	
+	if (this.config.modelID != 'se700') {
 	actions['switch_key2'] = {
 		label: 'Switch Key 2 Aux',
 		options: [
@@ -53,6 +53,7 @@ exports.getActions = function () {
 			}
 		]
 	};
+}
 	if (this.config.modelID == 'se3200') {
 	actions['switch_key3'] = {
 		label: 'Switch Key 3 Aux',
@@ -138,7 +139,20 @@ if (this.config.modelID == 'se3200') {
 		]
 	};
 }
-
+if (this.config.modelID == 'se700') {
+	actions['switch_pip'] = {
+		label: 'Switch PIP Aux',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchpip',
+				default: '0',
+				choices: this.model.pip
+			}
+		]
+	};
+}
 	actions['switch_dsk1'] = {
 		label: 'Switch DSK 1 Aux',
 		options: [
@@ -151,6 +165,8 @@ if (this.config.modelID == 'se3200') {
 			}
 		]
 	};
+
+if (this.config.modelID != 'se700') {
 	actions['switch_dsk2'] = {
 		label: 'Switch DSK 2 Aux',
 		options: [
@@ -163,8 +179,8 @@ if (this.config.modelID == 'se3200') {
 			}
 		]
 	};
-
-
+}
+if (this.config.modelID != 'se700') {
 		actions['switch_hdmi1'] = {
 			label: 'Switch HDMI 1 Output',
 			options: [
@@ -176,6 +192,7 @@ if (this.config.modelID == 'se3200') {
 				}
 			]
 		};
+	}
 
 		if (this.config.modelID == 'se3200') {
 			actions['switch_hdmi2'] = {
@@ -252,6 +269,7 @@ if (this.config.modelID == 'se3200') {
 			}
 		]
 	};
+	if (this.config.modelID != 'se700') {
 	actions['keyer'] = {
 		label: 'Keyer Controls',
 		options: [
@@ -264,6 +282,7 @@ if (this.config.modelID == 'se3200') {
 			}
 		]
 	};
+}
 	actions['user'] = {
 		label: 'Load User',
 		options: [
@@ -276,6 +295,7 @@ if (this.config.modelID == 'se3200') {
 			}
 		]
 	};
+	if (this.config.modelID != 'se700') {
 	actions['streamer'] = {
 		label: 'Streamer Options',
 		options: [
@@ -288,5 +308,6 @@ if (this.config.modelID == 'se3200') {
 			}
 		]
 	};
+}
 	return actions
 }

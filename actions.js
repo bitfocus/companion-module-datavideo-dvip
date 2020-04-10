@@ -309,5 +309,20 @@ if (this.config.modelID != 'se700') {
 		]
 	};
 }
+
+if (this.config.modelID == 'se3200') {
+	actions['logo'] = {
+		label: 'Logo Controls',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'logo',
+				default: '0',
+				choices: this.model.logo
+			}
+		]
+	};
+}
 	return actions
 }

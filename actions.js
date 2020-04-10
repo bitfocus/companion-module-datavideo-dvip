@@ -27,6 +27,31 @@ exports.getActions = function () {
 			}
 		]
 	};
+	actions['trans'] = {
+		label: 'Transition Controls',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Action',
+				id: 'trans',
+				default: '0',
+				choices: this.model.trans
+			}
+		]
+	};
+
+	actions['keyer'] = {
+		label: 'Keyer Controls',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Action',
+				id: 'keyer',
+				default: '0',
+				choices: this.model.keyer
+			}
+		]
+	};
 	actions['switch_key1'] = {
 		label: 'Switch Key 1 Aux',
 		options: [
@@ -247,18 +272,6 @@ exports.getActions = function () {
 		};
 	}
 
-	actions['trans'] = {
-		label: 'Transition Controls',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Action',
-				id: 'trans',
-				default: '0',
-				choices: this.model.trans
-			}
-		]
-	};
 	actions['ftb'] = {
 		label: 'Fade to Black',
 		options: [
@@ -271,19 +284,36 @@ exports.getActions = function () {
 			}
 		]
 	};
-	actions['keyer'] = {
-		label: 'Keyer Controls',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Action',
-				id: 'keyer',
-				default: '0',
-				choices: this.model.keyer
-			}
-		]
-	};
 
+
+
+	if (this.config.modelID == 'se3200') {
+		actions['logo'] = {
+			label: 'Logo Controls',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Action',
+					id: 'logo',
+					default: '0',
+					choices: this.model.logo
+				}
+			]
+		};
+	}
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+		actions['audio'] = {
+			label: 'Audio Controls',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select',
+					id: 'audio',
+					choices: this.model.audio
+				}
+			]
+		};
+	}
 	actions['loaduser'] = {
 		label: 'Load User',
 		options: [
@@ -316,34 +346,6 @@ exports.getActions = function () {
 					id: 'streamer',
 					default: '0',
 					choices: this.model.streamer
-				}
-			]
-		};
-	}
-
-	if (this.config.modelID == 'se3200') {
-		actions['logo'] = {
-			label: 'Logo Controls',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Action',
-					id: 'logo',
-					default: '0',
-					choices: this.model.logo
-				}
-			]
-		};
-	}
-	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
-		actions['audio'] = {
-			label: 'Audio Controls',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Select',
-					id: 'audio',
-					choices: this.model.audio
 				}
 			]
 		};

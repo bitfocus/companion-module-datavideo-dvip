@@ -912,7 +912,7 @@ class instance extends instance_skel {
 						ftb: this.CHOICES_FTB_1200, 
 						keyer: this.CHOICES_KEYER_700, 
 						user: this.CHOICES_USER_1200, 
-					 },,			
+					 },
 			se700: { id: 'se650', label: 'SE-650',
 						pgm: this.CHOICES_SWITCH_PGM_700,
 						pvw: this.CHOICES_SWITCH_PVW_700, 

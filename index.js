@@ -761,7 +761,7 @@ class instance extends instance_skel {
 
 		];
 
-		this.CHOICES_SWITCH_PGM_700 = [
+		this.CHOICES_SWITCH_PVW_700 = [
 			{ id: '0', label: 'Black', cmd: new Buffer([0x01, 0x00, 0x00, 0x00, 0x57, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
 			{ id: '1', label: 'In 1', cmd: new Buffer([0x01, 0x00, 0x00, 0x00, 0x57, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
 			{ id: '2', label: 'In 2', cmd: new Buffer([0x01, 0x00, 0x00, 0x00, 0x57, 0x00, 0x02, 0x00, 0x02, 0x00, 0x00, 0x00]) },
@@ -1309,34 +1309,34 @@ class instance extends instance_skel {
 				}
 
 
-				// let pos = buffer.indexOf('56000200', 0, "hex")
-				// if (pos > -1) {
-				// 	console.log('PGM to', buffer[pos + 4]);
-				// }
-				// pos = buffer.indexOf('57000200', 0, "hex")
-				// if (pos > -1) {
-				// 	console.log('PVW to', buffer[pos + 4]);
-				// }
-				// pos = buffer.indexOf('14000200', 0, "hex")
-				// if (pos > -1) {
-				// 	console.log('KEY 1 to', buffer[pos + 4]);
-				// }
-				// pos = buffer.indexOf('32000200', 0, "hex")
-				// if (pos > -1) {
-				// 	console.log('KEY 2 to', buffer[pos + 4]);
-				// }
-				// pos = buffer.indexOf('5c000200', 0, "hex")
-				// if (pos > -1) {
-				// 	console.log('DSK 1 to', buffer[pos + 4]);
-				// }
-				// pos = buffer.indexOf('6c000200', 0, "hex")
-				// if (pos > -1) {
-				// 	console.log('DSK 2 to', buffer[pos + 4]);
-				// }
-				// pos = buffer.indexOf('6e000200', 0, "hex")
-				// if (pos > -1) {
-				// 	console.log('DSK 2 to', buffer[pos + 4]);
-				// }
+				let pos = buffer.indexOf('56000200', 0, "hex")
+				if (pos > -1) {
+					console.log('PGM to', buffer[pos + 4]);
+				}
+				pos = buffer.indexOf('57000200', 0, "hex")
+				if (pos > -1) {
+					console.log('PVW to', buffer[pos + 4]);
+				}
+				pos = buffer.indexOf('14000200', 0, "hex")
+				if (pos > -1) {
+					console.log('KEY 1 to', buffer[pos + 4]);
+				}
+				pos = buffer.indexOf('32000200', 0, "hex")
+				if (pos > -1) {
+					console.log('KEY 2 to', buffer[pos + 4]);
+				}
+				pos = buffer.indexOf('5c000200', 0, "hex")
+				if (pos > -1) {
+					console.log('DSK 1 to', buffer[pos + 4]);
+				}
+				pos = buffer.indexOf('6c000200', 0, "hex")
+				if (pos > -1) {
+					console.log('DSK 2 to', buffer[pos + 4]);
+				}
+				pos = buffer.indexOf('6e000200', 0, "hex")
+				if (pos > -1) {
+					console.log('DSK 2 to', buffer[pos + 4]);
+				}
 				//Filter the null packet from the console log				
 
 			});

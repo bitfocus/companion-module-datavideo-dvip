@@ -2,6 +2,8 @@
 
 Work in progress module to control Datavideo vision mixers, with feedback.
 
+Note: You have to restart companion after selecting or changing the model to get the correct instance actions.  
+
 This module attempts to implement the realtime DVIP protocol to listen to changes while using the command protocol to send control commands to the vision mixer.  
 More documentation on the DVIP specification is here: https://github.com/BB21B/datavideo-dvip-docs
 

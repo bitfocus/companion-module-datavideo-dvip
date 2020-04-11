@@ -1182,7 +1182,6 @@ class instance extends instance_skel {
 				break;
 			case 'trans_durations':
 				frames.writeUInt32LE(options.frames, 0);
-
 				cmd = Buffer.from([0x01, 0x00, 0x00, 0x00, options.trans, 0x00, 0x07, 0x00, frames[0], frames[1], frames[2], frames[3]]);
 				break;
 			case 'logo':
@@ -1257,12 +1256,10 @@ class instance extends instance_skel {
 	destroy() {
 		if (this.socket !== undefined) {
 			this.socket.send(this.disconnect_packet);
-			this.socket.end();
 			this.socket.destroy();
 		}
 		if (this.socket_realtime !== undefined) {
 			this.socket_realtime.send(this.disconnect_packet);
-			this.socket_realtime.end();
 			this.socket_realtime.destroy();
 		}
 		debug('destroy', this.id);

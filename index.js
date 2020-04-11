@@ -1294,19 +1294,6 @@ class instance extends instance_skel {
 				if (!buffer.equals(this.null_packet)) {
 					console.log('Receive Realtime: ', buffer);
 				}
-			});
-
-			// if we get any data, display it to stdout
-			this.socket.on('data', (buffer) => {
-				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-					console.log('Receive CMD: ', buffer);
-				}
-				//Reply with the null packet for the realtime protocol
-				if (buffer.equals(this.null_packet_cmd)) {
-					this.socket.send(this.null_packet_cmd);
-				} else {
-					this.socket.send(this.null_packet);
-				}
 
 
 				let pos = buffer.indexOf('56000200', 0, "hex")
@@ -1337,7 +1324,19 @@ class instance extends instance_skel {
 				if (pos > -1) {
 					console.log('DSK 2 to', buffer[pos + 4]);
 				}
-				//Filter the null packet from the console log				
+			});
+
+			// if we get any data, display it to stdout
+			this.socket.on('data', (buffer) => {
+				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
+					console.log('Receive CMD: ', buffer);
+				}
+				//Reply with the null packet for the realtime protocol
+				if (buffer.equals(this.null_packet_cmd)) {
+					this.socket.send(this.null_packet_cmd);
+				} else {
+					this.socket.send(this.null_packet);
+				}
 
 			});
 

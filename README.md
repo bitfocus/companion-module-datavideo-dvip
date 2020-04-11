@@ -1,6 +1,29 @@
-# companion-module-datavideo-dvip
-Controls datavideo products via the DVIP Protocol
+## Companion Datavideo DVIP Module
 
-Currently work in progress support for the SE-650, SE-700, SE-1200MU and the SE-3200
+Work in progress module to control Datavideo vision mixers, with feedback.
 
-Supports feedback
+Currently supports:
+SE-650
+SE-700
+SE-1200MU
+SE-3200
+
+Please add an issue for other Datavision vision mixers you would like to see added or any feedback you have.
+
+**Available commands**
+
+* Switch PGM and PVW bus input
+* Switch Key, DSK, Aux bus input
+* Transition Controls
+* Keyer Controls
+* Audio Controls
+* Output Controls
+* User Load/User Save
+* Streamer Controls
+
+
+**Available feedback**
+* Current PGM and PVW Bus input feedback
+* Current Key, DSK, Aux Bus input feedback
+* T Bar and DSK T Bar transition active indication
+* Currently selected transition type

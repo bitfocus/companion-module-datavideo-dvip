@@ -11,20 +11,22 @@ class instance extends instance_skel {
 
 		this.null_packet = new Buffer([0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 		this.null_packet_cmd = new Buffer([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]);
-		this.pgm_in_src = -1;
-		this.pvw_in_src = -1;
-		this.key1_in_src = -1;
-		this.key2_in_src = -1;
-		this.key3_in_src = -1;
-		this.key4_in_src = -1;
-		this.pip_in_src = -1;
-		this.dsk1_in_src = -1;
-		this.dsk2_in_src = -1;
-		this.aux1_in_src = -1;
-		this.aux2_in_src = -1;
-		this.aux3_in_src = -1;
-		this.aux4_in_src = -1;
-		
+		this.disconnect_packet = new Buffer([0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00]);
+
+		this.pgm_in_src;
+		this.pvw_in_src;
+		this.key1_in_src;
+		this.key2_in_src;
+		this.key3_in_src;
+		this.key4_in_src;
+		this.pip_in_src;
+		this.dsk1_in_src;
+		this.dsk2_in_src;
+		this.aux1_in_src;
+		this.aux2_in_src;
+		this.aux3_in_src;
+		this.aux4_in_src;
+
 		Object.assign(this, {
 			...actions
 		});
@@ -1246,9 +1248,11 @@ class instance extends instance_skel {
 	// When module gets deleted
 	destroy() {
 		if (this.socket !== undefined) {
+			this.socket.send(this.disconnect_packet);
 			this.socket.destroy();
 		}
 		if (this.socket_realtime !== undefined) {
+			this.socket_realtime.send(this.disconnect_packet);
 			this.socket_realtime.destroy();
 		}
 		debug('destroy', this.id);
@@ -1258,18 +1262,20 @@ class instance extends instance_skel {
 		debug = this.debug;
 		log = this.log;
 
-		this.initTCP();
 		this.init_feedbacks();
+		this.initTCP();
 		this.init_presets();
 	}
 
 	initTCP() {
 		if (this.socket !== undefined) {
+			this.socket.send(this.disconnect_packet);
 			this.socket.destroy();
 			delete this.socket;
 		}
 
 		if (this.socket_realtime !== undefined) {
+			this.socket_realtime.send(this.disconnect_packet);
 			this.socket_realtime.destroy();
 			delete this.socket_realtime;
 		}
@@ -1313,34 +1319,40 @@ class instance extends instance_skel {
 			this.socket_realtime.on('data', (buffer) => {
 				this.socket_realtime.send(this.null_packet);
 
-			//	if (!buffer.equals(this.null_packet)) {
-			//		console.log('Receive Realtime: ', buffer);
-			//	}
-				//1200,700,650
-				let pos = buffer.indexOf('56000200', 0, "hex")
-				if (pos > -1) {
-					//console.log('PGM to', buffer[pos + 4]);
-					this.pgm_in_src = buffer[pos + 4];
-					this.checkFeedbacks('pgm_in');
-				}
-				pos = buffer.indexOf('57000200', 0, "hex")
-				if (pos > -1) {
-					//console.log('PVW to', buffer[pos + 4]);
-					this.pvw_in_src = buffer[pos + 4];
-					this.checkFeedbacks('pvw_in');
-				}
+				//	if (!buffer.equals(this.null_packet)) {
+				//		console.log('Receive Realtime: ', buffer);
+				//	}
+				
+				let pos;
+
 				//3200
-				pos = buffer.indexOf('94000200', 0, "hex")
-				if (pos > -1) {
-					//console.log('PGM to', buffer[pos + 4]);
-					this.pgm_in_src = buffer[pos + 4];
-					this.checkFeedbacks('pgm_in');
-				}
-				pos = buffer.indexOf('95000200', 0, "hex")
-				if (pos > -1) {
-					//console.log('PVW to', buffer[pos + 4]);
-					this.pvw_in_src = buffer[pos + 4];
-					this.checkFeedbacks('pvw_in');
+				if (this.config.modelID == 'se3200') {
+					pos = buffer.indexOf('94000200', 0, "hex")
+					if (pos > -1) {
+						//console.log('PGM to', buffer[pos + 4]);
+						this.pgm_in_src = buffer[pos + 4];
+						this.checkFeedbacks('pgm_in');
+					}
+					pos = buffer.indexOf('95000200', 0, "hex")
+					if (pos > -1) {
+						//console.log('PVW to', buffer[pos + 4]);
+						this.pvw_in_src = buffer[pos + 4];
+						this.checkFeedbacks('pvw_in');
+					}
+				} else {
+					//1200,700,650
+					pos = buffer.indexOf('56000200', 0, "hex")
+					if (pos > -1) {
+						//console.log('PGM to', buffer[pos + 4]);
+						this.pgm_in_src = buffer[pos + 4];
+						this.checkFeedbacks('pgm_in');
+					}
+					pos = buffer.indexOf('57000200', 0, "hex")
+					if (pos > -1) {
+						//console.log('PVW to', buffer[pos + 4]);
+						this.pvw_in_src = buffer[pos + 4];
+						this.checkFeedbacks('pvw_in');
+					}
 				}
 				pos = buffer.indexOf('14000200', 0, "hex")
 				if (pos > -1) {
@@ -1350,13 +1362,13 @@ class instance extends instance_skel {
 				}
 				pos = buffer.indexOf('32000200', 0, "hex")
 				if (pos > -1) {
-					
+
 					this.key2_in_src = buffer[pos + 4];
 					//console.log('KEY 2 to', buffer[pos + 4]);
 					if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
 						this.key2_in_src = buffer[pos + 4];
-					this.checkFeedbacks('key2_in');
-					}else{
+						this.checkFeedbacks('key2_in');
+					} else {
 						//console.log('PIP to', buffer[pos + 4]);
 						this.pip_in_src = buffer[pos + 4];
 						this.checkFeedbacks('pip_in');
@@ -1379,7 +1391,7 @@ class instance extends instance_skel {
 			// if we get any data, display it to stdout
 			this.socket.on('data', (buffer) => {
 				//if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-					//console.log('Receive CMD: ', buffer);
+				//console.log('Receive CMD: ', buffer);
 				//}
 				//Reply with the null packet for the realtime protocol
 				if (buffer.equals(this.null_packet_cmd)) {
@@ -1406,110 +1418,110 @@ class instance extends instance_skel {
 		this.actions();
 
 		if (resetConnection === true || this.socket === undefined) {
-			this.initTCP();
 			this.init_feedbacks();
+			this.initTCP();
 			this.init_presets();
-			//console.log('Connection reset after update. Port: ', config.port);
+			console.log('Connection reset after update. Port: ', config.port);
 		}
 	}
 
 	init_feedbacks() {
 
 		let feedbacks = {};
-			feedbacks['pgm_in'] = {
-				label: 'Color for PGM',
-				description: 'Set Button colors for PGM Bus',
-				options: [{
-					type: 'colorpicker',
-					label: 'Foreground color',
-					id: 'fg',
-					default: '16777215'
-				},
-				{
-					type: 'colorpicker',
-					label: 'Background color',
-					id: 'bg',
-					default: this.rgb(255, 0, 0),
-				},
-				{
-					type: 'dropdown',
-					label: 'Input',
-					id: 'pgm_in',
-					default: '0',
-					choices: this.model.pgm
-				}],
-				callback: (feedback, bank) => {
-					if (this.pgm_in_src == feedback.options.pgm_in) {
-						return {
-							color: feedback.options.fg,
-							bgcolor: feedback.options.bg
-						};
-					}
+		feedbacks['pgm_in'] = {
+			label: 'Color for PGM',
+			description: 'Set Button colors for PGM Bus',
+			options: [{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(255, 0, 0),
+			},
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'pgm_in',
+				default: '0',
+				choices: this.model.pgm
+			}],
+			callback: (feedback, bank) => {
+				if (this.pgm_in_src == feedback.options.pgm_in) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
 				}
 			}
-			feedbacks['pvw_in'] = {
-				label: 'Color for PVW',
-				description: 'Set Button colors for PVW Bus',
-				options: [{
-					type: 'colorpicker',
-					label: 'Foreground color',
-					id: 'fg',
-					default: '16777215'
-				},
-				{
-					type: 'colorpicker',
-					label: 'Background color',
-					id: 'bg',
-					default: this.rgb(51, 102, 0),
-				},
-				{
-					type: 'dropdown',
-					label: 'Input',
-					id: 'pvw_in',
-					default: '0',
-					choices: this.model.pvw
-				}],
-				callback: (feedback, bank) => {
-					if (this.pvw_in_src == feedback.options.pvw_in) {
-						return {
-							color: feedback.options.fg,
-							bgcolor: feedback.options.bg
-						};
-					}
+		}
+		feedbacks['pvw_in'] = {
+			label: 'Color for PVW',
+			description: 'Set Button colors for PVW Bus',
+			options: [{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(51, 102, 0),
+			},
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'pvw_in',
+				default: '0',
+				choices: this.model.pvw
+			}],
+			callback: (feedback, bank) => {
+				if (this.pvw_in_src == feedback.options.pvw_in) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
 				}
 			}
-			feedbacks['key1_in'] = {
-				label: 'Color for Key 1 Aux',
-				description: 'Set Button colors for Key 1 Aux Bus',
-				options: [{
-					type: 'colorpicker',
-					label: 'Foreground color',
-					id: 'fg',
-					default: '16777215'
-				},
-				{
-					type: 'colorpicker',
-					label: 'Background color',
-					id: 'bg',
-					default: this.rgb(51, 102, 0),
-				},
-				{
-					type: 'dropdown',
-					label: 'Input',
-					id: 'key1_in',
-					default: '0',
-					choices: this.model.dsk1
-				}],
-				callback: (feedback, bank) => {
-					if (this.key1_in_src == feedback.options.key1_in) {
-						return {
-							color: feedback.options.fg,
-							bgcolor: feedback.options.bg
-						};
-					}
+		}
+		feedbacks['key1_in'] = {
+			label: 'Color for Key 1 Aux',
+			description: 'Set Button colors for Key 1 Aux Bus',
+			options: [{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(51, 102, 0),
+			},
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'key1_in',
+				default: '0',
+				choices: this.model.dsk1
+			}],
+			callback: (feedback, bank) => {
+				if (this.key1_in_src == feedback.options.key1_in) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
 				}
 			}
-			if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+		}
+		if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
 			feedbacks['key2_in'] = {
 				label: 'Color for Key 2 Aux',
 				description: 'Set Button colors for Key 2 Aux Bus',
@@ -1541,7 +1553,7 @@ class instance extends instance_skel {
 					}
 				}
 			}
-		}else{
+		} else {
 			feedbacks['pip_in'] = {
 				label: 'Color for PIP Aux',
 				description: 'Set Button colors for PIP Aux Bus',
@@ -1575,38 +1587,38 @@ class instance extends instance_skel {
 			}
 		}
 
-			feedbacks['dsk1_in'] = {
-				label: 'Color for DSK1 Aux',
-				description: 'Set Button colors for DSK 1 Aux Bus',
-				options: [{
-					type: 'colorpicker',
-					label: 'Foreground color',
-					id: 'fg',
-					default: '16777215'
-				},
-				{
-					type: 'colorpicker',
-					label: 'Background color',
-					id: 'bg',
-					default: this.rgb(51, 102, 0),
-				},
-				{
-					type: 'dropdown',
-					label: 'Input',
-					id: 'dsk1_in',
-					default: '0',
-					choices: this.model.dsk1
-				}],
-				callback: (feedback, bank) => {
-					if (this.dsk1_in_src == feedback.options.dsk1_in) {
-						return {
-							color: feedback.options.fg,
-							bgcolor: feedback.options.bg
-						};
-					}
+		feedbacks['dsk1_in'] = {
+			label: 'Color for DSK1 Aux',
+			description: 'Set Button colors for DSK 1 Aux Bus',
+			options: [{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(51, 102, 0),
+			},
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'dsk1_in',
+				default: '0',
+				choices: this.model.dsk1
+			}],
+			callback: (feedback, bank) => {
+				if (this.dsk1_in_src == feedback.options.dsk1_in) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
 				}
 			}
-			if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+		}
+		if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
 			feedbacks['dsk2_in'] = {
 				label: 'Color for DSK2 Aux',
 				description: 'Set Button colors for DSK 2 Aux Bus',
@@ -1640,7 +1652,7 @@ class instance extends instance_skel {
 			}
 		}
 
-		
+
 		this.setFeedbackDefinitions(feedbacks);
 
 	};

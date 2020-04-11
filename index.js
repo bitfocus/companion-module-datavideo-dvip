@@ -1383,54 +1383,16 @@ class instance extends instance_skel {
 								this.setVariable('pvw_in', element.label);
 							}
 						}
-						//key 1
-						pos = buffer.indexOf('14000200', 0, "hex")
-						if (pos > -1) {
-							this.key1_in_src = buffer[pos + 4];
-							this.checkFeedbacks('key1_in');
-							element = this.model.key1.find(element => element.id === this.key1_in_src.toString());
-							if (element !== undefined) {
-								this.setVariable('key1_in', element.label);
-							}
-						}
-
-						//key 2
-						pos = buffer.indexOf('32000200', 0, "hex")
-						if (pos > -1) {
-							this.key2_in_src = buffer[pos + 4];
-							this.checkFeedbacks('key2_in');
-							element = this.model.key2.find(element => element.id === this.key2_in_src.toString());
-							if (element !== undefined) {
-								this.setVariable('key2_in', element.label);
-							}
-						}
-
-						//dsk 1
-						pos = buffer.indexOf('5c000200', 0, "hex")
-						if (pos > -1) {
-							this.dsk1_in_src = buffer[pos + 4];
-							this.checkFeedbacks('dsk1_in');
-							element = this.model.dsk1.find(element => element.id === this.dsk1_in_src.toString());
-							if (element !== undefined) {
-								this.setVariable('dsk1_in', element.label);
-							}
-						}
-						//dsk 1
-						pos = buffer.indexOf('6e000200', 0, "hex")
-						if (pos > -1) {
-							this.dsk2_in_src = buffer[pos + 4];
-							this.checkFeedbacks('dsk2_in');
-							element = this.model.dsk2.find(element => element.id === this.dsk2_in_src.toString());
-							if (element !== undefined) {
-								this.setVariable('dsk2_in', element.label);
-							}
-						}
 					}
 					pos = buffer.indexOf('14000200', 0, "hex")
 					if (pos > -1) {
 						//console.log('KEY 1 to', buffer[pos + 4]);
 						this.key1_in_src = buffer[pos + 4];
 						this.checkFeedbacks('key1_in');
+						element = this.model.key1.find(element => element.id === this.key1_in_src.toString());
+						if (element !== undefined) {
+							this.setVariable('key1_in', element.label);
+						}
 					}
 					pos = buffer.indexOf('32000200', 0, "hex")
 					if (pos > -1) {
@@ -1440,24 +1402,41 @@ class instance extends instance_skel {
 						if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
 							this.key2_in_src = buffer[pos + 4];
 							this.checkFeedbacks('key2_in');
+							element = this.model.key2.find(element => element.id === this.key2_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('key2_in', element.label);
+							}
 						} else {
 							//console.log('PIP to', buffer[pos + 4]);
 							this.pip_in_src = buffer[pos + 4];
 							this.checkFeedbacks('pip_in');
+							element = this.model.pip.find(element => element.id === this.pip_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('pip_in', element.label);
+							}
 						}
 					}
+
 					if (!this.config.modelID != 'se3200') {
 						pos = buffer.indexOf('5c000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('DSK 1 to', buffer[pos + 4]);
 							this.dsk1_in_src = buffer[pos + 4];
 							this.checkFeedbacks('dsk1_in');
+							element = this.model.dsk1.find(element => element.id === this.dsk1_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('dsk1_in', element.label);
+							}
 						}
 						pos = buffer.indexOf('6e000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('DSK 2 to', buffer[pos + 4]);
 							this.dsk2_in_src = buffer[pos + 4];
 							this.checkFeedbacks('dsk2_in');
+							element = this.model.dsk2.find(element => element.id === this.dsk2_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('dsk2_in', element.label);
+							}
 						}
 					} else {
 						//3200 dsk1
@@ -1466,6 +1445,10 @@ class instance extends instance_skel {
 							//console.log('DSK 1 to', buffer[pos + 4]);
 							this.dsk1_in_src = buffer[pos + 4];
 							this.checkFeedbacks('dsk1_in');
+							element = this.model.dsk1.find(element => element.id === this.dsk1_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('dsk1_in', element.label);
+							}
 						}
 
 
@@ -1475,6 +1458,10 @@ class instance extends instance_skel {
 							//console.log('DSK 2 to', buffer[pos + 4]);
 							this.dsk2_in_src = buffer[pos + 4];
 							this.checkFeedbacks('dsk2_in');
+							element = this.model.dsk2.find(element => element.id === this.dsk2_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('dsk2_in', element.label);
+							}
 						}
 
 						//3200 KEY 3
@@ -1483,6 +1470,10 @@ class instance extends instance_skel {
 							//console.log('KEY 3 to', buffer[pos + 4]);
 							this.key3_in_src = buffer[pos + 4];
 							this.checkFeedbacks('key3_in');
+							element = this.model.key3.find(element => element.id === this.key3_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('key3_in', element.label);
+							}
 						}
 						//3200 KEY 4
 						pos = buffer.indexOf('6e000200', 0, "hex")
@@ -1490,6 +1481,10 @@ class instance extends instance_skel {
 							//console.log('KEY 4 to', buffer[pos + 4]);
 							this.key4_in_src = buffer[pos + 4];
 							this.checkFeedbacks('key4_in');
+							element = this.model.key4.find(element => element.id === this.key4_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('key4_in', element.label);
+							}
 						}
 						//3200 Aux1
 						pos = buffer.indexOf('00000500', 0, "hex")
@@ -1497,6 +1492,10 @@ class instance extends instance_skel {
 							//console.log('AUX 1 to', buffer[pos + 4]);
 							this.aux1_in_src = buffer[pos + 4];
 							this.checkFeedbacks('aux1_in');
+							element = this.model.aux1.find(element => element.id === this.aux1_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('aux1_in', element.label);
+							}
 						}
 						//3200 Aux2
 						pos = buffer.indexOf('01000500', 0, "hex")
@@ -1504,6 +1503,10 @@ class instance extends instance_skel {
 							//console.log('AUX 2 to', buffer[pos + 4]);
 							this.aux2_in_src = buffer[pos + 4];
 							this.checkFeedbacks('aux2_in');
+							element = this.model.aux2.find(element => element.id === this.aux2_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('aux2_in', element.label);
+							}
 						}
 						//3200 Aux3
 						pos = buffer.indexOf('02000500', 0, "hex")
@@ -1511,6 +1514,10 @@ class instance extends instance_skel {
 							//console.log('AUX 3 to', buffer[pos + 4]);
 							this.aux3_in_src = buffer[pos + 4];
 							this.checkFeedbacks('aux3_in');
+							element = this.model.aux3.find(element => element.id === this.aux3_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('aux3_in', element.label);
+							}
 						}
 						//3200 Aux4
 						pos = buffer.indexOf('03000500', 0, "hex")
@@ -1518,6 +1525,10 @@ class instance extends instance_skel {
 							//console.log('AUX 4 to', buffer[pos + 4]);
 							this.aux4_in_src = buffer[pos + 4];
 							this.checkFeedbacks('aux4_in');
+							element = this.model.aux4.find(element => element.id === this.aux4_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('aux4_in', element.label);
+							}
 						}
 					}
 
@@ -2139,12 +2150,40 @@ class instance extends instance_skel {
 				name: 'key2_in'
 			},
 			{
+				label: 'Current Key 3 bus input name',
+				name: 'key3_in'
+			},
+			{
+				label: 'Current Key 4 bus input name',
+				name: 'key4_in'
+			},
+			{
+				label: 'Current PIP bus input name',
+				name: 'pip_in'
+			},
+			{
 				label: 'Current DSK 1 bus input name',
 				name: 'dsk1_in'
 			},
 			{
 				label: 'Current DSK 2 bus input name',
 				name: 'dsk2_in'
+			},
+			{
+				label: 'Current Aux 1 bus input name',
+				name: 'aux1_in'
+			},
+			{
+				label: 'Current Aux 2 bus input name',
+				name: 'aux2_in'
+			},
+			{
+				label: 'Current Aux 3 bus input name',
+				name: 'aux3_in'
+			},
+			{
+				label: 'Current Aux 4 bus input name',
+				name: 'aux4_in'
 			},
 			{
 				label: 'Current ME Duration in Frames',

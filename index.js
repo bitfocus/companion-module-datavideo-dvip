@@ -1248,7 +1248,9 @@ class instance extends instance_skel {
 		if (this.socket !== undefined) {
 			this.socket.destroy();
 		}
-
+		if (this.socket_realtime !== undefined) {
+			this.socket_realtime.destroy();
+		}
 		debug('destroy', this.id);
 	}
 
@@ -1265,6 +1267,11 @@ class instance extends instance_skel {
 		if (this.socket !== undefined) {
 			this.socket.destroy();
 			delete this.socket;
+		}
+
+		if (this.socket_realtime !== undefined) {
+			this.socket_realtime.destroy();
+			delete this.socket_realtime;
 		}
 
 		if (this.config.port === undefined) {

@@ -1274,7 +1274,7 @@ class instance extends instance_skel {
 			this.socket.on('data', (buffer) => {
 
 				//Reply with the null packet for the realtime protocol
-				// this.socket.send(this.null_packet);
+				 this.socket.send(this.null_packet);
 
 				// let pos = buffer.indexOf('56000200', 0, "hex")
 				// if (pos > -1) {

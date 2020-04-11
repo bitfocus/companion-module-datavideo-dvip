@@ -15,6 +15,9 @@ class instance extends instance_skel {
 		this.pvw_in_src = -1;
 		this.key1_in_src = -1;
 		this.key2_in_src = -1;
+		this.key3_in_src = -1;
+		this.key4_in_src = -1;
+		this.pip_in_src = -1;
 		this.dsk1_in_src = -1;
 		this.dsk2_in_src = -1;
 
@@ -1189,7 +1192,7 @@ class instance extends instance_skel {
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
 				cmd = Buffer.concat([pktsize, cmd], cmdsize);
-				console.log("Send: ", cmd);
+				//console.log("Send: ", cmd);
 				this.socket.send(cmd);
 			} else {
 				debug('Socket not connected :(');
@@ -1266,7 +1269,7 @@ class instance extends instance_skel {
 
 		if (this.config.host) {
 			this.config.port_cmd = parseInt(this.config.port) + 1;
-			//console.log("CMD PORT ",this.config.port_cmd)
+			////console.log("CMD PORT ",this.config.port_cmd)
 			this.socket = new tcp(this.config.host, this.config.port_cmd);
 			this.socket_realtime = new tcp(this.config.host, this.config.port);
 
@@ -1301,55 +1304,63 @@ class instance extends instance_skel {
 				this.socket_realtime.send(this.null_packet);
 
 				if (!buffer.equals(this.null_packet)) {
-					console.log('Receive Realtime: ', buffer);
+					//console.log('Receive Realtime: ', buffer);
 				}
 				//1200,700,650
 				let pos = buffer.indexOf('56000200', 0, "hex")
 				if (pos > -1) {
-					console.log('PGM to', buffer[pos + 4]);
+					//console.log('PGM to', buffer[pos + 4]);
 					this.pgm_in_src = buffer[pos + 4];
 					this.checkFeedbacks('pgm_in');
 				}
 				pos = buffer.indexOf('57000200', 0, "hex")
 				if (pos > -1) {
-					console.log('PVW to', buffer[pos + 4]);
+					//console.log('PVW to', buffer[pos + 4]);
 					this.pvw_in_src = buffer[pos + 4];
 					this.checkFeedbacks('pvw_in');
 				}
 				//3200
 				pos = buffer.indexOf('94000200', 0, "hex")
 				if (pos > -1) {
-					console.log('PGM to', buffer[pos + 4]);
+					//console.log('PGM to', buffer[pos + 4]);
 					this.pgm_in_src = buffer[pos + 4];
 					this.checkFeedbacks('pgm_in');
 				}
 				pos = buffer.indexOf('95000200', 0, "hex")
 				if (pos > -1) {
-					console.log('PVW to', buffer[pos + 4]);
+					//console.log('PVW to', buffer[pos + 4]);
 					this.pvw_in_src = buffer[pos + 4];
 					this.checkFeedbacks('pvw_in');
 				}
 				pos = buffer.indexOf('14000200', 0, "hex")
 				if (pos > -1) {
-					console.log('KEY 1 to', buffer[pos + 4]);
+					//console.log('KEY 1 to', buffer[pos + 4]);
 					this.key1_in_src = buffer[pos + 4];
 					this.checkFeedbacks('key1_in');
 				}
 				pos = buffer.indexOf('32000200', 0, "hex")
 				if (pos > -1) {
-					console.log('KEY 2 to', buffer[pos + 4]);
+					
 					this.key2_in_src = buffer[pos + 4];
+					//console.log('KEY 2 to', buffer[pos + 4]);
+					if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+						this.key2_in_src = buffer[pos + 4];
 					this.checkFeedbacks('key2_in');
+					}else{
+						//console.log('PIP to', buffer[pos + 4]);
+						this.pip_in_src = buffer[pos + 4];
+						this.checkFeedbacks('pip_in');
+					}
 				}
 				pos = buffer.indexOf('5c000200', 0, "hex")
 				if (pos > -1) {
-					console.log('DSK 1 to', buffer[pos + 4]);
+					//console.log('DSK 1 to', buffer[pos + 4]);
 					this.dsk1_in_src = buffer[pos + 4];
 					this.checkFeedbacks('dsk1_in');
 				}
 				pos = buffer.indexOf('6c000200', 0, "hex")
 				if (pos > -1) {
-					console.log('DSK 2 to', buffer[pos + 4]);
+					//console.log('DSK 2 to', buffer[pos + 4]);
 					this.dsk2_in_src = buffer[pos + 4];
 					this.checkFeedbacks('dsl2_in');
 				}
@@ -1358,7 +1369,7 @@ class instance extends instance_skel {
 			// if we get any data, display it to stdout
 			this.socket.on('data', (buffer) => {
 				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-					console.log('Receive CMD: ', buffer);
+					//console.log('Receive CMD: ', buffer);
 				}
 				//Reply with the null packet for the realtime protocol
 				if (buffer.equals(this.null_packet_cmd)) {
@@ -1388,7 +1399,7 @@ class instance extends instance_skel {
 			this.initTCP();
 			this.init_feedbacks();
 			this.init_presets();
-			console.log('Connection reset after update. Port: ', config.port);
+			//console.log('Connection reset after update. Port: ', config.port);
 		}
 	}
 
@@ -1457,10 +1468,106 @@ class instance extends instance_skel {
 					}
 				}
 			}
+			feedbacks['key1_in'] = {
+				label: 'Color for Key 1 Aux',
+				description: 'Set Button colors for Key 1 Aux Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'key1_in',
+					default: '0',
+					choices: this.model.dsk1
+				}],
+				callback: (feedback, bank) => {
+					if (this.key1_in_src == feedback.options.key1_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			}
+			if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+			feedbacks['key2_in'] = {
+				label: 'Color for Key 2 Aux',
+				description: 'Set Button colors for Key 2 Aux Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'key2_in',
+					default: '0',
+					choices: this.model.dsk1
+				}],
+				callback: (feedback, bank) => {
+					if (this.key2_in_src == feedback.options.key2_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			}
+		}else{
+			feedbacks['pip_in'] = {
+				label: 'Color for PIP Aux',
+				description: 'Set Button colors for PIP Aux Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'pip_in',
+					default: '0',
+					choices: this.model.pip
+				}],
+				callback: (feedback, bank) => {
+					if (this.pip_in_src == feedback.options.pip_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			}
+		}
 
 			feedbacks['dsk1_in'] = {
 				label: 'Color for DSK1 Aux',
-				description: 'Set Button colors for DSK1 Aux Bus',
+				description: 'Set Button colors for DSK 1 Aux Bus',
 				options: [{
 					type: 'colorpicker',
 					label: 'Foreground color',
@@ -1489,6 +1596,39 @@ class instance extends instance_skel {
 					}
 				}
 			}
+			if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+			feedbacks['dsk2_in'] = {
+				label: 'Color for DSK2 Aux',
+				description: 'Set Button colors for DSK 2 Aux Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'dsk2_in',
+					default: '0',
+					choices: this.model.dsk2
+				}],
+				callback: (feedback, bank) => {
+					if (this.dsk2_in_src == feedback.options.dsk2_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			}
+		}
 
 		
 		this.setFeedbackDefinitions(feedbacks);

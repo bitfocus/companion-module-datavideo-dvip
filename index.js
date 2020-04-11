@@ -533,7 +533,6 @@ class instance extends instance_skel {
 			{ id: '15', label: 'HDMI 1 Audio OFF', cmd: new Buffer([0x00, 0x00, 0x00, 0x00, 0x12, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
 			{ id: '37', label: 'V Fade', cmd: new Buffer([0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
 			{ id: '38', label: 'X Fade', cmd: new Buffer([0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x06, 0x00, 0x01, 0x00, 0x00, 0x00]) },
-
 		];
 
 
@@ -1012,15 +1011,9 @@ class instance extends instance_skel {
 		let element
 		let id = action.action
 		let options = action.options;
-		let userid;
+		let userid = new Buffer(4);
 		let pktsize = new Buffer(4);
 		let cmdsize;
-		let lengthpkt;
-		const conv = num => {
-			let b = new ArrayBuffer(4);
-			new DataView(b).setUint32(0, num);
-			return Array.from(new Uint8Array(b));
-		}
 
 		const lf = '\u000a';
 
@@ -1152,12 +1145,12 @@ class instance extends instance_skel {
 				}
 				break;
 			case 'loaduser':
-				userid = conv(options.userid);
-				cmd = new Buffer([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, userid[3], userid[2], 0x00, 0x00, 0x01, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00]);
+				userid.writeUInt32LE(options.userid, 0);
+				cmd = new Buffer([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, userid[0], userid[1], 0x00, 0x00, 0x01, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00]);
 				break;
 			case 'saveuser':
-				userid = conv(options.userid);
-				cmd = new Buffer([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, userid[3], userid[2], 0x00, 0x00, 0x01, 0x00, 0x08, 0x00, 0x02, 0x00, 0x00, 0x00]);
+				uuserid.writeUInt32LE(options.userid, 0);
+				cmd = new Buffer([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, userid[0], userid[1], 0x00, 0x00, 0x01, 0x00, 0x08, 0x00, 0x02, 0x00, 0x00, 0x00]);
 				break;
 			case 'streamer':
 				element = this.model.streamer.find(element => element.id === options.streamer);
@@ -1181,6 +1174,8 @@ class instance extends instance_skel {
 
 		if (cmd !== undefined) {
 			if (this.socket !== undefined && this.socket.connected) {
+				//Calculate packet length and prepend
+				//Add 4 bytes to include pack size value
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
 				cmd =  Buffer.concat([pktsize, cmd], cmdsize);

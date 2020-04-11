@@ -2,11 +2,11 @@
 
 Module to control Datavideo vision mixers, with feedback.
 
-Currently supports:
-SE-650
-SE-700
-SE-1200MU
-SE-3200
+Currently supports:  
+SE-650. 
+SE-700. 
+SE-1200MU. 
+SE-3200. 
 
 **Available commands**
 
@@ -26,3 +26,10 @@ SE-3200
 * Current Key, DSK, Aux Bus input feedback
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
+
+**Available presets**
+* PGM Bus with feedback
+* PVW Bus with feedback
+* Transition Mix, Wipe Clip and DVE with feedback
+* Transition Auto and DSK Auto with feedback
+* Transition Cut and DSK Cut

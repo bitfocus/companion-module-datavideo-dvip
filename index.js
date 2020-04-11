@@ -1018,7 +1018,6 @@ class instance extends instance_skel {
 			this.model = this.CONFIG_MODEL['se1200mu'];
 		}
 
-		this.actions()
 	}
 
 	actions(system) {
@@ -1261,10 +1260,10 @@ class instance extends instance_skel {
 	init() {
 		debug = this.debug;
 		log = this.log;
-
 		this.init_feedbacks();
 		this.initTCP();
 		this.init_presets();
+		this.actions();
 	}
 
 	initTCP() {
@@ -1414,10 +1413,10 @@ class instance extends instance_skel {
 		}
 
 		this.config = config;
-
-		this.actions();
-
+		this.model = this.CONFIG_MODEL[config.modelID];
+		
 		if (resetConnection === true || this.socket === undefined) {
+			this.actions();
 			this.init_feedbacks();
 			this.initTCP();
 			this.init_presets();

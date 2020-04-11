@@ -41,5 +41,5 @@ SE-3200.
 **Available variables**
 * Current PGM and PVW input names
 * Current Key, DSK and Aux bus input names
-* Current ME, DSK, FTB duration frames
+* Current ME, DSK and FTB duration frames
 * KEY and DSK button states (Just for testing for now)

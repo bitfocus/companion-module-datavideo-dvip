@@ -11,7 +11,7 @@ SE-3200.
 **Available commands**
 
 * Switch PGM and PVW bus input
-* Switch Key, DSK, Aux bus input
+* Switch Key, DSK and Aux bus input
 * Transition Controls
 * Fade to Black
 * Keyer Controls
@@ -23,7 +23,7 @@ SE-3200.
 
 **Available feedback**
 * Current PGM and PVW Bus input feedback
-* Current Key, DSK, Aux Bus input feedback
+* Current Key, DSK and Aux Bus input feedback
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
 

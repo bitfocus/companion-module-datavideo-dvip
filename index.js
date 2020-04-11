@@ -1261,6 +1261,7 @@ class instance extends instance_skel {
 		debug = this.debug;
 		log = this.log;
 		this.init_feedbacks();
+		this.init_variables();
 		this.initTCP();
 		this.init_presets();
 		this.actions();
@@ -1321,6 +1322,7 @@ class instance extends instance_skel {
 				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
 					//		console.log('Receive Realtime: ', buffer);
 					let pos;
+					let element;
 
 					//3200
 					if (this.config.modelID == 'se3200') {
@@ -1329,12 +1331,20 @@ class instance extends instance_skel {
 							//console.log('PGM to', buffer[pos + 4]);
 							this.pgm_in_src = buffer[pos + 4];
 							this.checkFeedbacks('pgm_in');
+							element = this.model.pgm.find(element => element.id === this.pgm_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('pgm_in', element.label);
+							}
 						}
 						pos = buffer.indexOf('95000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('PVW to', buffer[pos + 4]);
 							this.pvw_in_src = buffer[pos + 4];
 							this.checkFeedbacks('pvw_in');
+							element = this.model.pvw.find(element => element.id === this.pvw_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('pvw_in', element.label);
+							}
 						}
 					} else {
 						//1200,700,650
@@ -1343,12 +1353,21 @@ class instance extends instance_skel {
 							//console.log('PGM to', buffer[pos + 4]);
 							this.pgm_in_src = buffer[pos + 4];
 							this.checkFeedbacks('pgm_in');
+							element = this.model.pgm.find(element => element.id === this.pgm_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('pgm_in', element.label);
+							}
+
 						}
 						pos = buffer.indexOf('57000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('PVW to', buffer[pos + 4]);
 							this.pvw_in_src = buffer[pos + 4];
 							this.checkFeedbacks('pvw_in');
+							element = this.model.pvw.find(element => element.id === this.pvw_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('pvw_in', element.label);
+							}
 						}
 					}
 					pos = buffer.indexOf('14000200', 0, "hex")
@@ -1371,80 +1390,80 @@ class instance extends instance_skel {
 							this.checkFeedbacks('pip_in');
 						}
 					}
-					if(!this.config.modelID != 'se3200'){
+					if (!this.config.modelID != 'se3200') {
 						pos = buffer.indexOf('5c000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('DSK 1 to', buffer[pos + 4]);
 							this.dsk1_in_src = buffer[pos + 4];
 							this.checkFeedbacks('dsk1_in');
 						}
-					pos = buffer.indexOf('6e000200', 0, "hex")
-					if (pos > -1) {
-						//console.log('DSK 2 to', buffer[pos + 4]);
-						this.dsk2_in_src = buffer[pos + 4];
-						this.checkFeedbacks('dsk2_in');
-					}
-				}else{
-					//3200 dsk1
-					pos = buffer.indexOf('9a000200', 0, "hex")
-					if (pos > -1) {
-						//console.log('DSK 1 to', buffer[pos + 4]);
-						this.dsk1_in_src = buffer[pos + 4];
-						this.checkFeedbacks('dsk1_in');
-					}
+						pos = buffer.indexOf('6e000200', 0, "hex")
+						if (pos > -1) {
+							//console.log('DSK 2 to', buffer[pos + 4]);
+							this.dsk2_in_src = buffer[pos + 4];
+							this.checkFeedbacks('dsk2_in');
+						}
+					} else {
+						//3200 dsk1
+						pos = buffer.indexOf('9a000200', 0, "hex")
+						if (pos > -1) {
+							//console.log('DSK 1 to', buffer[pos + 4]);
+							this.dsk1_in_src = buffer[pos + 4];
+							this.checkFeedbacks('dsk1_in');
+						}
 
-					
-					//3200 dsk2
-					pos = buffer.indexOf('ac000200', 0, "hex")
-					if (pos > -1) {
-						//console.log('DSK 2 to', buffer[pos + 4]);
-						this.dsk2_in_src = buffer[pos + 4];
-						this.checkFeedbacks('dsk2_in');
-					}
 
-					//3200 KEY 3
-					pos = buffer.indexOf('50000200', 0, "hex")
-					if (pos > -1) {
-						//console.log('KEY 3 to', buffer[pos + 4]);
-						this.key3_in_src = buffer[pos + 4];
-						this.checkFeedbacks('key3_in');
+						//3200 dsk2
+						pos = buffer.indexOf('ac000200', 0, "hex")
+						if (pos > -1) {
+							//console.log('DSK 2 to', buffer[pos + 4]);
+							this.dsk2_in_src = buffer[pos + 4];
+							this.checkFeedbacks('dsk2_in');
+						}
+
+						//3200 KEY 3
+						pos = buffer.indexOf('50000200', 0, "hex")
+						if (pos > -1) {
+							//console.log('KEY 3 to', buffer[pos + 4]);
+							this.key3_in_src = buffer[pos + 4];
+							this.checkFeedbacks('key3_in');
+						}
+						//3200 KEY 4
+						pos = buffer.indexOf('6e000200', 0, "hex")
+						if (pos > -1) {
+							//console.log('KEY 4 to', buffer[pos + 4]);
+							this.key4_in_src = buffer[pos + 4];
+							this.checkFeedbacks('key4_in');
+						}
+						//3200 Aux1
+						pos = buffer.indexOf('00000500', 0, "hex")
+						if (pos > -1) {
+							//console.log('AUX 1 to', buffer[pos + 4]);
+							this.aux1_in_src = buffer[pos + 4];
+							this.checkFeedbacks('aux1_in');
+						}
+						//3200 Aux2
+						pos = buffer.indexOf('01000500', 0, "hex")
+						if (pos > -1) {
+							//console.log('AUX 2 to', buffer[pos + 4]);
+							this.aux2_in_src = buffer[pos + 4];
+							this.checkFeedbacks('aux2_in');
+						}
+						//3200 Aux3
+						pos = buffer.indexOf('02000500', 0, "hex")
+						if (pos > -1) {
+							//console.log('AUX 3 to', buffer[pos + 4]);
+							this.aux3_in_src = buffer[pos + 4];
+							this.checkFeedbacks('aux3_in');
+						}
+						//3200 Aux4
+						pos = buffer.indexOf('03000500', 0, "hex")
+						if (pos > -1) {
+							//console.log('AUX 4 to', buffer[pos + 4]);
+							this.aux4_in_src = buffer[pos + 4];
+							this.checkFeedbacks('aux4_in');
+						}
 					}
-					//3200 KEY 4
-					pos = buffer.indexOf('6e000200', 0, "hex")
-					if (pos > -1) {
-						//console.log('KEY 4 to', buffer[pos + 4]);
-						this.key4_in_src = buffer[pos + 4];
-						this.checkFeedbacks('key4_in');
-					}
-					//3200 Aux1
-					pos = buffer.indexOf('00000500', 0, "hex")
-					if (pos > -1) {
-						//console.log('AUX 1 to', buffer[pos + 4]);
-						this.aux1_in_src = buffer[pos + 4];
-						this.checkFeedbacks('aux1_in');
-					}
-					//3200 Aux2
-					pos = buffer.indexOf('01000500', 0, "hex")
-					if (pos > -1) {
-						//console.log('AUX 2 to', buffer[pos + 4]);
-						this.aux2_in_src = buffer[pos + 4];
-						this.checkFeedbacks('aux2_in');
-					}
-					//3200 Aux3
-					pos = buffer.indexOf('02000500', 0, "hex")
-					if (pos > -1) {
-						//console.log('AUX 3 to', buffer[pos + 4]);
-						this.aux3_in_src = buffer[pos + 4];
-						this.checkFeedbacks('aux3_in');
-					}
-					//3200 Aux4
-					pos = buffer.indexOf('03000500', 0, "hex")
-					if (pos > -1) {
-						//console.log('AUX 4 to', buffer[pos + 4]);
-						this.aux4_in_src = buffer[pos + 4];
-						this.checkFeedbacks('aux4_in');
-					}
-				}
 				}
 			});
 
@@ -1478,6 +1497,7 @@ class instance extends instance_skel {
 
 		if (resetConnection === true || this.socket === undefined) {
 			this.actions();
+			this.init_variables();
 			this.init_feedbacks();
 			this.initTCP();
 			this.init_presets();
@@ -1648,196 +1668,196 @@ class instance extends instance_skel {
 		}
 
 		if (this.config.modelID == 'se3200') {
-		feedbacks['key3_in'] = {
-			label: 'Color for Key 3 Aux',
-			description: 'Set Button colors for Key 3 Aux Bus',
-			options: [{
-				type: 'colorpicker',
-				label: 'Foreground color',
-				id: 'fg',
-				default: '16777215'
-			},
-			{
-				type: 'colorpicker',
-				label: 'Background color',
-				id: 'bg',
-				default: this.rgb(51, 102, 0),
-			},
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'key3_in',
-				default: '0',
-				choices: this.model.key3
-			}],
-			callback: (feedback, bank) => {
-				if (this.key3_in_src == feedback.options.key3_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+			feedbacks['key3_in'] = {
+				label: 'Color for Key 3 Aux',
+				description: 'Set Button colors for Key 3 Aux Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'key3_in',
+					default: '0',
+					choices: this.model.key3
+				}],
+				callback: (feedback, bank) => {
+					if (this.key3_in_src == feedback.options.key3_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
-		}
-		feedbacks['key4_in'] = {
-			label: 'Color for Key 4 Aux',
-			description: 'Set Button colors for Key 4 Aux Bus',
-			options: [{
-				type: 'colorpicker',
-				label: 'Foreground color',
-				id: 'fg',
-				default: '16777215'
-			},
-			{
-				type: 'colorpicker',
-				label: 'Background color',
-				id: 'bg',
-				default: this.rgb(51, 102, 0),
-			},
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'key4_in',
-				default: '0',
-				choices: this.model.key4
-			}],
-			callback: (feedback, bank) => {
-				if (this.key4_in_src == feedback.options.key4_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+			feedbacks['key4_in'] = {
+				label: 'Color for Key 4 Aux',
+				description: 'Set Button colors for Key 4 Aux Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'key4_in',
+					default: '0',
+					choices: this.model.key4
+				}],
+				callback: (feedback, bank) => {
+					if (this.key4_in_src == feedback.options.key4_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
-		}
 
-		feedbacks['aux1_in'] = {
-			label: 'Color for Aux 1 Bus',
-			description: 'Set Button colors for Aux 1 Bus',
-			options: [{
-				type: 'colorpicker',
-				label: 'Foreground color',
-				id: 'fg',
-				default: '16777215'
-			},
-			{
-				type: 'colorpicker',
-				label: 'Background color',
-				id: 'bg',
-				default: this.rgb(51, 102, 0),
-			},
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'aux1_in',
-				default: '0',
-				choices: this.model.aux1
-			}],
-			callback: (feedback, bank) => {
-				if (this.aux1_in_src == feedback.options.aux1_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+			feedbacks['aux1_in'] = {
+				label: 'Color for Aux 1 Bus',
+				description: 'Set Button colors for Aux 1 Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'aux1_in',
+					default: '0',
+					choices: this.model.aux1
+				}],
+				callback: (feedback, bank) => {
+					if (this.aux1_in_src == feedback.options.aux1_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
-		}
 
-		feedbacks['aux2_in'] = {
-			label: 'Color for Aux 2 Bus',
-			description: 'Set Button colors for Aux 2 Bus',
-			options: [{
-				type: 'colorpicker',
-				label: 'Foreground color',
-				id: 'fg',
-				default: '16777215'
-			},
-			{
-				type: 'colorpicker',
-				label: 'Background color',
-				id: 'bg',
-				default: this.rgb(51, 102, 0),
-			},
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'aux2_in',
-				default: '0',
-				choices: this.model.aux2
-			}],
-			callback: (feedback, bank) => {
-				if (this.aux2_in_src == feedback.options.aux2_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+			feedbacks['aux2_in'] = {
+				label: 'Color for Aux 2 Bus',
+				description: 'Set Button colors for Aux 2 Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'aux2_in',
+					default: '0',
+					choices: this.model.aux2
+				}],
+				callback: (feedback, bank) => {
+					if (this.aux2_in_src == feedback.options.aux2_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
-		}
-		feedbacks['aux3_in'] = {
-			label: 'Color for Aux 3 Bus',
-			description: 'Set Button colors for Aux 3 Bus',
-			options: [{
-				type: 'colorpicker',
-				label: 'Foreground color',
-				id: 'fg',
-				default: '16777215'
-			},
-			{
-				type: 'colorpicker',
-				label: 'Background color',
-				id: 'bg',
-				default: this.rgb(51, 102, 0),
-			},
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'aux3_in',
-				default: '0',
-				choices: this.model.aux1
-			}],
-			callback: (feedback, bank) => {
-				if (this.aux3_in_src == feedback.options.aux3_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+			feedbacks['aux3_in'] = {
+				label: 'Color for Aux 3 Bus',
+				description: 'Set Button colors for Aux 3 Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'aux3_in',
+					default: '0',
+					choices: this.model.aux1
+				}],
+				callback: (feedback, bank) => {
+					if (this.aux3_in_src == feedback.options.aux3_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
-		}
 
-		feedbacks['aux4_in'] = {
-			label: 'Color for Aux 4 Bus',
-			description: 'Set Button colors for Aux 4 Bus',
-			options: [{
-				type: 'colorpicker',
-				label: 'Foreground color',
-				id: 'fg',
-				default: '16777215'
-			},
-			{
-				type: 'colorpicker',
-				label: 'Background color',
-				id: 'bg',
-				default: this.rgb(51, 102, 0),
-			},
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'aux4_in',
-				default: '0',
-				choices: this.model.aux1
-			}],
-			callback: (feedback, bank) => {
-				if (this.aux4_in_src == feedback.options.aux4_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+			feedbacks['aux4_in'] = {
+				label: 'Color for Aux 4 Bus',
+				description: 'Set Button colors for Aux 4 Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'aux4_in',
+					default: '0',
+					choices: this.model.aux1
+				}],
+				callback: (feedback, bank) => {
+					if (this.aux4_in_src == feedback.options.aux4_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
 		}
-	}
 		feedbacks['dsk1_in'] = {
 			label: 'Color for DSK1 Aux',
 			description: 'Set Button colors for DSK 1 Aux Bus',
@@ -1972,6 +1992,23 @@ class instance extends instance_skel {
 
 		this.setPresetDefinitions(presets);
 	}
+	init_variables() {
+		var self = this;
+
+		var variables = [
+			{
+				label: 'Current PGM bus input name',
+				name: 'pgm_in'
+			},
+			{
+				label: 'Current PVW bus input name',
+				name: 'pvw_in'
+			},
+		];
+
+		this.setVariableDefinitions(variables);
+	};
+
 }
 
 

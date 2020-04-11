@@ -13,6 +13,7 @@ SE-3200
 * Switch PGM and PVW bus input
 * Switch Key, DSK, Aux bus input
 * Transition Controls
+* Fade to Black
 * Keyer Controls
 * Audio Controls
 * Output Controls

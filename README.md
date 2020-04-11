@@ -2,6 +2,8 @@
 
 Work in progress module to control Datavideo vision mixers, with feedback.
 
+This module attempts to implement the realtime DVIP protocol to listen to changes while using the command protocol to send control commands to the vision mixer.
+
 Currently supports:
 SE-650
 SE-700

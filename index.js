@@ -29,6 +29,12 @@ class instance extends instance_skel {
 		this.me_dur;
 		this.dsk_dur;
 		this.ftb_dur;
+		this.key1_pgm_state;
+		this.key1_pvw_state;
+		this.key2_pgm_state;
+		this.key2_pvw_state;
+		this.dsk1_pgm_state;
+		this.dsk1_pvw_state;
 
 		Object.assign(this, {
 			...actions
@@ -1205,7 +1211,7 @@ class instance extends instance_skel {
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
 				cmd = Buffer.concat([pktsize, cmd], cmdsize);
-			//	console.log("Send: ", cmd);
+				//console.log("Send: ", cmd);
 				this.socket.send(cmd);
 			} else {
 				debug('Socket not connected :(');
@@ -1328,7 +1334,7 @@ class instance extends instance_skel {
 				this.socket_realtime.send(this.null_packet);
 
 				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-				//	console.log('Receive Realtime: ', buffer);
+					//console.log('Receive Realtime: ', buffer);
 					let pos;
 					let element;
 
@@ -1490,6 +1496,58 @@ class instance extends instance_skel {
 						this.ftb_dur = buffer.readInt32LE(pos + 4);
 						this.setVariable('ftb_dur', this.ftb_dur);
 					}
+					//Key 1 State
+					pos = buffer.indexOf('13000200', 0, "hex")
+					if (pos > -1) {
+						this.key1_pgm_state = buffer.readInt16LE(pos + 4);
+						this.setVariable('key1_pgm_state', this.key1_pgm_state);
+					}
+
+					pos = buffer.indexOf('50000200', 0, "hex")
+					if (pos > -1) {
+						this.key1_pvw_state = buffer.readInt16LE(pos + 4);
+						this.setVariable('key1_pvw_state', this.key1_pvw_state);
+					}
+
+					//Key 2 State
+					pos = buffer.indexOf('31000200', 0, "hex")
+					if (pos > -1) {
+						this.key2_pgm_state = buffer.readInt16LE(pos + 4);
+						this.setVariable('key2_pgm_state', this.key2_pgm_state);
+					}
+
+					pos = buffer.indexOf('51000200', 0, "hex")
+					if (pos > -1) {
+						this.key2_pvw_state = buffer.readInt16LE(pos + 4);
+						this.setVariable('key2_pvw_state', this.key2_pvw_state);
+					}
+
+					//DSK 1 State
+					pos = buffer.indexOf('5b000200', 0, "hex")
+					if (pos > -1) {
+						this.dsk1_pgm_state = buffer.readInt16LE(pos + 4);
+						this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
+					}
+
+					pos = buffer.indexOf('7f000200', 0, "hex")
+					if (pos > -1) {
+						this.dsk1_pvw_state = buffer.readInt16LE(pos + 4);
+						this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
+					}
+
+					//DSK 2 State
+					pos = buffer.indexOf('6d000200', 0, "hex")
+					if (pos > -1) {
+						this.dsk2_pgm_state = buffer.readInt16LE(pos + 4);
+						this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
+					}
+
+					pos = buffer.indexOf('80000200', 0, "hex")
+					if (pos > -1) {
+						this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
+						this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
+					}
+
 				}
 			});
 
@@ -2042,6 +2100,39 @@ class instance extends instance_skel {
 				label: 'Current FTB Duration in Frames',
 				name: 'ftb_dur'
 			},
+			{
+				label: 'Current Key 1 PGM state',
+				name: 'key1_pgm_state'
+			},
+			{
+				label: 'Current Key 1 PVW state',
+				name: 'key1_pvw_state'
+			},
+			{
+				label: 'Current Key 2 PGM state',
+				name: 'key2_pgm_state'
+			},
+			{
+				label: 'Current Key 2 PVW state',
+				name: 'key2_pvw_state'
+			},
+			{
+				label: 'Current DSK 1 PGM state',
+				name: 'dsk1_pgm_state'
+			},
+			{
+				label: 'Current DSK 1 PVW state',
+				name: 'dsk1_pvw_state'
+			},
+			{
+				label: 'Current DSK 2 PGM state',
+				name: 'dsk2_pgm_state'
+			},
+			{
+				label: 'Current DSK 2 PVW state',
+				name: 'dsk2_pvw_state'
+			},
+
 		];
 
 		this.setVariableDefinitions(variables);

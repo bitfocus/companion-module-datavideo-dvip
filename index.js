@@ -11,8 +11,13 @@ class instance extends instance_skel {
 
 		this.null_packet = new Buffer([0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 		this.null_packet_cmd = new Buffer([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]);
-		this.pgm_in_src = 0;
-		this.pvw_in_src = 0;
+		this.pgm_in_src = -1;
+		this.pvw_in_src = -1;
+		this.key1_in_src = -1;
+		this.key2_in_src = -1;
+		this.dsk1_in_src = -1;
+		this.dsk2_in_src = -1;
+
 		Object.assign(this, {
 			...actions
 		});
@@ -1327,22 +1332,26 @@ class instance extends instance_skel {
 				pos = buffer.indexOf('14000200', 0, "hex")
 				if (pos > -1) {
 					console.log('KEY 1 to', buffer[pos + 4]);
+					this.key1_in_src = buffer[pos + 4];
+					this.checkFeedbacks('key1_in');
 				}
 				pos = buffer.indexOf('32000200', 0, "hex")
 				if (pos > -1) {
 					console.log('KEY 2 to', buffer[pos + 4]);
+					this.key2_in_src = buffer[pos + 4];
+					this.checkFeedbacks('key2_in');
 				}
 				pos = buffer.indexOf('5c000200', 0, "hex")
 				if (pos > -1) {
 					console.log('DSK 1 to', buffer[pos + 4]);
+					this.dsk1_in_src = buffer[pos + 4];
+					this.checkFeedbacks('dsk1_in');
 				}
 				pos = buffer.indexOf('6c000200', 0, "hex")
 				if (pos > -1) {
 					console.log('DSK 2 to', buffer[pos + 4]);
-				}
-				pos = buffer.indexOf('6e000200', 0, "hex")
-				if (pos > -1) {
-					console.log('DSK 2 to', buffer[pos + 4]);
+					this.dsk2_in_src = buffer[pos + 4];
+					this.checkFeedbacks('dsl2_in');
 				}
 			});
 
@@ -1385,9 +1394,8 @@ class instance extends instance_skel {
 
 	init_feedbacks() {
 
-
-		var feedbacks = {
-			pgm_in: {
+		let feedbacks = {};
+			feedbacks['pgm_in'] = {
 				label: 'Color for PGM',
 				description: 'Set Button colors for PGM Bus',
 				options: [{
@@ -1417,8 +1425,8 @@ class instance extends instance_skel {
 						};
 					}
 				}
-			},
-			pvw_in: {
+			}
+			feedbacks['pvw_in'] = {
 				label: 'Color for PVW',
 				description: 'Set Button colors for PVW Bus',
 				options: [{
@@ -1448,9 +1456,41 @@ class instance extends instance_skel {
 						};
 					}
 				}
-			},
+			}
 
-		};
+			feedbacks['dsk1_in'] = {
+				label: 'Color for DSK1 Aux',
+				description: 'Set Button colors for DSK1 Aux Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'dsk1_in',
+					default: '0',
+					choices: this.model.dsk1
+				}],
+				callback: (feedback, bank) => {
+					if (this.dsk1_in_src == feedback.options.dsk1_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			}
+
+		
 		this.setFeedbackDefinitions(feedbacks);
 
 	};

@@ -20,7 +20,11 @@ class instance extends instance_skel {
 		this.pip_in_src = -1;
 		this.dsk1_in_src = -1;
 		this.dsk2_in_src = -1;
-
+		this.aux1_in_src = -1;
+		this.aux2_in_src = -1;
+		this.aux3_in_src = -1;
+		this.aux4_in_src = -1;
+		
 		Object.assign(this, {
 			...actions
 		});
@@ -1269,7 +1273,6 @@ class instance extends instance_skel {
 
 		if (this.config.host) {
 			this.config.port_cmd = parseInt(this.config.port) + 1;
-			////console.log("CMD PORT ",this.config.port_cmd)
 			this.socket = new tcp(this.config.host, this.config.port_cmd);
 			this.socket_realtime = new tcp(this.config.host, this.config.port);
 
@@ -1303,9 +1306,9 @@ class instance extends instance_skel {
 			this.socket_realtime.on('data', (buffer) => {
 				this.socket_realtime.send(this.null_packet);
 
-				if (!buffer.equals(this.null_packet)) {
-					//console.log('Receive Realtime: ', buffer);
-				}
+			//	if (!buffer.equals(this.null_packet)) {
+			//		console.log('Receive Realtime: ', buffer);
+			//	}
 				//1200,700,650
 				let pos = buffer.indexOf('56000200', 0, "hex")
 				if (pos > -1) {
@@ -1358,19 +1361,19 @@ class instance extends instance_skel {
 					this.dsk1_in_src = buffer[pos + 4];
 					this.checkFeedbacks('dsk1_in');
 				}
-				pos = buffer.indexOf('6c000200', 0, "hex")
+				pos = buffer.indexOf('6e000200', 0, "hex")
 				if (pos > -1) {
 					//console.log('DSK 2 to', buffer[pos + 4]);
 					this.dsk2_in_src = buffer[pos + 4];
-					this.checkFeedbacks('dsl2_in');
+					this.checkFeedbacks('dsk2_in');
 				}
 			});
 
 			// if we get any data, display it to stdout
 			this.socket.on('data', (buffer) => {
-				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
+				//if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
 					//console.log('Receive CMD: ', buffer);
-				}
+				//}
 				//Reply with the null packet for the realtime protocol
 				if (buffer.equals(this.null_packet_cmd)) {
 					this.socket.send(this.null_packet_cmd);

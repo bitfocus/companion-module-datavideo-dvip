@@ -1339,7 +1339,7 @@ class instance extends instance_skel {
 					let pos;
 					let element;
 
-					//3200
+					//3200 PGM and PREVIEW BUS
 					if (this.config.modelID == 'se3200') {
 						pos = buffer.indexOf('94000200', 0, "hex")
 						if (pos > -1) {
@@ -1362,7 +1362,7 @@ class instance extends instance_skel {
 							}
 						}
 					} else {
-						//1200,700,650
+						//1200,700,650 PGM AND PREVIEW INPUT
 						pos = buffer.indexOf('56000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('PGM to', buffer[pos + 4]);
@@ -1385,6 +1385,7 @@ class instance extends instance_skel {
 							}
 						}
 					}
+					//ALL MODEL KEY 1
 					pos = buffer.indexOf('14000200', 0, "hex")
 					if (pos > -1) {
 						//console.log('KEY 1 to', buffer[pos + 4]);
@@ -1395,6 +1396,7 @@ class instance extends instance_skel {
 							this.setVariable('key1_in', element.label);
 						}
 					}
+					//ALL MODEL KEY 2/PIP
 					pos = buffer.indexOf('32000200', 0, "hex")
 					if (pos > -1) {
 
@@ -1417,7 +1419,7 @@ class instance extends instance_skel {
 							}
 						}
 					}
-
+					//DSK 1 FOR SE1200, SE700 ETC
 					if (!this.config.modelID != 'se3200') {
 						pos = buffer.indexOf('5c000200', 0, "hex")
 						if (pos > -1) {
@@ -1429,6 +1431,7 @@ class instance extends instance_skel {
 								this.setVariable('dsk1_in', element.label);
 							}
 						}
+						//DSK 2 FOR SE1200, SE700 ETC
 						pos = buffer.indexOf('6e000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('DSK 2 to', buffer[pos + 4]);
@@ -1440,7 +1443,7 @@ class instance extends instance_skel {
 							}
 						}
 					} else {
-						//3200 dsk1
+						//3200 DSK1
 						pos = buffer.indexOf('9a000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('DSK 1 to', buffer[pos + 4]);
@@ -1453,7 +1456,7 @@ class instance extends instance_skel {
 						}
 
 
-						//3200 dsk2
+						//3200 DSK2
 						pos = buffer.indexOf('ac000200', 0, "hex")
 						if (pos > -1) {
 							//console.log('DSK 2 to', buffer[pos + 4]);
@@ -1533,7 +1536,7 @@ class instance extends instance_skel {
 						}
 					}
 
-					//GET CURRENT TRANISTION
+					//GET CURRENT TRANS
 					if (this.config.modelID == 'se3200') {
 						pos = buffer.indexOf('96000200', 0, "hex")
 						if (pos > -1) {
@@ -1548,8 +1551,7 @@ class instance extends instance_skel {
 						}
 					}
 
-					//GET ME/DSK/FTB FRAME CA
-					//GET ME/DSK/FTB FRAME CHANGEGS
+					//GET ME/DSK/FTB FRAME DURATION
 					pos = buffer.indexOf('03000700', 0, "hex")
 					if (pos > -1) {
 						this.me_dur = buffer.readInt32LE(pos + 4);
@@ -1565,6 +1567,8 @@ class instance extends instance_skel {
 						this.ftb_dur = buffer.readInt32LE(pos + 4);
 						this.setVariable('ftb_dur', this.ftb_dur);
 					}
+
+					////BUTTON STATES/////
 					//Key 1 State
 					pos = buffer.indexOf('13000200', 0, "hex")
 					if (pos > -1) {
@@ -1616,7 +1620,7 @@ class instance extends instance_skel {
 						this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
 						this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
 					}
-
+					////BUTTON STATES/////
 				}
 			});
 
@@ -2175,7 +2179,7 @@ class instance extends instance_skel {
 						}
 					}
 				],
-				
+
 			},
 			{
 				category: 'transition',

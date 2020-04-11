@@ -1383,6 +1383,48 @@ class instance extends instance_skel {
 								this.setVariable('pvw_in', element.label);
 							}
 						}
+						//key 1
+						pos = buffer.indexOf('14000200', 0, "hex")
+						if (pos > -1) {
+							this.key1_in_src = buffer[pos + 4];
+							this.checkFeedbacks('key1_in');
+							element = this.model.key1.find(element => element.id === this.key1_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('key1_in', element.label);
+							}
+						}
+
+						//key 2
+						pos = buffer.indexOf('32000200', 0, "hex")
+						if (pos > -1) {
+							this.key2_in_src = buffer[pos + 4];
+							this.checkFeedbacks('key2_in');
+							element = this.model.key2.find(element => element.id === this.key2_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('key2_in', element.label);
+							}
+						}
+
+						//dsk 1
+						pos = buffer.indexOf('5c000200', 0, "hex")
+						if (pos > -1) {
+							this.dsk1_in_src = buffer[pos + 4];
+							this.checkFeedbacks('dsk1_in');
+							element = this.model.dsk1.find(element => element.id === this.dsk1_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('dsk1_in', element.label);
+							}
+						}
+						//dsk 1
+						pos = buffer.indexOf('6e000200', 0, "hex")
+						if (pos > -1) {
+							this.dsk2_in_src = buffer[pos + 4];
+							this.checkFeedbacks('dsk2_in');
+							element = this.model.dsk2.find(element => element.id === this.dsk2_in_src.toString());
+							if (element !== undefined) {
+								this.setVariable('dsk2_in', element.label);
+							}
+						}
 					}
 					pos = buffer.indexOf('14000200', 0, "hex")
 					if (pos > -1) {
@@ -2087,6 +2129,22 @@ class instance extends instance_skel {
 			{
 				label: 'Current PVW bus input name',
 				name: 'pvw_in'
+			},
+			{
+				label: 'Current Key 1 bus input name',
+				name: 'key1_in'
+			},
+			{
+				label: 'Current Key 2 bus input name',
+				name: 'key2_in'
+			},
+			{
+				label: 'Current DSK 1 bus input name',
+				name: 'dsk1_in'
+			},
+			{
+				label: 'Current DSK 2 bus input name',
+				name: 'dsk2_in'
 			},
 			{
 				label: 'Current ME Duration in Frames',

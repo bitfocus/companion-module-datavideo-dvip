@@ -11,6 +11,8 @@ class instance extends instance_skel {
 
 		this.null_packet = new Buffer([0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 		this.null_packet_cmd = new Buffer([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]);
+		this.pgm_in_src = 0;
+		this.pvw_in_src = 0;
 		Object.assign(this, {
 			...actions
 		});
@@ -1243,6 +1245,8 @@ class instance extends instance_skel {
 		log = this.log;
 
 		this.initTCP();
+		this.init_feedbacks();
+		this.init_presets();
 	}
 
 	initTCP() {
@@ -1294,15 +1298,31 @@ class instance extends instance_skel {
 				if (!buffer.equals(this.null_packet)) {
 					console.log('Receive Realtime: ', buffer);
 				}
-
-
+				//1200,700,650
 				let pos = buffer.indexOf('56000200', 0, "hex")
 				if (pos > -1) {
 					console.log('PGM to', buffer[pos + 4]);
+					this.pgm_in_src = buffer[pos + 4];
+					this.checkFeedbacks('pgm_in');
 				}
 				pos = buffer.indexOf('57000200', 0, "hex")
 				if (pos > -1) {
 					console.log('PVW to', buffer[pos + 4]);
+					this.pvw_in_src = buffer[pos + 4];
+					this.checkFeedbacks('pvw_in');
+				}
+				//3200
+				pos = buffer.indexOf('94000200', 0, "hex")
+				if (pos > -1) {
+					console.log('PGM to', buffer[pos + 4]);
+					this.pgm_in_src = buffer[pos + 4];
+					this.checkFeedbacks('pgm_in');
+				}
+				pos = buffer.indexOf('95000200', 0, "hex")
+				if (pos > -1) {
+					console.log('PVW to', buffer[pos + 4]);
+					this.pvw_in_src = buffer[pos + 4];
+					this.checkFeedbacks('pvw_in');
 				}
 				pos = buffer.indexOf('14000200', 0, "hex")
 				if (pos > -1) {
@@ -1357,9 +1377,149 @@ class instance extends instance_skel {
 
 		if (resetConnection === true || this.socket === undefined) {
 			this.initTCP();
+			this.init_feedbacks();
+			this.init_presets();
 			console.log('Connection reset after update. Port: ', config.port);
 		}
 	}
+
+	init_feedbacks() {
+
+
+		var feedbacks = {
+			pgm_in: {
+				label: 'Color for PGM',
+				description: 'Set Button colors for PGM Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(255, 0, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'pgm_in',
+					default: '0',
+					choices: this.model.pgm
+				}],
+				callback: (feedback, bank) => {
+					if (this.pgm_in_src == feedback.options.pgm_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			},
+			pvw_in: {
+				label: 'Color for PVW',
+				description: 'Set Button colors for PVW Bus',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'pvw_in',
+					default: '0',
+					choices: this.model.pvw
+				}],
+				callback: (feedback, bank) => {
+					if (this.pvw_in_src == feedback.options.pvw_in) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			},
+
+		};
+		this.setFeedbackDefinitions(feedbacks);
+
+	};
+
+	init_presets() {
+		var presets = [
+
+			{
+				category: 'pgm-bus',
+				label: 'PGM Bus',
+				bank: {
+					style: 'text',
+					text: 'In 1',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'switch_pgm',
+						options: {
+							switchpgm: '1'
+						}
+					}
+				],
+				feedbacks: [
+					{
+						type: 'pgm_in',
+						options: {
+							pgm_in: '1'
+						}
+					}
+				],
+			},
+			{
+				category: 'pvw-bus',
+				label: 'PVW Bus',
+				bank: {
+					style: 'text',
+					text: 'In 1',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'switch_pvw',
+						options: {
+							switchpvw: '1'
+						}
+					}
+				],
+				feedbacks: [
+					{
+						type: 'pvw_in',
+						options: {
+							pvw_in: '1'
+						}
+					}
+				],
+			}
+
+		];
+
+		this.setPresetDefinitions(presets);
+	}
 }
+
 
 exports = module.exports = instance;

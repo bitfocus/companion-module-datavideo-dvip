@@ -214,6 +214,7 @@ exports.getActions = function () {
 				type: 'dropdown',
 				label: 'Input',
 				id: 'switchhdmi1',
+				default: '1',
 				choices: this.model.hdmi1
 			}
 		]
@@ -228,6 +229,7 @@ exports.getActions = function () {
 					type: 'dropdown',
 					label: 'Input',
 					id: 'switchhdmi2',
+					default: '1',
 					choices: this.model.hdmi2
 				}
 			]
@@ -241,6 +243,7 @@ exports.getActions = function () {
 					type: 'dropdown',
 					label: 'Input',
 					id: 'switchhdmi3',
+					default: '1',
 					choices: this.model.hdmi3
 				}
 			]
@@ -254,6 +257,7 @@ exports.getActions = function () {
 				type: 'dropdown',
 				label: 'Input',
 				id: 'switchsdi1',
+				default: '1',
 				choices: this.model.sdi1
 			}
 		]
@@ -266,6 +270,7 @@ exports.getActions = function () {
 					type: 'dropdown',
 					label: 'Input',
 					id: 'switchsdi2',
+					default: '1',
 					choices: this.model.sdi2
 				}
 			]
@@ -309,6 +314,7 @@ exports.getActions = function () {
 					type: 'dropdown',
 					label: 'Select',
 					id: 'audio',
+					default: '8',
 					choices: this.model.audio
 				}
 			]

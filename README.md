@@ -15,6 +15,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Switch PGM and PVW bus input
 * Switch Key, DSK, Aux bus input
 * Transition Controls
+* Fade to Black
 * Keyer Controls
 * Audio Controls
 * Output Controls

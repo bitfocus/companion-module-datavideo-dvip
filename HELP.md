@@ -2,6 +2,8 @@
 
 Module to control Datavideo vision mixers, with feedback.
 
+Note: You have to restart companion after selecting or changing the model to get the correct instance actions.
+
 Currently supports:  
 SE-650. 
 SE-700. 

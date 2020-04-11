@@ -342,6 +342,28 @@ exports.getActions = function () {
 			}
 		]
 	};
+	actions['trans_durations'] = {
+		label: 'Transition Duration',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Select',
+				id: 'trans',
+				default: '3',
+				choices: [
+					{ id: '3', label: 'ME Duration'},
+					{ id: '8', label: 'DSK Duration' },
+					{ id: '13', label: 'FTB Duration' },
+				]
+			},
+			{
+				type: 'textinput',
+				label: 'Frames',
+				id: 'frames',
+				default: '10'
+			}
+		]
+	};
 	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
 		actions['streamer'] = {
 			label: 'Streamer Options',

@@ -26,6 +26,9 @@ class instance extends instance_skel {
 		this.aux2_in_src;
 		this.aux3_in_src;
 		this.aux4_in_src;
+		this.me_dur;
+		this.dsk_dur;
+		this.ftb_dur;
 
 		Object.assign(this, {
 			...actions
@@ -1031,6 +1034,7 @@ class instance extends instance_skel {
 		let options = action.options;
 		let userid = new Buffer(4);
 		let pktsize = new Buffer(4);
+		let frames = new Buffer(4);
 		let cmdsize;
 
 		const lf = '\u000a';
@@ -1176,6 +1180,11 @@ class instance extends instance_skel {
 					cmd = element.cmd;
 				}
 				break;
+			case 'trans_durations':
+				frames.writeUInt32LE(options.frames, 0);
+
+				cmd = new Buffer([0x01, 0x00, 0x00, 0x00, options.trans, 0x00, 0x07, 0x00, frames[0], frames[1], frames[2], frames[3]]);
+				break;
 			case 'logo':
 				element = this.model.logo.find(element => element.id === options.logo);
 				if (element !== undefined) {
@@ -1197,7 +1206,7 @@ class instance extends instance_skel {
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
 				cmd = Buffer.concat([pktsize, cmd], cmdsize);
-				//console.log("Send: ", cmd);
+			//	console.log("Send: ", cmd);
 				this.socket.send(cmd);
 			} else {
 				debug('Socket not connected :(');
@@ -1248,10 +1257,12 @@ class instance extends instance_skel {
 	destroy() {
 		if (this.socket !== undefined) {
 			this.socket.send(this.disconnect_packet);
+			this.socket.end();
 			this.socket.destroy();
 		}
 		if (this.socket_realtime !== undefined) {
 			this.socket_realtime.send(this.disconnect_packet);
+			this.socket_realtime.end();
 			this.socket_realtime.destroy();
 		}
 		debug('destroy', this.id);
@@ -1320,7 +1331,7 @@ class instance extends instance_skel {
 				this.socket_realtime.send(this.null_packet);
 
 				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-					//		console.log('Receive Realtime: ', buffer);
+				//	console.log('Receive Realtime: ', buffer);
 					let pos;
 					let element;
 
@@ -1463,6 +1474,24 @@ class instance extends instance_skel {
 							this.aux4_in_src = buffer[pos + 4];
 							this.checkFeedbacks('aux4_in');
 						}
+					}
+
+					//GET ME/DSK/FTB FRAME CA
+					//GET ME/DSK/FTB FRAME CHANGEGS
+					pos = buffer.indexOf('03000700', 0, "hex")
+					if (pos > -1) {
+						this.me_dur = buffer.readInt32LE(pos + 4);
+						this.setVariable('me_dur', this.me_dur);
+					}
+					pos = buffer.indexOf('08000700', 0, "hex")
+					if (pos > -1) {
+						this.dsk_dur = buffer.readInt32LE(pos + 4);
+						this.setVariable('dsk_dur', this.dsk_dur);
+					}
+					pos = buffer.indexOf('0d000700', 0, "hex")
+					if (pos > -1) {
+						this.ftb_dur = buffer.readInt32LE(pos + 4);
+						this.setVariable('ftb_dur', this.ftb_dur);
 					}
 				}
 			});
@@ -2003,6 +2032,18 @@ class instance extends instance_skel {
 			{
 				label: 'Current PVW bus input name',
 				name: 'pvw_in'
+			},
+			{
+				label: 'Current ME Duration in Frames',
+				name: 'me_dur'
+			},
+			{
+				label: 'Current DSK Duration in Frames',
+				name: 'dsk_dur'
+			},
+			{
+				label: 'Current FTB Duration in Frames',
+				name: 'ftb_dur'
 			},
 		];
 

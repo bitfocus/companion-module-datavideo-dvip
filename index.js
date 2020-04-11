@@ -35,6 +35,7 @@ class instance extends instance_skel {
 		this.key2_pvw_state;
 		this.dsk1_pgm_state;
 		this.dsk1_pvw_state;
+		this.trans_current;
 
 		Object.assign(this, {
 			...actions
@@ -1532,6 +1533,21 @@ class instance extends instance_skel {
 						}
 					}
 
+					//GET CURRENT TRANISTION
+					if (this.config.modelID == 'se3200') {
+						pos = buffer.indexOf('96000200', 0, "hex")
+						if (pos > -1) {
+							this.trans_current = buffer[pos + 4];
+							this.checkFeedbacks('trans_current');
+						}
+					} else {
+						pos = buffer.indexOf('58000200', 0, "hex")
+						if (pos > -1) {
+							this.trans_current = buffer[pos + 4];
+							this.checkFeedbacks('trans_current');
+						}
+					}
+
 					//GET ME/DSK/FTB FRAME CA
 					//GET ME/DSK/FTB FRAME CHANGEGS
 					pos = buffer.indexOf('03000700', 0, "hex")
@@ -2058,6 +2074,42 @@ class instance extends instance_skel {
 					}
 				}
 			}
+			feedbacks['trans_current'] = {
+				label: 'Color for current transition',
+				description: 'Set Button colors for current transition selection.',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(51, 102, 0),
+				},
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'trans',
+					default: '0',
+					choices: [
+						{ id: '0', label: 'Mix' },
+						{ id: '1', label: 'Wipe' },
+						{ id: '2', label: 'Clip' },
+						{ id: '3', label: 'DVE Trans' },
+					]
+				}],
+				callback: (feedback, bank) => {
+					if (this.trans_current == feedback.options.trans) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			}
 		}
 
 
@@ -2123,6 +2175,159 @@ class instance extends instance_skel {
 						}
 					}
 				],
+				
+			},
+			{
+				category: 'transition',
+				label: 'Transition',
+				bank: {
+					style: 'text',
+					text: 'Mix',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'trans',
+						options: {
+							trans: '4'
+						}
+					}
+				],
+				feedbacks: [
+					{
+						type: 'trans_current',
+						options: {
+							trans: '0'
+						}
+					}
+				],
+			},
+			{
+				category: 'transition',
+				label: 'Transition',
+				bank: {
+					style: 'text',
+					text: 'Wipe',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'trans',
+						options: {
+							trans: '5'
+						}
+					}
+				],
+				feedbacks: [
+					{
+						type: 'trans_current',
+						options: {
+							trans: '1'
+						}
+					}
+				],
+			},
+			{
+				category: 'transition',
+				label: 'Transition',
+				bank: {
+					style: 'text',
+					text: 'Clip',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'trans',
+						options: {
+							trans: '6'
+						}
+					}
+				],
+				feedbacks: [
+					{
+						type: 'trans_current',
+						options: {
+							trans: '2'
+						}
+					}
+				],
+			},
+			{
+				category: 'transition',
+				label: 'Transition',
+				bank: {
+					style: 'text',
+					text: 'DVE',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'trans',
+						options: {
+							trans: '15'
+						}
+					}
+				],
+				feedbacks: [
+					{
+						type: 'trans_current',
+						options: {
+							trans: '3'
+						}
+					}
+				],
+			},
+			{
+				category: 'transition',
+				label: 'Transition',
+				bank: {
+					style: 'text',
+					text: 'Auto',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'trans',
+						options: {
+							trans: '0'
+						}
+					}
+				]
+			},
+			{
+				category: 'transition',
+				label: 'Transition',
+				bank: {
+					style: 'text',
+					text: 'Cut',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'trans',
+						options: {
+							trans: '1'
+						}
+					}
+				]
 			}
 
 		];

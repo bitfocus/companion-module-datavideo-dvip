@@ -21,6 +21,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Switch PGM and PVW bus input
 * Switch Key, DSK and Aux bus input
 * Transition Controls
+* Set ME, DSK and FTB frame durations
 * Fade to Black
 * Keyer Controls
 * Audio Controls
@@ -42,3 +43,10 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Transition Mix, Wipe Clip and DVE with feedback
 * Transition Auto and DSK Auto with feedback
 * Transition Cut and DSK Cut
+
+**Available variables**
+* Current PGM and PVW input names
+* Current Key, DSK and Aux bus input names
+* Current ME, DSK, FTB duration frames
+* KEY and DSK button states (Just for testing for now)
+

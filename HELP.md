@@ -22,8 +22,8 @@ SE-3200.
 
 
 **Available feedback**
-* Current PGM and PVW Bus input feedback
-* Current Key, DSK and Aux Bus input feedback
+* Current PGM and PVW Bus selected input feedback
+* Current Key, DSK and Aux Bus selected input feedback
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
 

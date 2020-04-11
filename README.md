@@ -17,7 +17,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 **Available commands**
 
 * Switch PGM and PVW bus input
-* Switch Key, DSK, Aux bus input
+* Switch Key, DSK and Aux bus input
 * Transition Controls
 * Fade to Black
 * Keyer Controls
@@ -28,8 +28,8 @@ Please add an issue for other Datavision vision mixers you would like to see add
 
 
 **Available feedback**
-* Current PGM and PVW Bus input feedback
-* Current Key, DSK, Aux Bus input feedback
+* Current PGM and PVW Bus selected input feedback
+* Current Key, DSK and Aux Bus selected input feedback
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
 

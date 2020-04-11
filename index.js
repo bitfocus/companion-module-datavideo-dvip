@@ -36,6 +36,7 @@ class instance extends instance_skel {
 		this.dsk1_pgm_state;
 		this.dsk1_pvw_state;
 		this.trans_current;
+		this.tbar_state;
 
 		Object.assign(this, {
 			...actions
@@ -1621,6 +1622,14 @@ class instance extends instance_skel {
 						this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
 					}
 					////BUTTON STATES/////
+
+					//TBAR STATE
+					pos = buffer.indexOf('01000200', 0, "hex")
+					if (pos > -1) {
+						this.tbar_state = buffer.readInt32LE(pos + 4);
+						//console.log("tbar:", this.tbar_state);
+						this.checkFeedbacks('tbar_state');
+					}
 				}
 			});
 
@@ -2114,6 +2123,31 @@ class instance extends instance_skel {
 					}
 				}
 			}
+
+			feedbacks['tbar_state'] = {
+				label: 'Color for T Bar transition',
+				description: 'Set Button colors for when transition is running.',
+				options: [{
+					type: 'colorpicker',
+					label: 'Foreground color',
+					id: 'fg',
+					default: '16777215'
+				},
+				{
+					type: 'colorpicker',
+					label: 'Background color',
+					id: 'bg',
+					default: this.rgb(255, 56, 0),
+				}],
+				callback: (feedback, bank) => {
+					if (this.tbar_state > 0) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			}
 		}
 
 
@@ -2126,7 +2160,7 @@ class instance extends instance_skel {
 
 			{
 				category: 'pgm-bus',
-				label: 'PGM Bus',
+				label: 'In 1 PGM',
 				bank: {
 					style: 'text',
 					text: 'In 1',
@@ -2154,7 +2188,7 @@ class instance extends instance_skel {
 			},
 			{
 				category: 'pvw-bus',
-				label: 'PVW Bus',
+				label: 'In 1 PVW',
 				bank: {
 					style: 'text',
 					text: 'In 1',
@@ -2183,7 +2217,7 @@ class instance extends instance_skel {
 			},
 			{
 				category: 'transition',
-				label: 'Transition',
+				label: 'Mix',
 				bank: {
 					style: 'text',
 					text: 'Mix',
@@ -2211,7 +2245,7 @@ class instance extends instance_skel {
 			},
 			{
 				category: 'transition',
-				label: 'Transition',
+				label: 'Wipe',
 				bank: {
 					style: 'text',
 					text: 'Wipe',
@@ -2239,7 +2273,7 @@ class instance extends instance_skel {
 			},
 			{
 				category: 'transition',
-				label: 'Transition',
+				label: 'Clip',
 				bank: {
 					style: 'text',
 					text: 'Clip',
@@ -2267,7 +2301,7 @@ class instance extends instance_skel {
 			},
 			{
 				category: 'transition',
-				label: 'Transition',
+				label: 'DVE',
 				bank: {
 					style: 'text',
 					text: 'DVE',
@@ -2295,7 +2329,7 @@ class instance extends instance_skel {
 			},
 			{
 				category: 'transition',
-				label: 'Transition',
+				label: 'Auto',
 				bank: {
 					style: 'text',
 					text: 'Auto',
@@ -2311,11 +2345,16 @@ class instance extends instance_skel {
 							trans: '0'
 						}
 					}
-				]
+				],
+				feedbacks: [
+					{
+						type: 'tbar_state'
+					}
+				],
 			},
 			{
 				category: 'transition',
-				label: 'Transition',
+				label: 'Cut',
 				bank: {
 					style: 'text',
 					text: 'Cut',
@@ -2335,7 +2374,7 @@ class instance extends instance_skel {
 			},
 			{
 				category: 'transition',
-				label: 'Transition',
+				label: 'DSK Auto',
 				bank: {
 					style: 'text',
 					text: 'DSK Auto',
@@ -2355,7 +2394,7 @@ class instance extends instance_skel {
 			},
 			{
 				category: 'transition',
-				label: 'Transition',
+				label: 'DSK Cut',
 				bank: {
 					style: 'text',
 					text: 'DSK Cut',

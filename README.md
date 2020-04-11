@@ -3,6 +3,7 @@
 Work in progress module to control Datavideo vision mixers, with feedback.
 
 This module attempts to implement the realtime DVIP protocol to listen to changes while using the command protocol to send control commands to the vision mixer.
+More documentation on the DVIP specification is here: https://github.com/BB21B/datavideo-dvip-docs
 
 Currently supports:
 SE-650
@@ -11,6 +12,7 @@ SE-1200MU
 SE-3200
 
 Please add an issue for other Datavision vision mixers you would like to see added or any feedback you have.
+
 
 **Available commands**
 

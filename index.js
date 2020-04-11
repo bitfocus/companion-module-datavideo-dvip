@@ -2328,6 +2328,46 @@ class instance extends instance_skel {
 						}
 					}
 				]
+			},
+			{
+				category: 'transition',
+				label: 'Transition',
+				bank: {
+					style: 'text',
+					text: 'DSK Auto',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'trans',
+						options: {
+							trans: '2'
+						}
+					}
+				]
+			},
+			{
+				category: 'transition',
+				label: 'Transition',
+				bank: {
+					style: 'text',
+					text: 'DSK Cut',
+					size: '18',
+					color: this.rgb(255, 255, 255),
+					bgcolor: this.rgb(0, 0, 0),
+
+				},
+				actions: [
+					{
+						action: 'trans',
+						options: {
+							trans: '3'
+						}
+					}
+				]
 			}
 
 		];

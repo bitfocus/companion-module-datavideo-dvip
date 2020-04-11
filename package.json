@@ -16,7 +16,7 @@
 		"type": "git",
 		"url": "git+https://github.com/bitfocus/companion-module-datavideo-dvip.git"
 	},
-	"author": "",
+	"author": "Rose O",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/bitfocus/companion-module-datavideo-dvip/issues"

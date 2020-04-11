@@ -1336,13 +1336,16 @@ class instance extends instance_skel {
             });
 
             this.socket_realtime.on('data', (buffer) => {
+				//Send the null packet when we recieve a packet
                 this.socket_realtime.send(this.null_packet);
-
+				
+				//If it's not a null packet check what is inside
                 if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
                     //console.log('Receive Realtime: ', buffer);
                     let pos;
-                    let element;
-
+					let element;
+					
+					//All the feedback handling is below
                     //3200 PGM and PREVIEW BUS
                     if (this.config.modelID == 'se3200') {
                         pos = buffer.indexOf('94000200', 0, "hex")
@@ -1540,7 +1543,8 @@ class instance extends instance_skel {
                         }
                     }
 
-                    //GET CURRENT TRANS
+					//GET CURRENT TRANS
+					//FOR SE3200
                     if (this.config.modelID == 'se3200') {
                         pos = buffer.indexOf('96000200', 0, "hex")
                         if (pos > -1) {
@@ -1548,6 +1552,7 @@ class instance extends instance_skel {
                             this.checkFeedbacks('trans_current');
                         }
                     } else {
+						//FOR OTHERS
                         pos = buffer.indexOf('58000200', 0, "hex")
                         if (pos > -1) {
                             this.trans_current = buffer[pos + 4];
@@ -1555,17 +1560,20 @@ class instance extends instance_skel {
                         }
                     }
 
-                    //GET ME/DSK/FTB FRAME DURATION
+					//GET ME/DSK/FTB FRAME DURATION
+					//ME
                     pos = buffer.indexOf('03000700', 0, "hex")
                     if (pos > -1) {
                         this.me_dur = buffer.readInt32LE(pos + 4);
                         this.setVariable('me_dur', this.me_dur);
-                    }
+					}
+					//DSK
                     pos = buffer.indexOf('08000700', 0, "hex")
                     if (pos > -1) {
                         this.dsk_dur = buffer.readInt32LE(pos + 4);
                         this.setVariable('dsk_dur', this.dsk_dur);
-                    }
+					}
+					//FTB
                     pos = buffer.indexOf('0d000700', 0, "hex")
                     if (pos > -1) {
                         this.ftb_dur = buffer.readInt32LE(pos + 4);
@@ -1573,52 +1581,52 @@ class instance extends instance_skel {
                     }
 
                     ////BUTTON STATES/////
-                    //Key 1 State
+                    //Key 1 State PGM
                     pos = buffer.indexOf('13000200', 0, "hex")
                     if (pos > -1) {
                         this.key1_pgm_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('key1_pgm_state', this.key1_pgm_state);
                     }
-
+					//Key 1 State PVW
                     pos = buffer.indexOf('50000200', 0, "hex")
                     if (pos > -1) {
                         this.key1_pvw_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('key1_pvw_state', this.key1_pvw_state);
                     }
 
-                    //Key 2 State
+                    //Key 2 State PGM
                     pos = buffer.indexOf('31000200', 0, "hex")
                     if (pos > -1) {
                         this.key2_pgm_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('key2_pgm_state', this.key2_pgm_state);
                     }
-
+					//Key 2 State PVW
                     pos = buffer.indexOf('51000200', 0, "hex")
                     if (pos > -1) {
                         this.key2_pvw_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('key2_pvw_state', this.key2_pvw_state);
                     }
 
-                    //DSK 1 State
+                    //DSK 1 State PGM
                     pos = buffer.indexOf('5b000200', 0, "hex")
                     if (pos > -1) {
                         this.dsk1_pgm_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
                     }
-
+					//DSK 1 State PVW
                     pos = buffer.indexOf('7f000200', 0, "hex")
                     if (pos > -1) {
                         this.dsk1_pvw_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
                     }
 
-                    //DSK 2 State
+                    //DSK 2 State PGM
                     pos = buffer.indexOf('6d000200', 0, "hex")
                     if (pos > -1) {
                         this.dsk2_pgm_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
                     }
-
+					//DSK 2 State PVW
                     pos = buffer.indexOf('80000200', 0, "hex")
                     if (pos > -1) {
                         this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
@@ -1649,7 +1657,7 @@ class instance extends instance_skel {
                 //if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
                 //console.log('Receive CMD: ', buffer);
                 //}
-                //Reply with the null packet for the realtime protocol
+                //Reply with the null packet
                 if (buffer.equals(this.null_packet_cmd)) {
                     this.socket.send(this.null_packet_cmd);
                 } else {
@@ -2438,7 +2446,8 @@ class instance extends instance_skel {
         ];
 
         this.setPresetDefinitions(presets);
-    }
+	}
+	
     init_variables() {
         var self = this;
 

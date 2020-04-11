@@ -462,7 +462,7 @@ class instance extends instance_skel {
 		];
 		//3200 Keyer
 		this.CHOICES_KEYER_3200 = [
-			
+
 			{ id: '0', label: 'DSK 1 PGM ON', cmd: new Buffer([0x01, 0x00, 0x00, 0x00, 0x99, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
 			{ id: '1', label: 'DSK 1 PGM OFF', cmd: new Buffer([0x01, 0x00, 0x00, 0x00, 0x99, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
 			{ id: '2', label: 'DSK 1 PVW ON', cmd: new Buffer([0x01, 0x00, 0x00, 0x00, 0xbd, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
@@ -1181,8 +1181,8 @@ class instance extends instance_skel {
 				//Add 4 bytes to include pack size value
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
-				cmd =  Buffer.concat([pktsize, cmd], cmdsize);
-			//	console.log("Send: ",  cmd);
+				cmd = Buffer.concat([pktsize, cmd], cmdsize);
+				console.log("Send: ", cmd);
 				this.socket.send(cmd);
 			} else {
 				debug('Socket not connected :(');
@@ -1274,7 +1274,7 @@ class instance extends instance_skel {
 				debug('Connected');
 				this.socket.send(this.null_packet);
 			});
-		 	this.socket_realtime.on('status_change', (status, message) => {
+			this.socket_realtime.on('status_change', (status, message) => {
 				this.status(status, message);
 			});
 
@@ -1285,29 +1285,30 @@ class instance extends instance_skel {
 
 			this.socket_realtime.on('connect', () => {
 				debug('Connected');
-				this.socket.send(this.null_packet);
+				this.socket_realtime.send(this.null_packet);
 			});
 
 			this.socket_realtime.on('data', (buffer) => {
-				this.socket.send(this.null_packet);
-			//	if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-			//	console.log('Receive Realtime: ', buffer);
-			//	}
+				this.socket_realtime.send(this.null_packet);
+
+				if (!buffer.equals(this.null_packet)) {
+					console.log('Receive Realtime: ', buffer);
+				}
 			});
 
 			// if we get any data, display it to stdout
 			this.socket.on('data', (buffer) => {
-			//	if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-			//		console.log('Receive CMD: ', buffer);
-			//	}
+				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
+					console.log('Receive CMD: ', buffer);
+				}
 				//Reply with the null packet for the realtime protocol
-				if(buffer.equals(this.null_packet)){
+				if (buffer.equals(this.null_packet_cmd)) {
+					this.socket.send(this.null_packet_cmd);
+				} else {
 					this.socket.send(this.null_packet);
 				}
-				if(buffer.equals(this.null_packet_cmd)){
-					this.socket.send(this.null_packet_cmd);
-				}
-			
+
+
 				// let pos = buffer.indexOf('56000200', 0, "hex")
 				// if (pos > -1) {
 				// 	console.log('PGM to', buffer[pos + 4]);
@@ -1336,7 +1337,7 @@ class instance extends instance_skel {
 				// if (pos > -1) {
 				// 	console.log('DSK 2 to', buffer[pos + 4]);
 				// }
-				 //Filter the null packet from the console log				
+				//Filter the null packet from the console log				
 
 			});
 

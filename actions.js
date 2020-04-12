@@ -375,9 +375,9 @@ exports.getActions = function () {
 				]
 			},
 			{
-				type: 'textinput',
+				type: 'number',
 				label: 'Frames',
-				id: 'frames',
+                id: 'frames',
 				default: '10'
 			}
 		]

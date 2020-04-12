@@ -43,7 +43,7 @@ class instance extends instance_skel {
         this.tbar_state;
         this.dsk_tbar_state;
         this.audio_src;
-        
+
         Object.assign(this, {
             ...actions,
             ...feedbacks,
@@ -356,7 +356,7 @@ class instance extends instance_skel {
             id: 'info',
             width: 12,
             label: 'Information',
-            value: 'This module will control a Datavideo vision mixer. Port 5001 can be used if a physical control panel is not connected.'
+            value: 'This module will control a Datavideo vision mixer.'
         },
         {
             type: 'textinput',
@@ -398,6 +398,14 @@ class instance extends instance_skel {
         this.initTCP();
         this.init_presets();
         this.actions();
+    }
+
+    processSourceAssignment(fbID, varID, state, choices) {
+        this.checkFeedbacks(fbID);
+        let element = choices.find(element => element.id === state.toString());
+        if (element !== undefined) {
+            this.setVariable(varID, element.label);
+        }
     }
 
     initTCP() {
@@ -498,23 +506,14 @@ class instance extends instance_skel {
                         if (this.config.modelID == 'se3200') {
                             pos = buffer.indexOf('94000200', 0, "hex")
                             if (pos > -1) {
-                                //console.log('PGM to', buffer[pos + 4]);
                                 this.pgm_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('pgm_in');
-                                element = this.model.pgm.find(element => element.id === this.pgm_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('pgm_in', element.label);
-                                }
+                                this.processSourceAssignment('pgm_in', 'pgm_in', this.pgm_in_src, this.model.pgm);
                             }
                             pos = buffer.indexOf('95000200', 0, "hex")
                             if (pos > -1) {
                                 //console.log('PVW to', buffer[pos + 4]);
                                 this.pvw_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('pvw_in');
-                                element = this.model.pvw.find(element => element.id === this.pvw_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('pvw_in', element.label);
-                                }
+                                this.processSourceAssignment('pvw_in', 'pvw_in', this.pvw_in_src, this.model.pvw);
                             }
                         } else {
                             //1200,700,650 PGM AND PREVIEW INPUT
@@ -522,34 +521,24 @@ class instance extends instance_skel {
                             if (pos > -1) {
                                 //console.log('PGM to', buffer[pos + 4]);
                                 this.pgm_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('pgm_in');
-                                element = this.model.pgm.find(element => element.id === this.pgm_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('pgm_in', element.label);
-                                }
+                                this.processSourceAssignment('pgm_in', 'pgm_in', this.pgm_in_src, this.model.pgm);
 
                             }
                             pos = buffer.indexOf('57000200', 0, "hex")
                             if (pos > -1) {
                                 //console.log('PVW to', buffer[pos + 4]);
                                 this.pvw_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('pvw_in');
-                                element = this.model.pvw.find(element => element.id === this.pvw_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('pvw_in', element.label);
-                                }
+                                this.processSourceAssignment('pvw_in', 'pvw_in', this.pvw_in_src, this.model.pvw);
                             }
                         }
+
                         //ALL MODEL KEY 1
                         pos = buffer.indexOf('14000200', 0, "hex")
                         if (pos > -1) {
                             //console.log('KEY 1 to', buffer[pos + 4]);
                             this.key1_in_src = buffer[pos + 4];
-                            this.checkFeedbacks('key1_in');
-                            element = this.model.key1.find(element => element.id === this.key1_in_src.toString());
-                            if (element !== undefined) {
-                                this.setVariable('key1_in', element.label);
-                            }
+                            this.processSourceAssignment('key1_in', 'key1_in', this.key1_in_src, this.model.key1);
+
                         }
                         //ALL MODEL KEY 2/PIP
                         pos = buffer.indexOf('32000200', 0, "hex")
@@ -559,19 +548,11 @@ class instance extends instance_skel {
                             //console.log('KEY 2 to', buffer[pos + 4]);
                             if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
                                 this.key2_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('key2_in');
-                                element = this.model.key2.find(element => element.id === this.key2_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('key2_in', element.label);
-                                }
+                                this.processSourceAssignment('key2_in', 'key2_in', this.key2_in_src, this.model.key2);
                             } else {
                                 //console.log('PIP to', buffer[pos + 4]);
                                 this.pip_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('pip_in');
-                                element = this.model.pip.find(element => element.id === this.pip_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('pip_in', element.label);
-                                }
+                                this.processSourceAssignment('pip_in', 'pip_in', this.pip_in_src, this.model.pip);
                             }
                         }
                         //DSK 1 FOR SE1200, SE700 ETC
@@ -580,22 +561,15 @@ class instance extends instance_skel {
                             if (pos > -1) {
                                 //console.log('DSK 1 to', buffer[pos + 4]);
                                 this.dsk1_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('dsk1_in');
-                                element = this.model.dsk1.find(element => element.id === this.dsk1_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('dsk1_in', element.label);
-                                }
+                                this.processSourceAssignment('dsk1_in', 'dsk1_in', this.dsk1_in_src, this.model.dsk1);
                             }
                             //DSK 2 FOR SE1200, SE700 ETC
                             pos = buffer.indexOf('6e000200', 0, "hex")
                             if (pos > -1) {
                                 //console.log('DSK 2 to', buffer[pos + 4]);
                                 this.dsk2_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('dsk2_in');
-                                element = this.model.dsk2.find(element => element.id === this.dsk2_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('dsk2_in', element.label);
-                                }
+                                this.processSourceAssignment('dsk2_in', 'dsk2_in', this.dsk2_in_src, this.model.dsk2);
+
                             }
                         } else {
                             //3200 DSK1
@@ -603,11 +577,7 @@ class instance extends instance_skel {
                             if (pos > -1) {
                                 //console.log('DSK 1 to', buffer[pos + 4]);
                                 this.dsk1_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('dsk1_in');
-                                element = this.model.dsk1.find(element => element.id === this.dsk1_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('dsk1_in', element.label);
-                                }
+                                this.processSourceAssignment('dsk1_in', 'dsk1_in', this.dsk1_in_src, this.model.dsk1);
                             }
 
 
@@ -616,11 +586,7 @@ class instance extends instance_skel {
                             if (pos > -1) {
                                 //console.log('DSK 2 to', buffer[pos + 4]);
                                 this.dsk2_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('dsk2_in');
-                                element = this.model.dsk2.find(element => element.id === this.dsk2_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('dsk2_in', element.label);
-                                }
+                                this.processSourceAssignment('dsk2_in', 'dsk2_in', this.dsk2_in_src, this.model.dsk2);
                             }
 
                             //3200 KEY 3
@@ -628,69 +594,46 @@ class instance extends instance_skel {
                             if (pos > -1) {
                                 //console.log('KEY 3 to', buffer[pos + 4]);
                                 this.key3_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('key3_in');
-                                element = this.model.key3.find(element => element.id === this.key3_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('key3_in', element.label);
-                                }
+                                this.processSourceAssignment('key3_in', 'key3_in', this.key3_in_src, this.model.key3);
                             }
                             //3200 KEY 4
                             pos = buffer.indexOf('6e000200', 0, "hex")
                             if (pos > -1) {
                                 //console.log('KEY 4 to', buffer[pos + 4]);
                                 this.key4_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('key4_in');
-                                element = this.model.key4.find(element => element.id === this.key4_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('key4_in', element.label);
-                                }
+                                this.processSourceAssignment('key4_in', 'key4_in', this.key4_in_src, this.model.key4);
                             }
                             //3200 Aux1
                             pos = buffer.indexOf('00000500', 0, "hex")
                             if (pos > -1) {
                                 //console.log('AUX 1 to', buffer[pos + 4]);
                                 this.aux1_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('aux1_in');
-                                element = this.model.aux1.find(element => element.id === this.aux1_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('aux1_in', element.label);
-                                }
+                                this.processSourceAssignment('aux1_in', 'aux1_in', this.aux1_in_src, this.model.aux1);
                             }
                             //3200 Aux2
                             pos = buffer.indexOf('01000500', 0, "hex")
                             if (pos > -1) {
                                 //console.log('AUX 2 to', buffer[pos + 4]);
                                 this.aux2_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('aux2_in');
-                                element = this.model.aux2.find(element => element.id === this.aux2_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('aux2_in', element.label);
-                                }
+                                this.processSourceAssignment('aux2_in', 'aux2_in', this.aux2_in_src, this.model.aux2);
                             }
                             //3200 Aux3
                             pos = buffer.indexOf('02000500', 0, "hex")
                             if (pos > -1) {
                                 //console.log('AUX 3 to', buffer[pos + 4]);
                                 this.aux3_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('aux3_in');
-                                element = this.model.aux3.find(element => element.id === this.aux3_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('aux3_in', element.label);
-                                }
+                                this.processSourceAssignment('aux3_in', 'aux3_in', this.aux3_in_src, this.model.aux3);
+
                             }
                             //3200 Aux4
                             pos = buffer.indexOf('03000500', 0, "hex")
                             if (pos > -1) {
                                 //console.log('AUX 4 to', buffer[pos + 4]);
                                 this.aux4_in_src = buffer[pos + 4];
-                                this.checkFeedbacks('aux4_in');
-                                element = this.model.aux4.find(element => element.id === this.aux4_in_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('aux4_in', element.label);
-                                }
+                                this.processSourceAssignment('aux4_in', 'aux4_in', this.aux4_in_src, this.model.aux4);
+
                             }
                         }
-
                         //GET CURRENT TRANS
                         //FOR SE3200
                         if (this.config.modelID == 'se3200') {
@@ -803,14 +746,10 @@ class instance extends instance_skel {
                             pos = buffer.indexOf('0000000000000600', 0, "hex")
                             if (pos > -1) {
                                 this.audio_src = buffer.readInt16LE(pos + 8);
-                                //console.log("audio src:", this.audio_src);
-                                element = this.model.audio_src.find(element => element.id === this.audio_src.toString());
-                                if (element !== undefined) {
-                                    this.setVariable('audio_src', element.label);
-                                }
-                                this.checkFeedbacks('audio_src');
+                                this.processSourceAssignment('audio_src', 'audio_src', this.audio_src, this.model.audio_src);
                             }
                         }
+
                     }
                 });
 

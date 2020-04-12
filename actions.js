@@ -320,6 +320,20 @@ exports.getActions = function () {
 			]
 		};
 	}
+	if (this.config.modelID != 'se650' && this.config.modelID != 'se700') {
+		actions['audio_src'] = {
+			label: 'Select Audio Source',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select',
+					id: 'audio_src',
+					default: '0',
+					choices: this.model.audio_src
+				}
+			]
+		};
+	}
 	actions['loaduser'] = {
 		label: 'Load User',
 		options: [

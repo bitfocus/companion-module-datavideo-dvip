@@ -19,6 +19,7 @@ SE-3200.
 * Fade to Black
 * Keyer Controls
 * Audio Controls
+* Audio Sources
 * Output Controls
 * User Load/User Save
 * Streamer Controls
@@ -29,6 +30,7 @@ SE-3200.
 * Current Key, DSK and Aux Bus selected input feedback
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
+* Current audio source
 
 
 **Available presets**
@@ -37,9 +39,11 @@ SE-3200.
 * Transition Mix, Wipe Clip and DVE with feedback
 * Transition Auto and DSK Auto with feedback
 * Transition Cut and DSK Cut
+* Audio source set with feedback
 
 **Available variables**
 * Current PGM and PVW input names
 * Current Key, DSK and Aux bus input names
+* Current audio source
 * Current ME, DSK and FTB duration frames
 * KEY and DSK button states (Just for testing for now)

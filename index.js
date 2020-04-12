@@ -38,6 +38,7 @@ class instance extends instance_skel {
         this.trans_current;
         this.tbar_state;
         this.dsk_tbar_state;
+        this.audio_src;
 
         Object.assign(this, {
             ...actions
@@ -539,20 +540,7 @@ class instance extends instance_skel {
 
         // 3200 Audio
         this.CHOICES_AUDIO_3200 = [
-            { id: '0', label: 'External', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
-            { id: '1', label: 'Follow', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x01, 0x00, 0x00, 0x00]) },
-            { id: '2', label: 'In 1', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x02, 0x00, 0x00, 0x00]) },
-            { id: '3', label: 'In 2', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x03, 0x00, 0x00, 0x00]) },
-            { id: '4', label: 'In 3', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x04, 0x00, 0x00, 0x00]) },
-            { id: '5', label: 'In 4', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x00, 0x00, 0x00]) },
-            { id: '6', label: 'In 5', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x06, 0x00, 0x00, 0x00]) },
-            { id: '7', label: 'In 6', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x02, 0x00, 0x00, 0x00]) },
-            { id: '30', label: 'In 7', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x02, 0x00, 0x00, 0x00]) },
-            { id: '31', label: 'In 8', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x00, 0x02, 0x00, 0x00, 0x00]) },
-            { id: '32', label: 'In 9', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x02, 0x00, 0x00, 0x00]) },
-            { id: '33', label: 'In 10', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b, 0x00, 0x02, 0x00, 0x00, 0x00]) },
-            { id: '34', label: 'In 11', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0c, 0x00, 0x02, 0x00, 0x00, 0x00]) },
-            { id: '35', label: 'In 12', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0d, 0x00, 0x02, 0x00, 0x00, 0x00]) },
+
             { id: '8', label: 'External Audio ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x06, 0x00, 0x02, 0x00, 0x00, 0x00]) },
             { id: '9', label: 'External Audio OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x06, 0x00, 0x01, 0x00, 0x00, 0x00]) },
             { id: '36', label: 'External Audio Test', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x06, 0x00, 0x02, 0x00, 0x00, 0x00]) },
@@ -562,6 +550,24 @@ class instance extends instance_skel {
             { id: '15', label: 'HDMI 1 Audio OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x12, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
             { id: '37', label: 'V Fade', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x07, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
             { id: '38', label: 'X Fade', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x07, 0x00, 0x06, 0x00, 0x01, 0x00, 0x00, 0x00]) },
+        ];
+
+        // 3200 Audio Sources
+        this.CHOICES_AUDIO_SRC_3200 = [
+            { id: '0', label: 'External', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
+            { id: '1', label: 'Follow', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x01, 0x00, 0x00, 0x00]) },
+            { id: '2', label: 'In 1', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x02, 0x00, 0x00, 0x00]) },
+            { id: '3', label: 'In 2', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x03, 0x00, 0x00, 0x00]) },
+            { id: '4', label: 'In 3', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x04, 0x00, 0x00, 0x00]) },
+            { id: '5', label: 'In 4', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x00, 0x00, 0x00]) },
+            { id: '6', label: 'In 5', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x06, 0x00, 0x00, 0x00]) },
+            { id: '7', label: 'In 6', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x07, 0x00, 0x00, 0x00]) },
+            { id: '8', label: 'In 7', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x08, 0x00, 0x00, 0x00]) },
+            { id: '9', label: 'In 8', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x09, 0x00, 0x00, 0x00]) },
+            { id: '10', label: 'In 9', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x0a, 0x00, 0x00, 0x00]) },
+            { id: '12', label: 'In 10', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x0b, 0x00, 0x00, 0x00]) },
+            { id: '13', label: 'In 11', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x0c, 0x00, 0x00, 0x00]) },
+            { id: '14', label: 'In 12', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x0d, 0x00, 0x00, 0x00]) },
         ];
 
 
@@ -736,7 +742,7 @@ class instance extends instance_skel {
             { id: '10', label: 'KEY 1 PVW ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x50, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
             { id: '11', label: 'KEY 1 PVW OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x50, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
 
-            { id: '12', label: 'KEY 2 PGM ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x31, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, ]) },
+            { id: '12', label: 'KEY 2 PGM ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x31, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00,]) },
             { id: '13', label: 'KEY 2 PGM OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x31, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
             { id: '14', label: 'KEY 2 PVW ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x51, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
             { id: '15', label: 'KEY 2 PVW OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x51, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
@@ -753,14 +759,6 @@ class instance extends instance_skel {
         ];
         // 1200 Audio
         this.CHOICES_AUDIO_1200 = [
-            { id: '0', label: 'External', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
-            { id: '1', label: 'Follow', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x01, 0x00, 0x00, 0x00]) },
-            { id: '2', label: 'In 1', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x02, 0x00, 0x00, 0x00]) },
-            { id: '3', label: 'In 2', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x03, 0x00, 0x00, 0x00]) },
-            { id: '4', label: 'In 3', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x04, 0x00, 0x00, 0x00]) },
-            { id: '5', label: 'In 4', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x00, 0x00, 0x00]) },
-            { id: '6', label: 'In 5', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x06, 0x00, 0x00, 0x00]) },
-            { id: '7', label: 'In 6', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x02, 0x00, 0x00, 0x00]) },
             { id: '8', label: 'External Audio ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x06, 0x00, 0x02, 0x00, 0x00, 0x00]) },
             { id: '9', label: 'External Audio OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
             { id: '10', label: 'SDI 1 Audio ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x06, 0x00, 0x01, 0x00, 0x00, 0x00]) },
@@ -772,6 +770,19 @@ class instance extends instance_skel {
             { id: '16', label: 'Audio Level Auto', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x15, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]) },
             { id: '17', label: 'Audio Level SMPTE', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x15, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00]) },
             { id: '18', label: 'Audio Level EBU', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x15, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00, 0x00]) },
+        ];
+
+        // 1200 Audio SRC
+        this.CHOICES_AUDIO_SRC_1200 = [
+            { id: '0', label: 'External', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00]) },
+            { id: '1', label: 'Follow', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x01, 0x00, 0x00, 0x00]) },
+            { id: '2', label: 'In 1', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x02, 0x00, 0x00, 0x00]) },
+            { id: '3', label: 'In 2', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x03, 0x00, 0x00, 0x00]) },
+            { id: '4', label: 'In 3', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x04, 0x00, 0x00, 0x00]) },
+            { id: '5', label: 'In 4', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x05, 0x00, 0x00, 0x00]) },
+            { id: '6', label: 'In 5', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x06, 0x00, 0x00, 0x00]) },
+            { id: '7', label: 'In 6', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x07, 0x00, 0x00, 0x00]) },
+
         ];
         ////700////
 
@@ -897,7 +908,7 @@ class instance extends instance_skel {
             { id: '10', label: 'KEY 1 PVW ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x50, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
             { id: '11', label: 'KEY 1 PVW OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x50, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
 
-            { id: '12', label: 'P-in-P PGM ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x31, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, ]) },
+            { id: '12', label: 'P-in-P PGM ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x31, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00,]) },
             { id: '13', label: 'P-in-P PGM OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x31, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
             { id: '14', label: 'P-in-P PVW ON', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x51, 0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00]) },
             { id: '15', label: 'P-in-P PVW OFF', cmd: Buffer.from([0x01, 0x00, 0x00, 0x00, 0x51, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00]) },
@@ -955,6 +966,7 @@ class instance extends instance_skel {
                 keyer: this.CHOICES_KEYER_1200,
                 streamer: this.CHOICES_STREAMER_1200,
                 audio: this.CHOICES_AUDIO_1200,
+                audio_src: this.CHOICES_AUDIO_SRC_1200,
             },
             se3200: {
                 id: 'se3200',
@@ -981,7 +993,8 @@ class instance extends instance_skel {
                 keyer: this.CHOICES_KEYER_3200,
                 streamer: this.CHOICES_STREAMER_1200,
                 logo: this.CHOICES_LOGO_3200,
-                audio: this.CHOICES_AUDIO_3200
+                audio: this.CHOICES_AUDIO_3200,
+                audio_src: this.CHOICES_AUDIO_SRC_3200,
             },
             se700: {
                 id: 'se700',
@@ -1018,7 +1031,7 @@ class instance extends instance_skel {
 
         this.CHOICES_MODEL = Object.values(this.CONFIG_MODEL);
         // Sort alphabetical
-        this.CHOICES_MODEL.sort(function(a, b) {
+        this.CHOICES_MODEL.sort(function (a, b) {
             var x = a.label.toLowerCase();
             var y = b.label.toLowerCase();
             if (x < y) { return -1; }
@@ -1207,6 +1220,11 @@ class instance extends instance_skel {
                 if (element !== undefined) {
                     cmd = element.cmd;
                 }
+            case 'audio_src':
+                element = this.model.audio_src.find(element => element.id === options.audio_src);
+                if (element !== undefined) {
+                    cmd = element.cmd;
+                }
                 break;
         }
 
@@ -1230,36 +1248,36 @@ class instance extends instance_skel {
     config_fields() {
 
         return [{
-                type: 'text',
-                id: 'info',
-                width: 12,
-                label: 'Information',
-                value: 'This module will control a Datavideo vision mixer. Port 5001 can be used if a physical control panel is not connected.'
-            },
-            {
-                type: 'textinput',
-                id: 'host',
-                label: 'IP Address',
-                width: 6,
-                default: '192.168.1.101',
-                regex: this.REGEX_IP
-            },
-            {
-                type: 'dropdown',
-                id: 'port',
-                label: 'Port',
-                width: 4,
-                choices: this.CHOICES_PORT,
-                default: '5005',
-            },
-            {
-                type: 'dropdown',
-                id: 'modelID',
-                label: 'Model',
-                width: 6,
-                choices: this.CHOICES_MODEL,
-                default: 'se1200mu'
-            }
+            type: 'text',
+            id: 'info',
+            width: 12,
+            label: 'Information',
+            value: 'This module will control a Datavideo vision mixer. Port 5001 can be used if a physical control panel is not connected.'
+        },
+        {
+            type: 'textinput',
+            id: 'host',
+            label: 'IP Address',
+            width: 6,
+            default: '192.168.1.101',
+            regex: this.REGEX_IP
+        },
+        {
+            type: 'dropdown',
+            id: 'port',
+            label: 'Port',
+            width: 4,
+            choices: this.CHOICES_PORT,
+            default: '5005',
+        },
+        {
+            type: 'dropdown',
+            id: 'modelID',
+            label: 'Model',
+            width: 6,
+            choices: this.CHOICES_MODEL,
+            default: 'se1200mu'
+        }
         ]
     }
 
@@ -1336,16 +1354,16 @@ class instance extends instance_skel {
             });
 
             this.socket_realtime.on('data', (buffer) => {
-				//Send the null packet when we recieve a packet
+                //Send the null packet when we recieve a packet
                 this.socket_realtime.send(this.null_packet);
-				
-				//If it's not a null packet check what is inside
+
+                //If it's not a null packet check what is inside
                 if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-                    //console.log('Receive Realtime: ', buffer);
+                //    console.log('Receive Realtime: ', buffer);
                     let pos;
-					let element;
-					
-					//All the feedback handling is below
+                    let element;
+
+                    //All the feedback handling is below
                     //3200 PGM and PREVIEW BUS
                     if (this.config.modelID == 'se3200') {
                         pos = buffer.indexOf('94000200', 0, "hex")
@@ -1543,8 +1561,8 @@ class instance extends instance_skel {
                         }
                     }
 
-					//GET CURRENT TRANS
-					//FOR SE3200
+                    //GET CURRENT TRANS
+                    //FOR SE3200
                     if (this.config.modelID == 'se3200') {
                         pos = buffer.indexOf('96000200', 0, "hex")
                         if (pos > -1) {
@@ -1552,7 +1570,7 @@ class instance extends instance_skel {
                             this.checkFeedbacks('trans_current');
                         }
                     } else {
-						//FOR OTHERS
+                        //FOR OTHERS
                         pos = buffer.indexOf('58000200', 0, "hex")
                         if (pos > -1) {
                             this.trans_current = buffer[pos + 4];
@@ -1560,20 +1578,20 @@ class instance extends instance_skel {
                         }
                     }
 
-					//GET ME/DSK/FTB FRAME DURATION
-					//ME
+                    //GET ME/DSK/FTB FRAME DURATION
+                    //ME
                     pos = buffer.indexOf('03000700', 0, "hex")
                     if (pos > -1) {
                         this.me_dur = buffer.readInt32LE(pos + 4);
                         this.setVariable('me_dur', this.me_dur);
-					}
-					//DSK
+                    }
+                    //DSK
                     pos = buffer.indexOf('08000700', 0, "hex")
                     if (pos > -1) {
                         this.dsk_dur = buffer.readInt32LE(pos + 4);
                         this.setVariable('dsk_dur', this.dsk_dur);
-					}
-					//FTB
+                    }
+                    //FTB
                     pos = buffer.indexOf('0d000700', 0, "hex")
                     if (pos > -1) {
                         this.ftb_dur = buffer.readInt32LE(pos + 4);
@@ -1587,7 +1605,7 @@ class instance extends instance_skel {
                         this.key1_pgm_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('key1_pgm_state', this.key1_pgm_state);
                     }
-					//Key 1 State PVW
+                    //Key 1 State PVW
                     pos = buffer.indexOf('50000200', 0, "hex")
                     if (pos > -1) {
                         this.key1_pvw_state = buffer.readInt16LE(pos + 4);
@@ -1600,7 +1618,7 @@ class instance extends instance_skel {
                         this.key2_pgm_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('key2_pgm_state', this.key2_pgm_state);
                     }
-					//Key 2 State PVW
+                    //Key 2 State PVW
                     pos = buffer.indexOf('51000200', 0, "hex")
                     if (pos > -1) {
                         this.key2_pvw_state = buffer.readInt16LE(pos + 4);
@@ -1613,7 +1631,7 @@ class instance extends instance_skel {
                         this.dsk1_pgm_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
                     }
-					//DSK 1 State PVW
+                    //DSK 1 State PVW
                     pos = buffer.indexOf('7f000200', 0, "hex")
                     if (pos > -1) {
                         this.dsk1_pvw_state = buffer.readInt16LE(pos + 4);
@@ -1626,7 +1644,7 @@ class instance extends instance_skel {
                         this.dsk2_pgm_state = buffer.readInt16LE(pos + 4);
                         this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
                     }
-					//DSK 2 State PVW
+                    //DSK 2 State PVW
                     pos = buffer.indexOf('80000200', 0, "hex")
                     if (pos > -1) {
                         this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
@@ -1648,6 +1666,20 @@ class instance extends instance_skel {
                         this.dsk_tbar_state = buffer.readInt32LE(pos + 4);
                         //console.log("tbar:", this.tbar_state);
                         this.checkFeedbacks('dsk_tbar_state');
+                    }
+
+                    //Audio Source
+                    if (!this.config.modelID != 'se650' && !this.config.modelID != 'se700') {
+                        pos = buffer.indexOf('0000000000000600', 0, "hex")
+                        if (pos > -1) {
+                            this.audio_src = buffer.readInt16LE(pos + 8);
+                            //console.log("audio src:", this.audio_src);
+                            element = this.model.audio_src.find(element => element.id === this.audio_src.toString());
+                            if (element !== undefined) {
+                                this.setVariable('audio_src', element.label);
+                            }
+                            this.checkFeedbacks('audio_src');
+                        }
                     }
                 }
             });
@@ -1697,24 +1729,24 @@ class instance extends instance_skel {
             label: 'Color for PGM',
             description: 'Set Button colors for PGM Bus',
             options: [{
-                    type: 'colorpicker',
-                    label: 'Foreground color',
-                    id: 'fg',
-                    default: '16777215'
-                },
-                {
-                    type: 'colorpicker',
-                    label: 'Background color',
-                    id: 'bg',
-                    default: this.rgb(255, 0, 0),
-                },
-                {
-                    type: 'dropdown',
-                    label: 'Input',
-                    id: 'pgm_in',
-                    default: '0',
-                    choices: this.model.pgm
-                }
+                type: 'colorpicker',
+                label: 'Foreground color',
+                id: 'fg',
+                default: '16777215'
+            },
+            {
+                type: 'colorpicker',
+                label: 'Background color',
+                id: 'bg',
+                default: this.rgb(255, 0, 0),
+            },
+            {
+                type: 'dropdown',
+                label: 'Input',
+                id: 'pgm_in',
+                default: '0',
+                choices: this.model.pgm
+            }
             ],
             callback: (feedback, bank) => {
                 if (this.pgm_in_src == feedback.options.pgm_in) {
@@ -1729,24 +1761,24 @@ class instance extends instance_skel {
             label: 'Color for PVW',
             description: 'Set Button colors for PVW Bus',
             options: [{
-                    type: 'colorpicker',
-                    label: 'Foreground color',
-                    id: 'fg',
-                    default: '16777215'
-                },
-                {
-                    type: 'colorpicker',
-                    label: 'Background color',
-                    id: 'bg',
-                    default: this.rgb(51, 102, 0),
-                },
-                {
-                    type: 'dropdown',
-                    label: 'Input',
-                    id: 'pvw_in',
-                    default: '0',
-                    choices: this.model.pvw
-                }
+                type: 'colorpicker',
+                label: 'Foreground color',
+                id: 'fg',
+                default: '16777215'
+            },
+            {
+                type: 'colorpicker',
+                label: 'Background color',
+                id: 'bg',
+                default: this.rgb(51, 102, 0),
+            },
+            {
+                type: 'dropdown',
+                label: 'Input',
+                id: 'pvw_in',
+                default: '0',
+                choices: this.model.pvw
+            }
             ],
             callback: (feedback, bank) => {
                 if (this.pvw_in_src == feedback.options.pvw_in) {
@@ -1761,24 +1793,24 @@ class instance extends instance_skel {
             label: 'Color for Key 1 Aux',
             description: 'Set Button colors for Key 1 Aux Bus',
             options: [{
-                    type: 'colorpicker',
-                    label: 'Foreground color',
-                    id: 'fg',
-                    default: '16777215'
-                },
-                {
-                    type: 'colorpicker',
-                    label: 'Background color',
-                    id: 'bg',
-                    default: this.rgb(51, 102, 0),
-                },
-                {
-                    type: 'dropdown',
-                    label: 'Input',
-                    id: 'key1_in',
-                    default: '0',
-                    choices: this.model.key1
-                }
+                type: 'colorpicker',
+                label: 'Foreground color',
+                id: 'fg',
+                default: '16777215'
+            },
+            {
+                type: 'colorpicker',
+                label: 'Background color',
+                id: 'bg',
+                default: this.rgb(51, 102, 0),
+            },
+            {
+                type: 'dropdown',
+                label: 'Input',
+                id: 'key1_in',
+                default: '0',
+                choices: this.model.key1
+            }
             ],
             callback: (feedback, bank) => {
                 if (this.key1_in_src == feedback.options.key1_in) {
@@ -1794,24 +1826,24 @@ class instance extends instance_skel {
                 label: 'Color for Key 2 Aux',
                 description: 'Set Button colors for Key 2 Aux Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'key2_in',
-                        default: '0',
-                        choices: this.model.key2
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'key2_in',
+                    default: '0',
+                    choices: this.model.key2
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.key2_in_src == feedback.options.key2_in) {
@@ -1827,24 +1859,24 @@ class instance extends instance_skel {
                 label: 'Color for PIP Aux',
                 description: 'Set Button colors for PIP Aux Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'pip_in',
-                        default: '0',
-                        choices: this.model.pip
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'pip_in',
+                    default: '0',
+                    choices: this.model.pip
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.pip_in_src == feedback.options.pip_in) {
@@ -1862,24 +1894,24 @@ class instance extends instance_skel {
                 label: 'Color for Key 3 Aux',
                 description: 'Set Button colors for Key 3 Aux Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'key3_in',
-                        default: '0',
-                        choices: this.model.key3
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'key3_in',
+                    default: '0',
+                    choices: this.model.key3
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.key3_in_src == feedback.options.key3_in) {
@@ -1894,24 +1926,24 @@ class instance extends instance_skel {
                 label: 'Color for Key 4 Aux',
                 description: 'Set Button colors for Key 4 Aux Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'key4_in',
-                        default: '0',
-                        choices: this.model.key4
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'key4_in',
+                    default: '0',
+                    choices: this.model.key4
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.key4_in_src == feedback.options.key4_in) {
@@ -1927,24 +1959,24 @@ class instance extends instance_skel {
                 label: 'Color for Aux 1 Bus',
                 description: 'Set Button colors for Aux 1 Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'aux1_in',
-                        default: '0',
-                        choices: this.model.aux1
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'aux1_in',
+                    default: '0',
+                    choices: this.model.aux1
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.aux1_in_src == feedback.options.aux1_in) {
@@ -1960,24 +1992,24 @@ class instance extends instance_skel {
                 label: 'Color for Aux 2 Bus',
                 description: 'Set Button colors for Aux 2 Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'aux2_in',
-                        default: '0',
-                        choices: this.model.aux2
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'aux2_in',
+                    default: '0',
+                    choices: this.model.aux2
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.aux2_in_src == feedback.options.aux2_in) {
@@ -1992,24 +2024,24 @@ class instance extends instance_skel {
                 label: 'Color for Aux 3 Bus',
                 description: 'Set Button colors for Aux 3 Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'aux3_in',
-                        default: '0',
-                        choices: this.model.aux1
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'aux3_in',
+                    default: '0',
+                    choices: this.model.aux1
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.aux3_in_src == feedback.options.aux3_in) {
@@ -2025,24 +2057,24 @@ class instance extends instance_skel {
                 label: 'Color for Aux 4 Bus',
                 description: 'Set Button colors for Aux 4 Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'aux4_in',
-                        default: '0',
-                        choices: this.model.aux1
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'aux4_in',
+                    default: '0',
+                    choices: this.model.aux1
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.aux4_in_src == feedback.options.aux4_in) {
@@ -2058,24 +2090,24 @@ class instance extends instance_skel {
             label: 'Color for DSK1 Aux',
             description: 'Set Button colors for DSK 1 Aux Bus',
             options: [{
-                    type: 'colorpicker',
-                    label: 'Foreground color',
-                    id: 'fg',
-                    default: '16777215'
-                },
-                {
-                    type: 'colorpicker',
-                    label: 'Background color',
-                    id: 'bg',
-                    default: this.rgb(51, 102, 0),
-                },
-                {
-                    type: 'dropdown',
-                    label: 'Input',
-                    id: 'dsk1_in',
-                    default: '0',
-                    choices: this.model.dsk1
-                }
+                type: 'colorpicker',
+                label: 'Foreground color',
+                id: 'fg',
+                default: '16777215'
+            },
+            {
+                type: 'colorpicker',
+                label: 'Background color',
+                id: 'bg',
+                default: this.rgb(51, 102, 0),
+            },
+            {
+                type: 'dropdown',
+                label: 'Input',
+                id: 'dsk1_in',
+                default: '0',
+                choices: this.model.dsk1
+            }
             ],
             callback: (feedback, bank) => {
                 if (this.dsk1_in_src == feedback.options.dsk1_in) {
@@ -2091,24 +2123,24 @@ class instance extends instance_skel {
                 label: 'Color for DSK2 Aux',
                 description: 'Set Button colors for DSK 2 Aux Bus',
                 options: [{
-                        type: 'colorpicker',
-                        label: 'Foreground color',
-                        id: 'fg',
-                        default: '16777215'
-                    },
-                    {
-                        type: 'colorpicker',
-                        label: 'Background color',
-                        id: 'bg',
-                        default: this.rgb(51, 102, 0),
-                    },
-                    {
-                        type: 'dropdown',
-                        label: 'Input',
-                        id: 'dsk2_in',
-                        default: '0',
-                        choices: this.model.dsk2
-                    }
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'dsk2_in',
+                    default: '0',
+                    choices: this.model.dsk2
+                }
                 ],
                 callback: (feedback, bank) => {
                     if (this.dsk2_in_src == feedback.options.dsk2_in) {
@@ -2126,29 +2158,29 @@ class instance extends instance_skel {
             label: 'Color for current transition',
             description: 'Set Button colors for current transition selection.',
             options: [{
-                    type: 'colorpicker',
-                    label: 'Foreground color',
-                    id: 'fg',
-                    default: '16777215'
-                },
-                {
-                    type: 'colorpicker',
-                    label: 'Background color',
-                    id: 'bg',
-                    default: this.rgb(51, 102, 0),
-                },
-                {
-                    type: 'dropdown',
-                    label: 'Input',
-                    id: 'trans',
-                    default: '0',
-                    choices: [
-                        { id: '0', label: 'Mix' },
-                        { id: '1', label: 'Wipe' },
-                        { id: '2', label: 'Clip' },
-                        { id: '3', label: 'DVE Trans' },
-                    ]
-                }
+                type: 'colorpicker',
+                label: 'Foreground color',
+                id: 'fg',
+                default: '16777215'
+            },
+            {
+                type: 'colorpicker',
+                label: 'Background color',
+                id: 'bg',
+                default: this.rgb(51, 102, 0),
+            },
+            {
+                type: 'dropdown',
+                label: 'Input',
+                id: 'trans',
+                default: '0',
+                choices: [
+                    { id: '0', label: 'Mix' },
+                    { id: '1', label: 'Wipe' },
+                    { id: '2', label: 'Clip' },
+                    { id: '3', label: 'DVE Trans' },
+                ]
+            }
             ],
             callback: (feedback, bank) => {
                 if (this.trans_current == feedback.options.trans) {
@@ -2164,17 +2196,17 @@ class instance extends instance_skel {
             label: 'Color for T Bar transition',
             description: 'Set Button colors for when transition is running.',
             options: [{
-                    type: 'colorpicker',
-                    label: 'Foreground color',
-                    id: 'fg',
-                    default: '16777215'
-                },
-                {
-                    type: 'colorpicker',
-                    label: 'Background color',
-                    id: 'bg',
-                    default: this.rgb(255, 56, 0),
-                }
+                type: 'colorpicker',
+                label: 'Foreground color',
+                id: 'fg',
+                default: '16777215'
+            },
+            {
+                type: 'colorpicker',
+                label: 'Background color',
+                id: 'bg',
+                default: this.rgb(255, 56, 0),
+            }
             ],
             callback: (feedback, bank) => {
                 if (this.tbar_state > 0) {
@@ -2191,17 +2223,17 @@ class instance extends instance_skel {
             label: 'Color for T Bar DSK transition',
             description: 'Set Button colors for when DSK transition is running.',
             options: [{
-                    type: 'colorpicker',
-                    label: 'Foreground color',
-                    id: 'fg',
-                    default: '16777215'
-                },
-                {
-                    type: 'colorpicker',
-                    label: 'Background color',
-                    id: 'bg',
-                    default: this.rgb(255, 56, 0),
-                }
+                type: 'colorpicker',
+                label: 'Foreground color',
+                id: 'fg',
+                default: '16777215'
+            },
+            {
+                type: 'colorpicker',
+                label: 'Background color',
+                id: 'bg',
+                default: this.rgb(255, 56, 0),
+            }
             ],
             callback: (feedback, bank) => {
                 if (this.dsk_tbar_state > 0) {
@@ -2212,6 +2244,41 @@ class instance extends instance_skel {
                 }
             }
         }
+        if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+            feedbacks['audio_src'] = {
+                label: 'Color for current audio source',
+                description: 'Set Button colors for current audio source',
+                options: [{
+                    type: 'colorpicker',
+                    label: 'Foreground color',
+                    id: 'fg',
+                    default: '16777215'
+                },
+                {
+                    type: 'colorpicker',
+                    label: 'Background color',
+                    id: 'bg',
+                    default: this.rgb(51, 102, 0),
+                },
+                {
+                    type: 'dropdown',
+                    label: 'Input',
+                    id: 'audio_src',
+                    default: '0',
+                    choices: this.model.audio_src
+                }
+                ],
+                callback: (feedback, bank) => {
+                    if (this.audio_src == feedback.options.audio_src) {
+                        return {
+                            color: feedback.options.fg,
+                            bgcolor: feedback.options.bg
+                        };
+                    }
+                }
+            }
+        }
+
         this.setFeedbackDefinitions(feedbacks);
 
     };
@@ -2441,112 +2508,166 @@ class instance extends instance_skel {
                         trans: '3'
                     }
                 }]
-            }
+            },
+            {
+                category: 'audio',
+                label: 'External',
+                bank: {
+                    style: 'text',
+                    text: 'External',
+                    size: '18',
+                    color: this.rgb(255, 255, 255),
+                    bgcolor: this.rgb(0, 0, 0),
+
+                },
+                actions: [{
+                    action: 'audio_src',
+                    options: {
+                        audio_src: '0'
+                    }
+                }],
+                feedbacks: [{
+                    type: 'audio_src',
+                    options: {
+                        audio_src: '0'
+                    }
+                }],
+
+            },
+            {
+                category: 'audio',
+                label: 'Follow',
+                bank: {
+                    style: 'text',
+                    text: 'Follow',
+                    size: '18',
+                    color: this.rgb(255, 255, 255),
+                    bgcolor: this.rgb(0, 0, 0),
+
+                },
+                actions: [{
+                    action: 'audio_src',
+                    options: {
+                        audio_src: '1'
+                    }
+                }],
+                feedbacks: [{
+                    type: 'audio_src',
+                    options: {
+                        audio_src: '1'
+                    }
+                }],
+
+            },
 
         ];
 
         this.setPresetDefinitions(presets);
-	}
-	
+    }
+
     init_variables() {
         var self = this;
 
         var variables = [{
-                label: 'Current PGM bus input name',
-                name: 'pgm_in'
-            },
-            {
-                label: 'Current PVW bus input name',
-                name: 'pvw_in'
-            },
-            {
-                label: 'Current Key 1 bus input name',
-                name: 'key1_in'
-            },
-            {
-                label: 'Current Key 2 bus input name',
-                name: 'key2_in'
-            },
-            {
-                label: 'Current Key 3 bus input name',
-                name: 'key3_in'
-            },
-            {
-                label: 'Current Key 4 bus input name',
-                name: 'key4_in'
-            },
-            {
-                label: 'Current PIP bus input name',
-                name: 'pip_in'
-            },
-            {
-                label: 'Current DSK 1 bus input name',
-                name: 'dsk1_in'
-            },
-            {
-                label: 'Current DSK 2 bus input name',
-                name: 'dsk2_in'
-            },
-            {
-                label: 'Current Aux 1 bus input name',
-                name: 'aux1_in'
-            },
-            {
-                label: 'Current Aux 2 bus input name',
-                name: 'aux2_in'
-            },
-            {
-                label: 'Current Aux 3 bus input name',
-                name: 'aux3_in'
-            },
-            {
-                label: 'Current Aux 4 bus input name',
-                name: 'aux4_in'
-            },
-            {
-                label: 'Current ME Duration in Frames',
-                name: 'me_dur'
-            },
-            {
-                label: 'Current DSK Duration in Frames',
-                name: 'dsk_dur'
-            },
-            {
-                label: 'Current FTB Duration in Frames',
-                name: 'ftb_dur'
-            },
-            {
-                label: 'Current Key 1 PGM state',
-                name: 'key1_pgm_state'
-            },
-            {
-                label: 'Current Key 1 PVW state',
-                name: 'key1_pvw_state'
-            },
-            {
-                label: 'Current Key 2 PGM state',
-                name: 'key2_pgm_state'
-            },
-            {
-                label: 'Current Key 2 PVW state',
-                name: 'key2_pvw_state'
-            },
-            {
-                label: 'Current DSK 1 PGM state',
-                name: 'dsk1_pgm_state'
-            },
-            {
-                label: 'Current DSK 1 PVW state',
-                name: 'dsk1_pvw_state'
-            },
-            {
-                label: 'Current DSK 2 PGM state',
-                name: 'dsk2_pgm_state'
-            },
-            {
-                label: 'Current DSK 2 PVW state',
-                name: 'dsk2_pvw_state'
-            },
+            label: 'Current PGM bus input name',
+            name: 'pgm_in'
+        },
+        {
+            label: 'Current PVW bus input name',
+            name: 'pvw_in'
+        },
+        {
+            label: 'Current Audio source',
+            name: 'audio_src'
+        },
+        {
+            label: 'Current Key 1 bus input name',
+            name: 'key1_in'
+        },
+        {
+            label: 'Current Key 2 bus input name',
+            name: 'key2_in'
+        },
+        {
+            label: 'Current Key 3 bus input name',
+            name: 'key3_in'
+        },
+        {
+            label: 'Current Key 4 bus input name',
+            name: 'key4_in'
+        },
+        {
+            label: 'Current PIP bus input name',
+            name: 'pip_in'
+        },
+        {
+            label: 'Current DSK 1 bus input name',
+            name: 'dsk1_in'
+        },
+        {
+            label: 'Current DSK 2 bus input name',
+            name: 'dsk2_in'
+        },
+        {
+            label: 'Current Aux 1 bus input name',
+            name: 'aux1_in'
+        },
+        {
+            label: 'Current Aux 2 bus input name',
+            name: 'aux2_in'
+        },
+        {
+            label: 'Current Aux 3 bus input name',
+            name: 'aux3_in'
+        },
+        {
+            label: 'Current Aux 4 bus input name',
+            name: 'aux4_in'
+        },
+        {
+            label: 'Current ME Duration in Frames',
+            name: 'me_dur'
+        },
+        {
+            label: 'Current DSK Duration in Frames',
+            name: 'dsk_dur'
+        },
+        {
+            label: 'Current FTB Duration in Frames',
+            name: 'ftb_dur'
+        },
+        {
+            label: 'Current Key 1 PGM state',
+            name: 'key1_pgm_state'
+        },
+        {
+            label: 'Current Key 1 PVW state',
+            name: 'key1_pvw_state'
+        },
+        {
+            label: 'Current Key 2 PGM state',
+            name: 'key2_pgm_state'
+        },
+        {
+            label: 'Current Key 2 PVW state',
+            name: 'key2_pvw_state'
+        },
+        {
+            label: 'Current DSK 1 PGM state',
+            name: 'dsk1_pgm_state'
+        },
+        {
+            label: 'Current DSK 1 PVW state',
+            name: 'dsk1_pvw_state'
+        },
+        {
+            label: 'Current DSK 2 PGM state',
+            name: 'dsk2_pgm_state'
+        },
+        {
+            label: 'Current DSK 2 PVW state',
+            name: 'dsk2_pvw_state'
+        },
 
         ];
 

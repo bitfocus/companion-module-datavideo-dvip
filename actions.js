@@ -338,9 +338,11 @@ exports.getActions = function () {
 		label: 'Load User',
 		options: [
 			{
-				type: 'textinput',
+				type: 'number',
 				label: 'User 1-999',
-				id: 'userid',
+                id: 'userid',
+                min: 1,
+                max: 999,
 				default: '1'
 			}
 		]
@@ -349,9 +351,11 @@ exports.getActions = function () {
 		label: 'Save User',
 		options: [
 			{
-				type: 'textinput',
+				type: 'number',
 				label: 'User 1-999',
-				id: 'userid',
+                id: 'userid',
+                min: 1,
+                max: 999,
 				default: '1'
 			}
 		]

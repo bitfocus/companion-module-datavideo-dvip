@@ -470,7 +470,9 @@ class instance extends instance_skel {
 
 				this.socket.on('error', (err) => {
 					debug('Network error', err);
-					this.log('error', 'Network error: ' + err.message);
+                    this.log('error', 'Network error: ' + err.message);
+                    //Request new port if the command socket has an error
+                    this.initTCP();
 				});
 
 				this.socket.on('connect', () => {

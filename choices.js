@@ -1,4 +1,3 @@
-//Port selection
 this.CHOICES_PORT = [
     { id: '5001', label: '5001' },
     { id: '5003', label: '5003' },

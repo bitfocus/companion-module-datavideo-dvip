@@ -294,11 +294,11 @@ class instance extends instance_skel {
                 }
                 break;
             case 'loaduser':
-                userid.writeUInt32LE(options.userid, 0);
+                userid.writeUInt16LE(options.userid, 0);
                 cmd = Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, userid[0], userid[1], 0x00, 0x00, 0x01, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00]);
                 break;
             case 'saveuser':
-                uuserid.writeUInt32LE(options.userid, 0);
+                userid.writeUInt16LE(options.userid, 0);
                 cmd = Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, userid[0], userid[1], 0x00, 0x00, 0x01, 0x00, 0x08, 0x00, 0x02, 0x00, 0x00, 0x00]);
                 break;
             case 'streamer':

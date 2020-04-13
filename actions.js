@@ -340,9 +340,9 @@ exports.getActions = function () {
 			{
 				type: 'number',
 				label: 'User 1-999',
-                id: 'userid',
-                min: 1,
-                max: 999,
+				id: 'userid',
+				min: 1,
+				max: 999,
 				default: '1'
 			}
 		]
@@ -353,9 +353,9 @@ exports.getActions = function () {
 			{
 				type: 'number',
 				label: 'User 1-999',
-                id: 'userid',
-                min: 1,
-                max: 999,
+				id: 'userid',
+				min: 1,
+				max: 999,
 				default: '1'
 			}
 		]
@@ -377,7 +377,7 @@ exports.getActions = function () {
 			{
 				type: 'number',
 				label: 'Frames',
-                id: 'frames',
+				id: 'frames',
 				default: '10'
 			}
 		]
@@ -395,36 +395,36 @@ exports.getActions = function () {
 				}
 			]
 		};
-    }
-    actions['set_input_name'] = {
-        label: 'Set Input Name',
-        options: [
+	}
+	actions['set_input_name'] = {
+		label: 'Set Input Name',
+		options: [
 
-            {
-                type: 'dropdown',
-                label: 'Input',
-                id: 'input',
-                default: '1',
-                choices: this.model.inputs
-            },            
-            {
-                type: 'textinput',
-                label: 'Name',
-                id: 'name',
-            }
-        ]
-    };
-    actions['send_hex'] = {
-        label: 'Send Hex Value',
-        options: [
-            {
-                type: 'textinput',
-                label: 'Hex Input',
-                id: 'hex',
-                default: '0',
-            }
-        ]
-    };
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'input',
+				default: '1',
+				choices: this.model.inputs
+			},            
+			{
+				type: 'textinput',
+				label: 'Name',
+				id: 'name',
+			}
+		]
+	};
+	actions['send_hex'] = {
+		label: 'Send Hex Value',
+		options: [
+			{
+				type: 'textinput',
+				label: 'Hex Input',
+				id: 'hex',
+				default: '0',
+			}
+		]
+	};
 
 	return actions
 }

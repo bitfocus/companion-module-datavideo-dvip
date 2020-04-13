@@ -368,8 +368,10 @@ class instance extends instance_skel {
 
 				this.socket.send(cmd);
 				//Update input names on change
-				if (id == 'set_input_name') {
-					this.getInputNames(null);
+				if (id == 'set_input_name' || id == 'load_user')  {
+					if(this.cur_input_request == 0){
+						this.getInputNames(null);
+					}
 				}
 
 			} else {
@@ -572,11 +574,12 @@ class instance extends instance_skel {
 					} else if (buffer.equals(this.null_packet)) {
 						this.socket.send(this.null_packet);
 					} else {
-							console.log('Receive CMD: ', buffer);
+						//console.log('Receive CMD: ', buffer);
 						//Input name
 						//Slight downside is that the return packet does not included the request input number
 						//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
 						//This is also done when set_input_name action is ran.
+						if(this.cur_input_request != 0){
 						pos = buffer.indexOf('03000000', 0, "hex")
 						if (pos > -1) {
 							let name;
@@ -584,10 +587,13 @@ class instance extends instance_skel {
 							this.getInputNames(name.toString('utf16le'));
 
 						}
+					}
 						//Grab names again on this packet
 						pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
 						if (pos > -1) {
-							this.getInputNames(null);
+							if(this.cur_input_request == 0){
+								this.getInputNames(null); 
+							}
 
 						}
 
@@ -601,14 +607,16 @@ class instance extends instance_skel {
 
 					//If it's not a null packet check what is inside
 					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-						console.log('Receive Realtime: ', buffer);
+						//console.log('Receive Realtime: ', buffer);
 						let pos;
 						let element;
 
 						//Update input names on user switch
-						pos = buffer.indexOf('18000000304e1300', 0, "hex")
+						pos = buffer.indexOf('0000304e1300', 0, "hex")
 						if (pos > -1) {
-							this.getInputNames(null);
+							if(this.cur_input_request == 0){
+								this.getInputNames(null);
+							}
 						}
 
 

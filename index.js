@@ -15,7 +15,11 @@ class instance extends instance_skel {
 
 		this.null_packet = Buffer.from([0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 		this.null_packet_cmd = Buffer.from([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]);
+		this.null_packet_cmd = Buffer.from([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]);
+		this.filter_packet = Buffer.from([0x08, 0x00, 0x00, 0x00, 0x30, 0x4e, 0x13, 0x00]);
 		this.disconnect_packet = Buffer.from([0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00]);
+
+		this.cur_input_request = 0;
 
 		this.pgm_in_src;
 		this.pvw_in_src;
@@ -362,6 +366,11 @@ class instance extends instance_skel {
 				//console.log("Send: ", cmd);
 
 				this.socket.send(cmd);
+				//Update input names on change
+				if(id == 'set_input_name'){
+					this.getInputNames(null);
+				}
+
 			} else {
 				debug('Socket not connected :(');
 			}
@@ -427,6 +436,56 @@ class instance extends instance_skel {
 		if (element !== undefined) {
 			this.setVariable(varID, element.label);
 		}
+	}
+
+	getInputNames(inputName) {
+		let maxInputs;
+		let input = Buffer.alloc(4);
+		let lastInput;
+
+		switch (this.config.modelID) {
+			case 'se3200':
+				maxInputs = 12;
+				break;
+			case 'se1200mu':
+				maxInputs = 6;
+				break;
+			case 'se700':
+			case 'se650':
+				maxInputs = 4;
+				break;
+		}
+
+
+
+		if (inputName == null) {
+			//Grab input 1
+			this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]));
+			this.cur_input_request = 2;
+
+		} else if (this.cur_input_request > 1) {
+			//request current input name
+			lastInput = this.cur_input_request - 1;
+			//console.log("input: ", lastInput);
+			//console.log("input name:", inputName);
+			this.setVariable('in'+lastInput.toString()+'_name', inputName);
+			if (this.cur_input_request != 0 && this.cur_input_request <= maxInputs) {
+				input.writeInt32LE(this.cur_input_request);
+				this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, input[0], 0x00, 0x00, 0x00]));
+			}
+
+
+			if (this.cur_input_request <= maxInputs) {
+				this.cur_input_request++;
+			} else if (this.cur_input_request > maxInputs) {
+				this.cur_input_request = 0;
+			}
+
+		}
+
+
+
+
 	}
 
 	initTCP() {
@@ -499,6 +558,7 @@ class instance extends instance_skel {
 				this.socket.on('connect', () => {
 					debug('Connected');
 					this.socket.send(this.null_packet);
+					this.getInputNames(null);
 				});
 				this.socket_realtime.on('status_change', (status, message) => {
 					this.status(status, message);
@@ -514,15 +574,55 @@ class instance extends instance_skel {
 					this.socket_realtime.send(this.null_packet);
 				});
 
+				//Command socket data recieve
+				this.socket.on('data', (buffer) => {
+					let pos;
+
+					//Reply with the null packet
+					if (buffer.equals(this.null_packet_cmd)) {
+						this.socket.send(this.null_packet_cmd);
+					} else if (buffer.equals(this.null_packet)) {
+						this.socket.send(this.null_packet);
+					} else {
+					//	console.log('Receive CMD: ', buffer);
+						//Input name
+						//Slight downside is that the return packet does not included the request input number
+						//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
+						//This is also done when set_input_name action is ran.
+						pos = buffer.indexOf('03000000', 0, "hex")
+						if (pos > -1) {
+							let name;
+							name = buffer.slice(pos + 8, buffer.length);
+							this.getInputNames(name.toString('utf16le'));
+
+						}
+						//Grab names again on this packet
+						pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
+						if (pos > -1) {
+							this.getInputNames(null);
+
+						}
+
+					}
+
+				});
+
 				this.socket_realtime.on('data', (buffer) => {
 					//Send the null packet when we recieve a packet
 					this.socket_realtime.send(this.null_packet);
 
 					//If it's not a null packet check what is inside
-					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-						//    console.log('Receive Realtime: ', buffer);
+					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
+					//	console.log('Receive Realtime: ', buffer);
 						let pos;
 						let element;
+
+						//Update input names on user switch
+						pos = buffer.indexOf('18000000304e1300', 0, "hex")
+						if (pos > -1) {
+							this.getInputNames(null);
+						}
+						
 
 						//All the feedback handling is below
 						//3200 PGM and PREVIEW BUS
@@ -776,19 +876,6 @@ class instance extends instance_skel {
 					}
 				});
 
-				//Command socket data recieve
-				this.socket.on('data', (buffer) => {
-					//if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd)) {
-					//    console.log('Receive CMD: ', buffer);
-					//}
-					//Reply with the null packet
-					if (buffer.equals(this.null_packet_cmd)) {
-						this.socket.send(this.null_packet_cmd);
-					} else {
-						this.socket.send(this.null_packet);
-					}
-
-				});
 			});
 
 		}
@@ -798,7 +885,7 @@ class instance extends instance_skel {
 	updateConfig(config) {
 		var resetConnection = false;
 
-		if (this.config.host != config.host || this.config.port != config.port || this.config.modelID != config.modelID) {
+		if (this.config.label != config.label || this.config.host != config.host || this.config.port != config.port || this.config.modelID != config.modelID) {
 			resetConnection = true;
 		}
 

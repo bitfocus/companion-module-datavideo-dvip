@@ -100,6 +100,54 @@ exports.getVariables = function () {
 		label: 'Current DSK 2 PVW state',
 		name: 'dsk2_pvw_state'
 	},
+	{
+		label: 'Current In 1 Name',
+		name: 'in1_name'
+	},
+	{
+		label: 'Current In 2 Name',
+		name: 'in2_name'
+	},
+	{
+		label: 'Current In 3 Name',
+		name: 'in3_name'
+	},
+	{
+		label: 'Current In 4 Name',
+		name: 'in4_name'
+	},
+	{
+		label: 'Current In 5 Name',
+		name: 'in5_name'
+	},
+	{
+		label: 'Current In 6 Name',
+		name: 'in6_name'
+	},
+	{
+		label: 'Current In 7 Name',
+		name: 'in7_name'
+	},
+	{
+		label: 'Current In 8 Name',
+		name: 'in8_name'
+	},
+	{
+		label: 'Current In 9 Name',
+		name: 'in9_name'
+	},
+	{
+		label: 'Current In 10 Name',
+		name: 'in10_name'
+	},
+	{
+		label: 'Current In 11 Name',
+		name: 'in11_name'
+	},
+	{
+		label: 'Current In 12 Name',
+		name: 'in12_name'
+	},
 
 	];
 

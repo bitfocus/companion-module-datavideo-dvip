@@ -29,7 +29,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Output Controls
 * User Load/User Save
 * Streamer Controls
-* Change input name
+* Change input name on mixer
 
 
 **Available feedback**
@@ -49,8 +49,9 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Audio source set with feedback
 
 **Available variables**
-* Current PGM and PVW input names
-* Current Key, DSK and Aux bus input names
+* Current PGM and PVW inputs sources
+* Current Key, DSK and Aux bus inputs sources
 * Current audio source
 * Current ME, DSK and FTB duration frames
 * KEY and DSK button states (Just for testing for now)
+* Input names labels from mixer

@@ -1,4 +1,5 @@
 exports.getPresets = function () {
+
 	var presets = [
 
 		{
@@ -6,7 +7,7 @@ exports.getPresets = function () {
 			label: 'In 1 PGM',
 			bank: {
 				style: 'text',
-				text: 'In 1',
+				text: `$(${this.config.label}:in1_name)`,
 				size: '18',
 				color: this.rgb(255, 255, 255),
 				bgcolor: this.rgb(0, 0, 0),
@@ -30,7 +31,7 @@ exports.getPresets = function () {
 			label: 'In 1 PVW',
 			bank: {
 				style: 'text',
-				text: 'In 1',
+				text: `$(${this.config.label}:in1_name)`,
 				size: '18',
 				color: this.rgb(255, 255, 255),
 				bgcolor: this.rgb(0, 0, 0),

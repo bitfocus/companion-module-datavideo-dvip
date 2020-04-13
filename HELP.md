@@ -48,4 +48,4 @@ SE-3200.
 * Current audio source
 * Current ME, DSK and FTB duration frames
 * KEY and DSK button states (Just for testing for now)
-* Input names labels from mixer
+* Input name labels from mixer

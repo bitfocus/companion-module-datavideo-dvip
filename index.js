@@ -439,24 +439,9 @@ class instance extends instance_skel {
 	}
 
 	getInputNames(inputName) {
-		let maxInputs;
+		let maxInputs = this.model.inputs.length;
 		let input = Buffer.alloc(4);
 		let lastInput;
-
-		switch (this.config.modelID) {
-			case 'se3200':
-				maxInputs = 12;
-				break;
-			case 'se1200mu':
-				maxInputs = 6;
-				break;
-			case 'se700':
-			case 'se650':
-				maxInputs = 4;
-				break;
-		}
-
-
 
 		if (inputName == null) {
 			//Grab input 1

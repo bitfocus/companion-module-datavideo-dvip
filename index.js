@@ -48,6 +48,7 @@ class instance extends instance_skel {
 		this.tbar_state;
 		this.dsk_tbar_state;
 		this.audio_src;
+		this.curr_user;
 
 		Object.assign(this, {
 			...actions,
@@ -592,7 +593,7 @@ class instance extends instance_skel {
 						pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
 						if (pos > -1) {
 							if(this.cur_input_request == 0){
-								this.getInputNames(null); 
+								this.getInputNames(null);
 							}
 
 						}
@@ -611,13 +612,26 @@ class instance extends instance_skel {
 						let pos;
 						let element;
 
-						//Update input names on user switch
-						pos = buffer.indexOf('0000304e1300', 0, "hex")
+						//User memory change
+						pos = buffer.indexOf('00000800', 0, "hex")
 						if (pos > -1) {
+							this.curr_user = buffer.readInt32LE(pos + 4);
+							
+							this.checkFeedbacks('curr_user');
+							this.setVariable('curr_user', this.curr_user);
+							//Update input names because user has changed
 							if(this.cur_input_request == 0){
 								this.getInputNames(null);
 							}
 						}
+
+						//Update input names on user switch
+						//pos = buffer.indexOf('0000304e1300', 0, "hex")
+						//if (pos > -1) {
+						//	if(this.cur_input_request == 0){
+						//		this.getInputNames(null);
+						//	}
+						//}
 
 
 						//All the feedback handling is below
@@ -894,7 +908,7 @@ class instance extends instance_skel {
 			this.init_feedbacks();
 			this.initTCP();
 			this.init_presets();
-			console.log('Connection reset after update. Port: ', config.port);
+			console.log('Connection reset after update.');
 		}
 	}
 

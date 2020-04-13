@@ -32,6 +32,7 @@ SE-3200.
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
 * Current audio source
+* Currently selected user
 
 
 **Available presets**
@@ -51,3 +52,4 @@ SE-3200.
 * Current ME, DSK and FTB duration frames
 * KEY and DSK button states (Just for testing for now)
 * Input name labels from mixer
+* Currently selected user

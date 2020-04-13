@@ -38,6 +38,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
 * Current audio source
+* Currently selected user
 
 
 **Available presets**
@@ -57,3 +58,4 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Current ME, DSK and FTB duration frames
 * KEY and DSK button states (Just for testing for now)
 * Input name labels from mixer
+* Currently selected user

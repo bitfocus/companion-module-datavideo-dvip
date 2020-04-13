@@ -274,6 +274,31 @@ exports.getPresets = function () {
 				}
 			}],
 
+		},		
+		{
+			category: 'user-load',
+			label: 'User 1',
+			bank: {
+				style: 'text',
+				text: 'User 1',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'loaduser',
+				options: {
+					userid: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'curr_user',
+				options: {
+					userid: '1'
+				}
+			}],
+
 		},
 
 	];

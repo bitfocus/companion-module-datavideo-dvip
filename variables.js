@@ -200,7 +200,10 @@ exports.getVariables = function () {
 		label: 'Current In 12 Name',
 		name: 'in12_name'
 	},
-
+	{
+		label: 'Current User Number',
+		name: 'curr_user'
+	},
 	];
 
 	return variables;

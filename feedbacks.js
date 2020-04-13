@@ -555,6 +555,40 @@ exports.getFeedbacks = function () {
 		}
 	}
 
+	feedbacks['curr_user'] = {
+		label: 'Color for currently loaded user',
+		description: 'Set Button colors for currently loaded user',
+		options: [{
+			type: 'colorpicker',
+			label: 'Foreground color',
+			id: 'fg',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color',
+			id: 'bg',
+			default: this.rgb(51, 102, 0),
+		},
+		{
+			type: 'number',
+			label: 'User 1-999',
+			id: 'userid',
+			default: '1',
+			min: 1,
+			max: 999,
+		}
+		],
+		callback: (feedback, bank) => {
+			if (this.curr_user == feedback.options.userid) {
+				return {
+					color: feedback.options.fg,
+					bgcolor: feedback.options.bg
+				};
+			}
+		}
+	}
+
 	return feedbacks;
 
 }

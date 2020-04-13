@@ -25,10 +25,11 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Fade to Black
 * Keyer Controls
 * Audio Controls
-* Audio Sources
+* Switch Audio Source Input
 * Output Controls
 * User Load/User Save
 * Streamer Controls
+* Change input name
 
 
 **Available feedback**

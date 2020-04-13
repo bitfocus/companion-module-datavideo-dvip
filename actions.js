@@ -395,6 +395,36 @@ exports.getActions = function () {
 				}
 			]
 		};
-	}
+    }
+    actions['set_input_name'] = {
+        label: 'Set Input Name',
+        options: [
+
+            {
+                type: 'dropdown',
+                label: 'Input',
+                id: 'input',
+                default: '1',
+                choices: this.model.inputs
+            },            
+            {
+                type: 'textinput',
+                label: 'Name',
+                id: 'name',
+            }
+        ]
+    };
+    actions['send_hex'] = {
+        label: 'Send Hex Value',
+        options: [
+            {
+                type: 'textinput',
+                label: 'Hex Input',
+                id: 'hex',
+                default: '0',
+            }
+        ]
+    };
+
 	return actions
 }

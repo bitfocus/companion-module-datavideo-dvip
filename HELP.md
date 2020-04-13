@@ -19,10 +19,11 @@ SE-3200.
 * Fade to Black
 * Keyer Controls
 * Audio Controls
-* Audio Sources
+* Switch Audio Source Input
 * Output Controls
 * User Load/User Save
 * Streamer Controls
+* Change input name
 
 
 **Available feedback**

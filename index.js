@@ -20,6 +20,7 @@ class instance extends instance_skel {
 		this.disconnect_packet = Buffer.from([0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00]);
 
 		this.cur_input_request = 0;
+		this.input_names = [];
 
 		this.pgm_in_src;
 		this.pvw_in_src;
@@ -367,7 +368,7 @@ class instance extends instance_skel {
 
 				this.socket.send(cmd);
 				//Update input names on change
-				if(id == 'set_input_name'){
+				if (id == 'set_input_name') {
 					this.getInputNames(null);
 				}
 
@@ -435,6 +436,13 @@ class instance extends instance_skel {
 		let element = choices.find(element => element.id === state.toString());
 		if (element !== undefined) {
 			this.setVariable(varID, element.label);
+
+			let input = this.model.inputs.find(element => element.id === state.toString());
+			if(input !== undefined){
+				this.setVariable(varID + '_name', this.input_names[element.id]);
+			}else{
+				this.setVariable(varID+ '_name', element.label);
+			}
 		}
 	}
 
@@ -453,12 +461,12 @@ class instance extends instance_skel {
 			lastInput = this.cur_input_request - 1;
 			//console.log("input: ", lastInput);
 			//console.log("input name:", inputName);
-			this.setVariable('in'+lastInput.toString()+'_name', inputName);
+			this.setVariable('in' + lastInput.toString() + '_name', inputName);
+			this.input_names[lastInput] = inputName;
 			if (this.cur_input_request != 0 && this.cur_input_request <= maxInputs) {
 				input.writeInt32LE(this.cur_input_request);
 				this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, input[0], 0x00, 0x00, 0x00]));
 			}
-
 
 			if (this.cur_input_request <= maxInputs) {
 				this.cur_input_request++;
@@ -467,9 +475,6 @@ class instance extends instance_skel {
 			}
 
 		}
-
-
-
 
 	}
 
@@ -513,8 +518,6 @@ class instance extends instance_skel {
 			this.socket_request.on('connect', () => {
 				debug('Connected');
 				this.socket_request.send(Buffer.from([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0xaa, 0x55]));
-
-
 			});
 
 
@@ -569,7 +572,7 @@ class instance extends instance_skel {
 					} else if (buffer.equals(this.null_packet)) {
 						this.socket.send(this.null_packet);
 					} else {
-					//	console.log('Receive CMD: ', buffer);
+							console.log('Receive CMD: ', buffer);
 						//Input name
 						//Slight downside is that the return packet does not included the request input number
 						//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
@@ -598,7 +601,7 @@ class instance extends instance_skel {
 
 					//If it's not a null packet check what is inside
 					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-					//	console.log('Receive Realtime: ', buffer);
+						console.log('Receive Realtime: ', buffer);
 						let pos;
 						let element;
 
@@ -607,7 +610,7 @@ class instance extends instance_skel {
 						if (pos > -1) {
 							this.getInputNames(null);
 						}
-						
+
 
 						//All the feedback handling is below
 						//3200 PGM and PREVIEW BUS

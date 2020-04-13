@@ -1,60 +1,112 @@
 exports.getVariables = function () {
 
 	var variables = [{
-		label: 'Current PGM bus input name',
+		label: 'Current PGM bus input',
 		name: 'pgm_in'
 	},
 	{
-		label: 'Current PVW bus input name',
+		label: 'Current PGM bus input name',
+		name: 'pgm_in_name'
+	},
+	{
+		label: 'Current PVW bus input',
 		name: 'pvw_in'
+	},
+	{
+		label: 'Current PVW bus input name',
+		name: 'pvw_in_name'
 	},
 	{
 		label: 'Current Audio source',
 		name: 'audio_src'
 	},
 	{
-		label: 'Current Key 1 bus input name',
+		label: 'Current Key 1 bus input',
 		name: 'key1_in'
 	},
 	{
-		label: 'Current Key 2 bus input name',
+		label: 'Current Key 1 bus input name',
+		name: 'key1_in_name'
+	},
+	{
+		label: 'Current Key 2 bus input',
 		name: 'key2_in'
 	},
 	{
-		label: 'Current Key 3 bus input name',
+		label: 'Current Key 2 bus input name',
+		name: 'key2_in_name'
+	},
+	{
+		label: 'Current Key 3 bus input',
 		name: 'key3_in'
 	},
 	{
-		label: 'Current Key 4 bus input name',
+		label: 'Current Key 3 bus input name',
+		name: 'key3_in_name'
+	},
+	{
+		label: 'Current Key 4 bus input',
 		name: 'key4_in'
 	},
 	{
-		label: 'Current PIP bus input name',
+		label: 'Current Key 4 bus input name',
+		name: 'key4_in_name'
+	},
+	{
+		label: 'Current PIP bus input',
 		name: 'pip_in'
 	},
 	{
-		label: 'Current DSK 1 bus input name',
+		label: 'Current PIP bus input name',
+		name: 'pip_in_name'
+	},
+	{
+		label: 'Current DSK 1 bus input',
 		name: 'dsk1_in'
 	},
 	{
-		label: 'Current DSK 2 bus input name',
+		label: 'Current DSK 1 bus input name',
+		name: 'dsk1_in_name'
+	},
+	{
+		label: 'Current DSK 2 bus input',
 		name: 'dsk2_in'
 	},
 	{
-		label: 'Current Aux 1 bus input name',
+		label: 'Current DSK 2 bus input name',
+		name: 'dsk2_in_name'
+	},
+	{
+		label: 'Current Aux 1 bus input',
 		name: 'aux1_in'
 	},
 	{
-		label: 'Current Aux 2 bus input name',
+		label: 'Current Aux 1 bus input name',
+		name: 'aux1_in_name'
+	},
+	{
+		label: 'Current Aux 2 bus input',
 		name: 'aux2_in'
 	},
 	{
-		label: 'Current Aux 3 bus input name',
+		label: 'Current Aux 2 bus input name',
+		name: 'aux2_in_name'
+	},
+	{
+		label: 'Current Aux 3 bus input',
 		name: 'aux3_in'
 	},
 	{
-		label: 'Current Aux 4 bus input name',
+		label: 'Current Aux 3 bus input name',
+		name: 'aux3_in_name'
+	},
+	{
+		label: 'Current Aux 4 bus input',
 		name: 'aux4_in'
+	},
+	{
+		label: 'Current Aux 4 bus input name',
+		name: 'aux4_in_name'
 	},
 	{
 		label: 'Current ME Duration in Frames',

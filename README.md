@@ -50,7 +50,9 @@ Please add an issue for other Datavision vision mixers you would like to see add
 
 **Available variables**
 * Current PGM and PVW inputs sources
+* Current PGM and PVW inputs source names
 * Current Key, DSK and Aux bus inputs sources
+* Current Key, DSK and Aux bus inputs source names
 * Current audio source
 * Current ME, DSK and FTB duration frames
 * KEY and DSK button states (Just for testing for now)

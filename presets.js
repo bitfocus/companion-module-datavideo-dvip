@@ -276,6 +276,31 @@ exports.getPresets = function () {
 
 		},		
 		{
+			category: 'audio',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'audio_src',
+				options: {
+					audio_src: '2'
+				}
+			}],
+			feedbacks: [{
+				type: 'audio_src',
+				options: {
+					audio_src: '2'
+				}
+			}],
+
+		},		
+		{
 			category: 'user-load',
 			label: 'User 1',
 			bank: {

@@ -18,6 +18,7 @@ class instance extends instance_skel {
 		this.null_packet_cmd = Buffer.from([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]);
 		this.filter_packet = Buffer.from([0x08, 0x00, 0x00, 0x00, 0x30, 0x4e, 0x13, 0x00]);
 		this.disconnect_packet = Buffer.from([0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00]);
+		this.get_audio_src_packet = Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00]);
 
 		this.cur_input_request = 0;
 		this.input_names = [];
@@ -369,8 +370,8 @@ class instance extends instance_skel {
 
 				this.socket.send(cmd);
 				//Update input names on change
-				if (id == 'set_input_name' || id == 'load_user')  {
-					if(this.cur_input_request == 0){
+				if (id == 'set_input_name' || id == 'load_user') {
+					if (this.cur_input_request == 0) {
 						this.getInputNames(null);
 					}
 				}
@@ -441,10 +442,10 @@ class instance extends instance_skel {
 			this.setVariable(varID, element.label);
 
 			let input = this.model.inputs.find(element => element.id === state.toString());
-			if(input !== undefined){
+			if (input !== undefined) {
 				this.setVariable(varID + '_name', this.input_names[element.id]);
-			}else{
-				this.setVariable(varID+ '_name', element.label);
+			} else {
+				this.setVariable(varID + '_name', element.label);
 			}
 		}
 	}
@@ -549,7 +550,10 @@ class instance extends instance_skel {
 				this.socket.on('connect', () => {
 					debug('Connected');
 					this.socket.send(this.null_packet);
+					//Get input names
 					this.getInputNames(null);
+					//Get current audio source
+					this.socket.send(this.get_audio_src_packet);
 				});
 				this.socket_realtime.on('status_change', (status, message) => {
 					this.status(status, message);
@@ -580,22 +584,31 @@ class instance extends instance_skel {
 						//Slight downside is that the return packet does not included the request input number
 						//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
 						//This is also done when set_input_name action is ran.
-						if(this.cur_input_request != 0){
-						pos = buffer.indexOf('03000000', 0, "hex")
-						if (pos > -1) {
-							let name;
-							name = buffer.slice(pos + 8, buffer.length);
-							this.getInputNames(name.toString('utf16le'));
+						if (this.cur_input_request != 0) {
+							pos = buffer.indexOf('03000000', 0, "hex")
+							if (pos > -1) {
+								let name;
+								name = buffer.slice(pos + 8, buffer.length);
+								this.getInputNames(name.toString('utf16le'));
 
+							}
 						}
-					}
 						//Grab names again on this packet
 						pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
 						if (pos > -1) {
-							if(this.cur_input_request == 0){
+							if (this.cur_input_request == 0) {
 								this.getInputNames(null);
 							}
 
+						}
+
+						//Audio Source
+						if (!this.config.modelID != 'se650' && !this.config.modelID != 'se700') {
+							pos = buffer.indexOf('0100000000000600', 0, "hex")
+							if (pos > -1) {
+								this.audio_src = buffer.readInt16LE(pos + 8);
+								this.processSourceAssignment('audio_src', 'audio_src', this.audio_src, this.model.audio_src);
+							}
 						}
 
 					}
@@ -608,7 +621,7 @@ class instance extends instance_skel {
 
 					//If it's not a null packet check what is inside
 					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-						//console.log('Receive Realtime: ', buffer);
+					//	console.log('Receive Realtime: ', buffer);
 						let pos;
 						let element;
 
@@ -620,9 +633,12 @@ class instance extends instance_skel {
 							this.checkFeedbacks('curr_user');
 							this.setVariable('curr_user', this.curr_user);
 							//Update input names because user has changed
-							if(this.cur_input_request == 0){
+							if (this.cur_input_request == 0) {
 								this.getInputNames(null);
 							}
+
+							//Request the audio src on user change
+							this.socket.send(this.get_audio_src_packet);
 						}
 
 						//Update input names on user switch
@@ -877,9 +893,11 @@ class instance extends instance_skel {
 
 						//Audio Source
 						if (!this.config.modelID != 'se650' && !this.config.modelID != 'se700') {
-							pos = buffer.indexOf('0000000000000600', 0, "hex")
+							//Only on whole packet because I'm getting false hits.
+							//Currently it doesn't seem to send audio source on connect
+							pos = buffer.indexOf('100000000000000000000600', 0, "hex")
 							if (pos > -1) {
-								this.audio_src = buffer.readInt16LE(pos + 8);
+								this.audio_src = buffer.readInt16LE(pos + 12);
 								this.processSourceAssignment('audio_src', 'audio_src', this.audio_src, this.model.audio_src);
 							}
 						}

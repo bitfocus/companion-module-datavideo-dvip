@@ -33,20 +33,33 @@ exports.getFeedbacks = function () {
 			}
 		}
 	}
+
 	feedbacks['pvw_in'] = {
 		label: 'Color for PVW',
 		description: 'Set Button colors for PVW Bus',
 		options: [{
 			type: 'colorpicker',
-			label: 'Foreground color',
+			label: 'Foreground color for PVW state',
 			id: 'fg',
 			default: '16777215'
 		},
 		{
 			type: 'colorpicker',
-			label: 'Background color',
+			label: 'Background color for PVW state',
 			id: 'bg',
 			default: this.rgb(51, 102, 0),
+		},
+		{
+			type: 'colorpicker',
+			label: 'Foreground color for Transition state',
+			id: 'fg_trans',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color for Transition state',
+			id: 'bg_trans',
+			default: this.rgb(255, 56, 0),
 		},
 		{
 			type: 'dropdown',
@@ -58,13 +71,26 @@ exports.getFeedbacks = function () {
 		],
 		callback: (feedback, bank) => {
 			if (this.pvw_in_src == feedback.options.pvw_in) {
-				return {
-					color: feedback.options.fg,
-					bgcolor: feedback.options.bg
-				};
+				if (this.tbar_state > 0) {
+					return {
+						color: feedback.options.fg_trans,
+						bgcolor: feedback.options.bg_trans,
+					};
+				} else {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
 			}
+
+
 		}
 	}
+
+
+
+
 	feedbacks['key1_in'] = {
 		label: 'Color for Key 1 Aux',
 		description: 'Set Button colors for Key 1 Aux Bus',

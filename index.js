@@ -616,7 +616,7 @@ class instance extends instance_skel {
 						pos = buffer.indexOf('00000800', 0, "hex")
 						if (pos > -1) {
 							this.curr_user = buffer.readInt32LE(pos + 4);
-							
+
 							this.checkFeedbacks('curr_user');
 							this.setVariable('curr_user', this.curr_user);
 							//Update input names because user has changed
@@ -865,6 +865,7 @@ class instance extends instance_skel {
 							this.tbar_state = buffer.readInt32LE(pos + 4);
 							//console.log("tbar:", this.tbar_state);
 							this.checkFeedbacks('tbar_state');
+							this.checkFeedbacks('pvw_in')
 						}
 						//DSK Auto T Bar
 						pos = buffer.indexOf('81000200', 0, "hex")

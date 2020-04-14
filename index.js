@@ -430,6 +430,9 @@ class instance extends instance_skel {
 			this.socket_realtime.send(this.disconnect_packet);
 			this.socket_realtime.destroy();
 		}
+		if (this.socket_request !== undefined) {
+			this.socket_request.destroy();
+		}
 		debug('destroy', this.id);
 	}
 

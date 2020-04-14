@@ -70,7 +70,7 @@ class instance extends instance_skel {
 		this.CONFIG_MODEL = {
 			se1200mu: {
 				id: 'se1200mu',
-				label: 'SE-1200MU',
+				label: 'SE-1200MU/HS-1300',
 				pgm: this.CHOICES_SWITCH_PGM_1200,
 				pvw: this.CHOICES_SWITCH_PVW_1200,
 				key1: this.CHOICES_SWITCH_KEY1_1200,

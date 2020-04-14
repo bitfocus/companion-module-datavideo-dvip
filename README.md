@@ -10,7 +10,7 @@ More documentation on the DVIP specification is here: https://github.com/BB21B/d
 Currently supports:  
 SE-650  
 SE-700  
-SE-1200MU  
+SE-1200MU/HS-1300  
 SE-3200  
 
 Please add an issue for other Datavision vision mixers you would like to see added or any feedback you have.

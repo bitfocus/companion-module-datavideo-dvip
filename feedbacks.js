@@ -112,14 +112,33 @@ exports.getFeedbacks = function () {
 			id: 'key1_in',
 			default: '0',
 			choices: this.model.key1
-		}
+		},
+		{
+			type: 'colorpicker',
+			label: 'Foreground color for PGM on state',
+			id: 'fg_pgm',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color for PGM on state',
+			id: 'bg_pgm',
+			default: this.rgb(255, 00, 0),
+		},
 		],
 		callback: (feedback, bank) => {
 			if (this.key1_in_src == feedback.options.key1_in) {
-				return {
-					color: feedback.options.fg,
-					bgcolor: feedback.options.bg
-				};
+				if (this.key1_pgm_state == 1) {
+					return {
+						color: feedback.options.fg_pgm,
+						bgcolor: feedback.options.bg_pgm
+					};
+				} else {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
 			}
 		}
 	}
@@ -145,14 +164,33 @@ exports.getFeedbacks = function () {
 				id: 'key2_in',
 				default: '0',
 				choices: this.model.key2
-			}
+			},
+			{
+				type: 'colorpicker',
+				label: 'Foreground color for PGM on state',
+				id: 'fg_pgm',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color for PGM on state',
+				id: 'bg_pgm',
+				default: this.rgb(255, 00, 0),
+			},
 			],
 			callback: (feedback, bank) => {
 				if (this.key2_in_src == feedback.options.key2_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+					if (this.key2_pgm_state == 1) {
+						return {
+							color: feedback.options.fg_pgm,
+							bgcolor: feedback.options.bg_pgm
+						};
+					} else {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
 		}
@@ -178,14 +216,33 @@ exports.getFeedbacks = function () {
 				id: 'pip_in',
 				default: '0',
 				choices: this.model.pip
-			}
+			},
+			{
+				type: 'colorpicker',
+				label: 'Foreground color for PGM on state',
+				id: 'fg_pgm',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color for PGM on state',
+				id: 'bg_pgm',
+				default: this.rgb(255, 00, 0),
+			},
 			],
 			callback: (feedback, bank) => {
 				if (this.pip_in_src == feedback.options.pip_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+					if (this.pip_pgm_state == 1) {
+						return {
+							color: feedback.options.fg_pgm,
+							bgcolor: feedback.options.bg_pgm
+						};
+					} else {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
 		}
@@ -213,14 +270,33 @@ exports.getFeedbacks = function () {
 				id: 'key3_in',
 				default: '0',
 				choices: this.model.key3
-			}
+			},
+			{
+				type: 'colorpicker',
+				label: 'Foreground color for PGM on state',
+				id: 'fg_pgm',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color for PGM on state',
+				id: 'bg_pgm',
+				default: this.rgb(255, 00, 0),
+			},
 			],
 			callback: (feedback, bank) => {
 				if (this.key3_in_src == feedback.options.key3_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+					if (this.key3_pgm_state == 1) {
+						return {
+							color: feedback.options.fg_pgm,
+							bgcolor: feedback.options.bg_pgm
+						};
+					} else {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
 		}
@@ -245,14 +321,33 @@ exports.getFeedbacks = function () {
 				id: 'key4_in',
 				default: '0',
 				choices: this.model.key4
-			}
+			},
+			{
+				type: 'colorpicker',
+				label: 'Foreground color for PGM on state',
+				id: 'fg_pgm',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color for PGM on state',
+				id: 'bg_pgm',
+				default: this.rgb(255, 00, 0),
+			},
 			],
 			callback: (feedback, bank) => {
 				if (this.key4_in_src == feedback.options.key4_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+					if (this.key4_pgm_state == 1) {
+						return {
+							color: feedback.options.fg_pgm,
+							bgcolor: feedback.options.bg_pgm
+						};
+					} else {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
 		}
@@ -389,7 +484,7 @@ exports.getFeedbacks = function () {
 		}
 	}
 	feedbacks['dsk1_in'] = {
-		label: 'Color for DSK1 Aux',
+		label: 'Color for DSK 1 Aux',
 		description: 'Set Button colors for DSK 1 Aux Bus',
 		options: [{
 			type: 'colorpicker',
@@ -409,20 +504,39 @@ exports.getFeedbacks = function () {
 			id: 'dsk1_in',
 			default: '0',
 			choices: this.model.dsk1
-		}
+		},
+		{
+			type: 'colorpicker',
+			label: 'Foreground color for PGM on state',
+			id: 'fg_pgm',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color for PGM on state',
+			id: 'bg_pgm',
+			default: this.rgb(255, 00, 0),
+		},
 		],
 		callback: (feedback, bank) => {
 			if (this.dsk1_in_src == feedback.options.dsk1_in) {
-				return {
-					color: feedback.options.fg,
-					bgcolor: feedback.options.bg
-				};
+				if (this.dsk1_pgm_state == 1) {
+					return {
+						color: feedback.options.fg_pgm,
+						bgcolor: feedback.options.bg_pgm
+					};
+				} else {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
 			}
 		}
 	}
 	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
 		feedbacks['dsk2_in'] = {
-			label: 'Color for DSK2 Aux',
+			label: 'Color for DSK 2 Aux',
 			description: 'Set Button colors for DSK 2 Aux Bus',
 			options: [{
 				type: 'colorpicker',
@@ -442,14 +556,33 @@ exports.getFeedbacks = function () {
 				id: 'dsk2_in',
 				default: '0',
 				choices: this.model.dsk2
-			}
+			},
+			{
+				type: 'colorpicker',
+				label: 'Foreground color for PGM on state',
+				id: 'fg_pgm',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color for PGM on state',
+				id: 'bg_pgm',
+				default: this.rgb(255, 00, 0),
+			},
 			],
 			callback: (feedback, bank) => {
 				if (this.dsk2_in_src == feedback.options.dsk2_in) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+					if (this.dsk2_pgm_state == 1) {
+						return {
+							color: feedback.options.fg_pgm,
+							bgcolor: feedback.options.bg_pgm
+						};
+					} else {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
 		}

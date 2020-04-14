@@ -34,7 +34,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 
 **Available feedback**
 * Current PGM and PVW Bus selected input feedback (PVW bus also has running transition feedback)
-* Current Key, DSK and Aux Bus selected input feedback
+* Current Key, DSK and Aux Bus selected input feedback (Key and DSK also feedback when live in PGM)
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
 * Current audio source
@@ -44,6 +44,8 @@ Please add an issue for other Datavision vision mixers you would like to see add
 **Available presets**
 * PGM Bus with feedback
 * PVW Bus with feedback
+* Key 1 Bus with feedback
+* DSK 1 Bus with feedback
 * Transition Mix, Wipe Clip and DVE with feedback
 * Transition Auto and DSK Auto with feedback
 * Transition Cut and DSK Cut

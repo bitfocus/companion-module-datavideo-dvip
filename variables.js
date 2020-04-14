@@ -137,6 +137,30 @@ exports.getVariables = function () {
 		name: 'key2_pvw_state'
 	},
 	{
+		label: 'Current Key 3 PGM state',
+		name: 'key3_pgm_state'
+	},
+	{
+		label: 'Current Key 3 PVW state',
+		name: 'key3_pvw_state'
+	},	
+	{
+		label: 'Current Key 4 PGM state',
+		name: 'key4_pgm_state'
+	},
+	{
+		label: 'Current Key 4 PVW state',
+		name: 'key4_pvw_state'
+	},
+	{
+		label: 'Current PIP PGM state',
+		name: 'pip_pgm_state'
+	},
+	{
+		label: 'Current PIP PVW state',
+		name: 'pip_pvw_state'
+	},
+	{
 		label: 'Current DSK 1 PGM state',
 		name: 'dsk1_pgm_state'
 	},

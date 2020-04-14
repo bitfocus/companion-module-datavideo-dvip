@@ -43,8 +43,16 @@ class instance extends instance_skel {
 		this.key1_pvw_state;
 		this.key2_pgm_state;
 		this.key2_pvw_state;
+		this.key3_pgm_state;
+		this.key3_pvw_state;
+		this.key4_pgm_state;
+		this.key4_pvw_state;
+		this.pip_pgm_state;
+		this.pip_pvw_state;
 		this.dsk1_pgm_state;
 		this.dsk1_pvw_state;
+		this.dsk2_pgm_state;
+		this.dsk2_pvw_state;
 		this.trans_current;
 		this.tbar_state;
 		this.dsk_tbar_state;
@@ -621,7 +629,7 @@ class instance extends instance_skel {
 
 					//If it's not a null packet check what is inside
 					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-					//	console.log('Receive Realtime: ', buffer);
+						//	console.log('Receive Realtime: ', buffer);
 						let pos;
 						let element;
 
@@ -821,56 +829,161 @@ class instance extends instance_skel {
 						}
 
 						////BUTTON STATES/////
-						//Key 1 State PGM
-						pos = buffer.indexOf('13000200', 0, "hex")
-						if (pos > -1) {
-							this.key1_pgm_state = buffer.readInt16LE(pos + 4);
-							this.setVariable('key1_pgm_state', this.key1_pgm_state);
-						}
-						//Key 1 State PVW
-						pos = buffer.indexOf('50000200', 0, "hex")
-						if (pos > -1) {
-							this.key1_pvw_state = buffer.readInt16LE(pos + 4);
-							this.setVariable('key1_pvw_state', this.key1_pvw_state);
-						}
+						if (this.config.modelID != 'se3200') {
+							//Button states for 1200 700 650
+							//Key 1 State PGM
+							pos = buffer.indexOf('13000200', 0, "hex")
+							if (pos > -1) {
+								this.key1_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key1_pgm_state', this.key1_pgm_state);
+								this.checkFeedbacks('key1_in');
+							}
+							//Key 1 State PVW
 
-						//Key 2 State PGM
-						pos = buffer.indexOf('31000200', 0, "hex")
-						if (pos > -1) {
-							this.key2_pgm_state = buffer.readInt16LE(pos + 4);
-							this.setVariable('key2_pgm_state', this.key2_pgm_state);
-						}
-						//Key 2 State PVW
-						pos = buffer.indexOf('51000200', 0, "hex")
-						if (pos > -1) {
-							this.key2_pvw_state = buffer.readInt16LE(pos + 4);
-							this.setVariable('key2_pvw_state', this.key2_pvw_state);
-						}
+							pos = buffer.indexOf('50000200', 0, "hex")
+							if (pos > -1) {
+								this.key1_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key1_pvw_state', this.key1_pvw_state);
+							}
 
-						//DSK 1 State PGM
-						pos = buffer.indexOf('5b000200', 0, "hex")
-						if (pos > -1) {
-							this.dsk1_pgm_state = buffer.readInt16LE(pos + 4);
-							this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
-						}
-						//DSK 1 State PVW
-						pos = buffer.indexOf('7f000200', 0, "hex")
-						if (pos > -1) {
-							this.dsk1_pvw_state = buffer.readInt16LE(pos + 4);
-							this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
-						}
+							//Key 2 State PGM / PIP
+							pos = buffer.indexOf('31000200', 0, "hex")
+							if (pos > -1) {
+								if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
+									this.pip_pgm_state = buffer.readInt16LE(pos + 4);
+									this.setVariable('pip_pgm_state', this.pip_pgm_state);
+									this.checkFeedbacks('pip_in');
+								} else {
+									this.key2_pgm_state = buffer.readInt16LE(pos + 4);
+									this.setVariable('key2_pgm_state', this.key2_pgm_state);
+									this.checkFeedbacks('key2_in');
+								}
+							}
+							//Key 2 State PVW / PIP
+							pos = buffer.indexOf('51000200', 0, "hex")
+							if (pos > -1) {
+								if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
+									this.pip_pvw_state = buffer.readInt16LE(pos + 4);
+									this.setVariable('pip_pvw_state', this.pip_pvw_state);
+								}else{
+									this.key2_pvw_state = buffer.readInt16LE(pos + 4);
+									this.setVariable('key2_pvw_state', this.key2_pvw_state);
+								}
 
-						//DSK 2 State PGM
-						pos = buffer.indexOf('6d000200', 0, "hex")
-						if (pos > -1) {
-							this.dsk2_pgm_state = buffer.readInt16LE(pos + 4);
-							this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
-						}
-						//DSK 2 State PVW
-						pos = buffer.indexOf('80000200', 0, "hex")
-						if (pos > -1) {
-							this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
-							this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
+							}
+
+							//DSK 1 State PGM
+							pos = buffer.indexOf('5b000200', 0, "hex")
+							if (pos > -1) {
+								this.dsk1_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
+								this.checkFeedbacks('dsk1_in');
+							}
+							//DSK 1 State PVW
+							pos = buffer.indexOf('7f000200', 0, "hex")
+							if (pos > -1) {
+								this.dsk1_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
+							}
+
+							//DSK 2 State PGM
+							pos = buffer.indexOf('6d000200', 0, "hex")
+							if (pos > -1) {
+								this.dsk2_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
+								this.checkFeedbacks('dsk2_in');
+							}
+							//DSK 2 State PVW
+							pos = buffer.indexOf('80000200', 0, "hex")
+							if (pos > -1) {
+								this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
+							}
+						} else {
+							//Button states for 3200
+							//Key 1 State PGM
+							pos = buffer.indexOf('13000200', 0, "hex")
+							if (pos > -1) {
+								this.key1_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key1_pgm_state', this.key1_pgm_state);
+								this.checkFeedbacks('key1_in');
+							}
+							//Key 1 State PVW
+
+							pos = buffer.indexOf('8c000200', 0, "hex")
+							if (pos > -1) {
+								this.key1_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key1_pvw_state', this.key1_pvw_state);
+							}
+
+							//Key 2 State PGM
+							pos = buffer.indexOf('31000200', 0, "hex")
+							if (pos > -1) {
+								this.key2_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key2_pgm_state', this.key2_pgm_state);
+								this.checkFeedbacks('key2_in');
+							}
+							//Key 2 State PVW
+							pos = buffer.indexOf('8d000200', 0, "hex")
+							if (pos > -1) {
+								this.key2_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key2_pvw_state', this.key2_pvw_state);
+							}
+
+							//Key 3 State PGM
+							pos = buffer.indexOf('4f000200', 0, "hex")
+							if (pos > -1) {
+								this.key3_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key3_pgm_state', this.key3_pgm_state);
+								this.checkFeedbacks('key3_in');
+							}
+							//Key 3 State PVW
+							pos = buffer.indexOf('8e000200', 0, "hex")
+							if (pos > -1) {
+								this.key3_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key3_pvw_state', this.key3_pvw_state);
+							}
+
+							//Key 4 State PGM
+							pos = buffer.indexOf('6d000200', 0, "hex")
+							if (pos > -1) {
+								this.key4_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key4_pgm_state', this.key4_pgm_state);
+								this.checkFeedbacks('key4_in');
+							}
+							//Key 4 State PVW
+							pos = buffer.indexOf('8f000200', 0, "hex")
+							if (pos > -1) {
+								this.key4_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('key4_pvw_state', this.key4_pvw_state);
+							}
+							//DSK 1 State PGM
+							pos = buffer.indexOf('5b000200', 0, "hex")
+							if (pos > -1) {
+								this.dsk1_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
+								this.checkFeedbacks('dsk1_in');
+							}
+							//DSK 1 State PVW
+							pos = buffer.indexOf('7f000200', 0, "hex")
+							if (pos > -1) {
+								this.dsk1_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
+							}
+
+							//DSK 2 State PGM
+							pos = buffer.indexOf('6d000200', 0, "hex")
+							if (pos > -1) {
+								this.dsk2_pgm_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
+								this.checkFeedbacks('dsk2_in');
+							}
+							//DSK 2 State PVW
+							pos = buffer.indexOf('80000200', 0, "hex")
+							if (pos > -1) {
+								this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
+								this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
+							}
 						}
 						////BUTTON STATES/////
 

@@ -52,6 +52,54 @@ exports.getPresets = function () {
 
 		},
 		{
+			category: 'dsk-1-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_dsk1',
+				options: {
+					switchdsk1: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'dsk1_in',
+				options: {
+					dsk1_in: '1'
+				}
+			}],
+		},
+		{
+			category: 'key-1-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_key1',
+				options: {
+					switchkey1: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'key1_in',
+				options: {
+					key1_in: '1'
+				}
+			}],
+		},
+		{
 			category: 'transition',
 			label: 'Mix',
 			bank: {
@@ -274,7 +322,7 @@ exports.getPresets = function () {
 				}
 			}],
 
-		},		
+		},
 		{
 			category: 'audio',
 			label: 'In 1',
@@ -299,7 +347,7 @@ exports.getPresets = function () {
 				}
 			}],
 
-		},		
+		},
 		{
 			category: 'user-load',
 			label: 'User 1',
@@ -325,6 +373,7 @@ exports.getPresets = function () {
 			}],
 
 		},
+
 
 	];
 

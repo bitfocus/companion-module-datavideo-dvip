@@ -90,7 +90,7 @@ class instance extends instance_skel {
 			},
 			se3200: {
 				id: 'se3200',
-				label: 'SE-3200',
+				label: 'SE-3200/HS-3200',
 				pgm: this.CHOICES_SWITCH_PGM_3200,
 				pvw: this.CHOICES_SWITCH_PVW_3200,
 				key1: this.CHOICES_SWITCH_KEY1_3200,

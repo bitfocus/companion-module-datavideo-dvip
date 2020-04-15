@@ -42,6 +42,11 @@ exports.getCommands = function () {
             type: "int",
         },
         {
+            id: 5,
+            label: "NOT_DOCUMENTED",
+            type: "int",
+        },
+        {
             id: 6,
             label: "STATUS_BOARD_ID_VERSION",
             type: "int",
@@ -254,6 +259,11 @@ exports.getCommands = function () {
         {
             id: 5,
             label: "SYSTEM_GENLOCK_V_PHASE",
+            type: "int",
+        },
+        {
+            id: 6,
+            label: "NOT_DOCUMENTED",
             type: "int",
         },
         ]
@@ -914,7 +924,7 @@ exports.getCommands = function () {
                 id: 134,
                 label: "SWITCHER_FTB_DIRN",
                 type: "flag",
-            }, 
+            },
             {
                 id: 135,
                 label: "SWITCHER_FTB_DIRN",
@@ -1215,88 +1225,109 @@ exports.getCommands = function () {
     {
         id: 5,
         label: "SECTION_OUTPUT_CTRL",
-        controls: [{
-            id: 4,
-            label: "OUTPUT_MULTIVIEWER_MODE",
-            type: "int",
-        },
-        {
-            id: 5,
-            label: "OUTPUT_MULTIVIEWER_MAIN1_SRC",
-            type: "int",
-        },
-        {
-            id: 9,
-            label: "OUTPUT_MULTIVIEWER_TRANSP_LABELS",
-            type: "int",
-            values: [{
+        controls: [
+            {
                 id: 0,
-                label: "NOT_TRANSPARENT",
+                label: "OUTPUT_AUX_CTRL_AUX1_SRC",
+                type: "int",
             },
             {
                 id: 1,
-                label: "TRANSPARENT",
-            }
-            ]
-        },
-        {
-            id: 10,
-            label: "OUTPUT_MULTIVIEWER_AUTO_NUM",
-            type: "int",
-            values: [{
-                id: 0,
-                label: "NOT_ENABLED",
+                label: "OUTPUT_AUX_CTRL_AUX2_SRC",
+                type: "int",
             },
             {
-                id: 1,
-                label: "ENABLED",
-            }
-            ]
-        },
-        {
-            id: 11,
-            label: "OUTPUT_MULTIVIEWER_LABEL_INFO",
-            type: "int",
-            values: [{
-                id: 0,
-                label: "NOT_ENABLED",
+                id: 2,
+                label: "OUTPUT_AUX_CTRL_AUX3_SRC",
+                type: "int",
             },
             {
-                id: 1,
-                label: "ENABLED",
-            }
-            ]
-        },
-        {
-            id: 12,
-            label: "OUTPUT_ANALOG_OUT_SELECT",
-            type: "int",
-        },
-        {
-            id: 13,
-            label: "OUTPUT_ANALOG_OUT_MODE",
-            type: "int",
-        },
-        {
-            id: 14,
-            label: "OUTPUT_ANALOG_OUT_SYNC_MODE",
-            type: "int",
-        },
-        {
-            id: 15,
-            label: "OUTPUT_DVI_OUT_SELECT",
-            type: "int",
-        },
-        {
-            id: 16,
-            label: "OUTPUT_MULTI_OUT1_SELECT",
-            type: "int",
-        },
-        {
-            id: 17,
-            label: "OUTPUT_MULTI_OUT2_SELECT",
-            type: "int",
-        },
+                id: 3,
+                label: "OUTPUT_AUX_CTRL_AUX4_SRC",
+                type: "int",
+            },
+            {
+                id: 4,
+                label: "OUTPUT_MULTIVIEWER_MODE",
+                type: "int",
+            },
+            {
+                id: 5,
+                label: "OUTPUT_MULTIVIEWER_MAIN1_SRC",
+                type: "int",
+            },
+            {
+                id: 9,
+                label: "OUTPUT_MULTIVIEWER_TRANSP_LABELS",
+                type: "int",
+                values: [{
+                    id: 0,
+                    label: "NOT_TRANSPARENT",
+                },
+                {
+                    id: 1,
+                    label: "TRANSPARENT",
+                }
+                ]
+            },
+            {
+                id: 10,
+                label: "OUTPUT_MULTIVIEWER_AUTO_NUM",
+                type: "int",
+                values: [{
+                    id: 0,
+                    label: "NOT_ENABLED",
+                },
+                {
+                    id: 1,
+                    label: "ENABLED",
+                }
+                ]
+            },
+            {
+                id: 11,
+                label: "OUTPUT_MULTIVIEWER_LABEL_INFO",
+                type: "int",
+                values: [{
+                    id: 0,
+                    label: "NOT_ENABLED",
+                },
+                {
+                    id: 1,
+                    label: "ENABLED",
+                }
+                ]
+            },
+            {
+                id: 12,
+                label: "OUTPUT_ANALOG_OUT_SELECT",
+                type: "int",
+            },
+            {
+                id: 13,
+                label: "OUTPUT_ANALOG_OUT_MODE",
+                type: "int",
+            },
+            {
+                id: 14,
+                label: "OUTPUT_ANALOG_OUT_SYNC_MODE",
+                type: "int",
+            },
+            {
+                id: 15,
+                label: "OUTPUT_DVI_OUT_SELECT",
+                type: "int",
+            },
+            {
+                id: 16,
+                label: "OUTPUT_MULTI_OUT1_SELECT",
+                type: "int",
+            },
+            {
+                id: 17,
+                label: "OUTPUT_MULTI_OUT2_SELECT",
+                type: "int",
+            },
         ]
     },
     {
@@ -1670,16 +1701,67 @@ exports.getCommands = function () {
             id: 1,
             label: "MEMORY_COMMAND",
             type: "int",
+            values: [{
+                id: 0,
+                label: "DV_MEMORY_READY"
+            },
+            {
+                id: 1,
+                label: "DV_MEMORY_LOAD"
+            },
+            {
+                id: 2,
+                label: "DV_MEMORY_STORE"
+            },
+            {
+                id: 3,
+                label: "DV_MEMORY_DELETE"
+            }
+            ]
         },
         {
             id: 2,
             label: "MEMORY_STATE",
             type: "int",
+            values: [{
+                id: 0,
+                label: "DV_MEM_STATE_READY"
+            },
+            {
+                id: 1,
+                label: "DV_MEM_STATE_BUSY"
+            },
+            {
+                id: 2,
+                label: "DV_MEM_STATE_ERROR"
+            }
+            ]
         },
         {
             id: 3,
             label: "MEMORY_RESULT",
             type: "int",
+            values: [{
+                id: 0,
+                label: "DV_MEM_RESULT_OK"
+            },
+            {
+                id: 1,
+                label: "DV_MEM_RESULT_FAIL"
+            },
+            {
+                id: 2,
+                label: "DV_MEM_RESULT_NOT_FOUND"
+            },
+            {
+                id: 3,
+                label: "DV_MEM_RESULT_ILLEGAL_COMMAND"
+            },
+            {
+                id: 4,
+                label: "DV_MEM_RESULT_ILLEGAL_VALUE"
+            }
+            ]
         },
         {
             id: 4,
@@ -1720,16 +1802,71 @@ exports.getCommands = function () {
             id: 2,
             label: "STILL_COMMAND",
             type: "int",
+            values: [{
+                id: 0,
+                label: "DV_STILL_READY"
+            },
+            {
+                id: 1,
+                label: "DV_STILL_LOAD"
+            },
+            {
+                id: 2,
+                label: "DV_STILL_STORE"
+            },
+            {
+                id: 3,
+                label: "DV_STILL_GRAB"
+            },
+            {
+                id: 4,
+                label: "DV_STILL_DELETE"
+            },
+            ]
         },
         {
             id: 3,
             label: "STILL_STATE",
             type: "int",
+            values: [{
+                id: 0,
+                label: "DV_STILL_STATE_READY"
+            },
+            {
+                id: 1,
+                label: "DV_STILL_STATE_BUSY"
+            },
+            {
+                id: 2,
+                label: "DV_STILL_STATE_ERROR"
+            }
+            ]
         },
         {
             id: 4,
             label: "STILL_RESULT",
             type: "int",
+            values: [{
+                id: 0,
+                label: "DV_STILL_RESULT_OK"
+            },
+            {
+                id: 1,
+                label: "DV_STILL_RESULT_FAIL"
+            },
+            {
+                id: 2,
+                label: "DV_STILL_RESULT_NOT_FOUND"
+            },
+            {
+                id: 3,
+                label: "DV_STILL_RESULT_ILLEGAL_COMMAND"
+            },
+            {
+                id: 4,
+                label: "DV_STILL_RESULT_ILLEGAL_VALUE"
+            },
+            ]
         },
         {
             id: 5,

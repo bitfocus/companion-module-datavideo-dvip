@@ -451,7 +451,169 @@ class instance extends instance_skel {
 		this.init_commands();
 	}
 
-	processBuffer(buffer){
+	processControl(section, control, value, value_label) {
+
+		switch (control) {
+			case 'SWITCHER_PGM_SRC':
+				this.pgm_in_src = value;
+				this.processSourceAssignment('pgm_in', 'pgm_in', this.pgm_in_src, this.model.pgm);
+				break;
+			case 'SWITCHER_PST_SRC':
+				this.pvw_in_src = value;
+				this.processSourceAssignment('pvw_in', 'pvw_in', this.pvw_in_src, this.model.pvw);
+				break;
+			case 'SWITCHER_KEY1_KEY_SRC':
+				this.key1_in_src = value;
+				this.processSourceAssignment('key1_in', 'key1_in', this.key1_in_src, this.model.key1);
+				break;
+			case 'SWITCHER_KEY2_KEY_SRC':
+				if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
+					this.pip_in_src = value;
+					this.processSourceAssignment('pip_in', 'pip_in', this.pip_in_src, this.model.pip);
+				} else {
+					this.key2_in_src = value;
+					this.processSourceAssignment('key2_in', 'key2_in', this.key2_in_src, this.model.key2);
+				}
+				break;
+			case 'SWITCHER_KEY3_KEY_SRC':
+				this.key3_in_src = value;
+				this.processSourceAssignment('key3_in', 'key3_in', this.key3_in_src, this.model.key3);
+				break;
+			case 'SWITCHER_KEY4_KEY_SRC':
+				this.key4_in_src = value;
+				this.processSourceAssignment('key4_in', 'key4_in', this.key4_in_src, this.model.key4);
+				break;
+			case 'SWITCHER_DSK1_KEY_SRC':
+				this.dsk1_in_src = value;
+				this.processSourceAssignment('dsk1_in', 'dsk1_in', this.dsk1_in_src, this.model.dsk1);
+				break;
+			case 'SWITCHER_DSK2_KEY_SRC':
+				this.dsk2_in_src = value;
+				this.processSourceAssignment('dsk2_in', 'dsk2_in', this.dsk2_in_src, this.model.dsk2);
+				break;
+			case 'OUTPUT_AUX_CTRL_AUX1_SRC':
+				this.aux1_in_src = value;
+				this.processSourceAssignment('aux1_in', 'aux1_in', this.aux1_in_src, this.model.aux1);
+				break;
+			case 'OUTPUT_AUX_CTRL_AUX2_SRC':
+				this.aux2_in_src = value;
+				this.processSourceAssignment('aux2_in', 'aux2_in', this.aux2_in_src, this.model.aux2);
+				break;
+			case 'OUTPUT_AUX_CTRL_AUX3_SRC':
+				this.aux3_in_src = value;
+				this.processSourceAssignment('aux3_in', 'aux3_in', this.aux3_in_src, this.model.aux3);
+				break;
+			case 'OUTPUT_AUX_CTRL_AUX4_SRC':
+				this.aux4_in_src = value;
+				this.processSourceAssignment('aux4_in', 'aux4_in', this.aux4_in_src, this.model.aux4);
+				break;
+			case 'SWITCHER_DSK1_KEYER_ON':
+				this.dsk1_pgm_state = value;
+				this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
+				this.checkFeedbacks('dsk1_in');
+				break;
+			case 'SWITCHER_DSK1_TRANS_ENABLE':
+				this.dsk1_pvw_state = value;
+				this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
+				break;
+			case 'SWITCHER_DSK2_KEYER_ON':
+				this.dsk2_pgm_state = value;
+				this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
+				this.checkFeedbacks('dsk2_in');
+				break;
+			case 'SWITCHER_DSK2_TRANS_ENABLE':
+				this.dsk2_pvw_state = value;
+				this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
+				break;
+			case 'SWITCHER_KEY1_KEYER_ON':
+				this.key1_pgm_state = value;
+				this.setVariable('key1_pgm_state', this.key1_pgm_state);
+				this.checkFeedbacks('key1_in');
+				break;
+			case 'SWITCHER_TRANS_KEY1':
+				this.key1_pvw_state = value;
+				this.setVariable('key1_pvw_state', this.key1_pvw_state);
+				break;
+			case 'SWITCHER_KEY2_KEYER_ON':
+				if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
+					this.pip_pgm_state = value;
+					this.setVariable('pip_pgm_state', this.pip_pgm_state);
+					this.checkFeedbacks('pip_in');
+				} else {
+					this.key2_pgm_state = value;
+					this.setVariable('key2_pgm_state', this.key2_pgm_state);
+					this.checkFeedbacks('key2_in');
+				}
+				break;
+			case 'SWITCHER_TRANS_KEY2':
+				if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
+					this.pip_pvw_state = value;
+					this.setVariable('pip_pvw_state', this.pip_pvw_state);
+				} else {
+					this.key2_pvw_state = value;
+					this.setVariable('key2_pvw_state', this.key2_pvw_state);
+				}
+				break;
+			case 'SWITCHER_KEY3_KEYER_ON':
+				this.key3_pgm_state = value;
+				this.setVariable('key3_pgm_state', this.key3_pgm_state);
+				this.checkFeedbacks('key3_in');
+				break;
+			case 'SWITCHER_TRANS_KEY3':
+				this.key3_pvw_state = value;
+				this.setVariable('key3_pvw_state', this.key3_pvw_state);
+				break;
+			case 'SWITCHER_KEY4_KEYER_ON':
+				this.key4_pgm_state = value;
+				this.setVariable('key4_pgm_state', this.key4_pgm_state);
+				this.checkFeedbacks('key4_in');
+				break;
+			case 'SWITCHER_TRANS_KEY4':
+				this.key4_pvw_state = value;
+				this.setVariable('key4_pvw_state', this.key4_pvw_state);
+				break;
+			case 'SWITCHER_TRANS_TYPE':
+				this.trans_current = value;
+				this.checkFeedbacks('trans_current');
+				break;
+			case 'ME_TRANS_DURATION':
+				this.me_dur = value;
+				this.setVariable('me_dur', this.me_dur);
+				break;
+			case 'DSK_TRANS_DURATION':
+				this.dsk_dur = value;
+				this.setVariable('dsk_dur', this.dsk_dur);
+				break;
+			case 'FTB_TRANS_DURATION':
+				this.ftb_dur = value;
+				this.setVariable('ftb_dur', this.ftb_dur);
+				break;
+			case 'AUDIO_SOURCE':
+				this.audio_src = value;
+				this.processSourceAssignment('audio_src', 'audio_src', this.audio_src, this.model.audio_src);
+				break;
+			case 'MEMORY_SELECT':
+				this.curr_user = value;
+				this.checkFeedbacks('curr_user');
+				this.setVariable('curr_user', this.curr_user);
+				break;
+			case 'SWITCHER_WIPE_LEVEL':
+				this.tbar_state = value;
+				this.checkFeedbacks('tbar_state');
+				this.checkFeedbacks('pvw_in')
+				break;
+
+			case 'SWITCHER_DSK_TRANS_LEVEL':
+				this.dsk_tbar_state = value;
+				//console.log("tbar:", this.tbar_state);
+				this.checkFeedbacks('dsk_tbar_state');
+				break;
+
+		}
+
+	}
+
+	processBuffer(buffer) {
 		console.log("   ");
 		console.log("   ");
 		console.log("__________________PACKET START_____________________");
@@ -463,7 +625,7 @@ class instance extends instance_skel {
 		let data;
 		let command;
 		let element;
-		
+
 		//New handling code test
 		command = buffer.readInt16LE(4, true);
 		console.log("COMMAND ID: ", command)
@@ -472,68 +634,70 @@ class instance extends instance_skel {
 		//let setctl = this.COMMANDS[1]['sections'];
 		let com = this.COMMANDS.find(element => element.id == command);
 		if (com !== undefined) {
-			
+
 
 			console.log("COMMAND: ", com.label);
-			for(let i = 8; i < buffer.length; i = i + 4) {
+			for (let i = 8; i < buffer.length; i = i + 4) {
 				console.log("   ");
 				console.log("_____________SECTION LOOP______________");
-					 data = buffer.slice(i, i + 4);
-					console.log("CONTROL BUFFER: ", data);
-					console.log("NEXT 4 BITS: ", buffer.slice(i + 4, i + 8));
-					left = data.readInt16LE(0, true);
-					right = data.readInt16LE(2, true);
-			
-			element = com.sections.find(element => element.id == right);
-			if (element !== undefined) {
-				console.log("SECTION: ", element.label);
-				let element2 = element.controls.find(element => element.id == left);
-				if (element2 !== undefined) {
-					console.log("CONTROL: ", element2.label);
+				data = buffer.slice(i, i + 4);
+				console.log("CONTROL BUFFER: ", data);
+				console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
+				left = data.readInt16LE(0, true);
+				right = data.readInt16LE(2, true);
 
-					if(i+ 4 < buffer.length){
-					switch (element2.type){
-						case 'float':
-							value = buffer.readFloatLE(i + 4);
-							break;
-						case 'int':
-							value = buffer.readInt32LE(i + 4, true);
-							break;
-						case 'flag':
-							value = buffer.readInt8(i + 4, true);
-							break;
-					}
-				
+				element = com.sections.find(element => element.id == right);
+				if (element !== undefined) {
+					console.log("SECTION: ", element.label);
+					let element2 = element.controls.find(element => element.id == left);
+					if (element2 !== undefined) {
+						console.log("CONTROL: ", element2.label);
 
-					console.log("VALUE: ", value);
-					if (element2.values != null) {
-						let element3 = element2.values.find(element => element.id == value);
-						if (element3 !== undefined) {
-							console.log("VALUE LABEL: ", element3.label);
+						if (i + 4 < buffer.length) {
+							switch (element2.type) {
+								case 'float':
+									value = buffer.readFloatLE(i + 4);
+									break;
+								case 'int':
+									value = buffer.readInt32LE(i + 4, true);
+									break;
+								case 'flag':
+									value = buffer.readInt8(i + 4, true);
+									break;
+							}
 
+							console.log("VALUE: ", value);
+							if (element2.values != null) {
+								let element3 = element2.values.find(element => element.id == value);
+								if (element3 !== undefined) {
+									console.log("VALUE LABEL: ", element3.label);
+									this.processControl(element.label, element2.label, value, element3.label);
+								}
+							} else {
+								this.processControl(element.label, element2.label, value, null);
+							}
 
 						}
 					}
-					
 				}
-				}
+				i = i + 4;
 			}
-			i = i + 4;
 		}
-	}
 	}
 
 	processSourceAssignment(fbID, varID, state, choices) {
 		this.checkFeedbacks(fbID);
-		let element = choices.find(element => element.id === state.toString());
-		if (element !== undefined) {
-			this.setVariable(varID, element.label);
+		if (choices != null) {
+			let element = choices.find(element => element.id === state.toString());
+			if (element !== undefined) {
+				this.setVariable(varID, element.label);
 
-			let input = this.model.inputs.find(element => element.id === state.toString());
-			if (input !== undefined) {
-				this.setVariable(varID + '_name', this.input_names[element.id]);
-			} else {
-				this.setVariable(varID + '_name', element.label);
+				let input = this.model.inputs.find(element => element.id === state.toString());
+				if (input !== undefined) {
+					this.setVariable(varID + '_name', this.input_names[element.id]);
+				} else {
+					this.setVariable(varID + '_name', element.label);
+				}
 			}
 		}
 	}
@@ -641,7 +805,7 @@ class instance extends instance_skel {
 					//Get input names
 					this.getInputNames(null);
 					//Get current audio source
-					this.socket.send(this.get_audio_src_packet);
+					//this.socket.send(this.get_audio_src_packet);
 				});
 				this.socket_realtime.on('status_change', (status, message) => {
 					this.status(status, message);
@@ -668,7 +832,7 @@ class instance extends instance_skel {
 						this.socket.send(this.null_packet);
 					} else {
 						//console.log('Receive CMD: ', buffer);
-						this.processBuffer(buffer);
+						//this.processBuffer(buffer);
 						//Input name
 						//Slight downside is that the return packet does not included the request input number
 						//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
@@ -691,15 +855,6 @@ class instance extends instance_skel {
 
 						}
 
-						//Audio Source
-						if (!this.config.modelID != 'se650' && !this.config.modelID != 'se700') {
-							pos = buffer.indexOf('0100000000000600', 0, "hex")
-							if (pos > -1) {
-								this.audio_src = buffer.readInt16LE(pos + 8);
-								this.processSourceAssignment('audio_src', 'audio_src', this.audio_src, this.model.audio_src);
-							}
-						}
-
 					}
 
 				});
@@ -708,396 +863,11 @@ class instance extends instance_skel {
 					//Send the null packet when we recieve a packet
 					this.socket_realtime.send(this.null_packet);
 
-
 					//If it's not a null packet check what is inside
 					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
 						//console.log('Receive Realtime: ', buffer);
-						let pos;
-						let element;
+
 						this.processBuffer(buffer);
-
-
-						//User memory change
-						pos = buffer.indexOf('00000800', 0, "hex")
-						if (pos > -1) {
-							this.curr_user = buffer.readInt32LE(pos + 4);
-
-							this.checkFeedbacks('curr_user');
-							this.setVariable('curr_user', this.curr_user);
-							//Update input names because user has changed
-							if (this.cur_input_request == 0) {
-								this.getInputNames(null);
-							}
-
-							//Request the audio src on user change
-							this.socket.send(this.get_audio_src_packet);
-						}
-
-						//Update input names on user switch
-						//pos = buffer.indexOf('0000304e1300', 0, "hex")
-						//if (pos > -1) {
-						//	if(this.cur_input_request == 0){
-						//		this.getInputNames(null);
-						//	}
-						//}
-
-
-						//All the feedback handling is below
-						//3200 PGM and PREVIEW BUS
-						if (this.config.modelID == 'se3200') {
-							pos = buffer.indexOf('94000200', 0, "hex")
-							if (pos > -1) {
-								this.pgm_in_src = buffer[pos + 4];
-								this.processSourceAssignment('pgm_in', 'pgm_in', this.pgm_in_src, this.model.pgm);
-							}
-							pos = buffer.indexOf('95000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('PVW to', buffer[pos + 4]);
-								this.pvw_in_src = buffer[pos + 4];
-								this.processSourceAssignment('pvw_in', 'pvw_in', this.pvw_in_src, this.model.pvw);
-							}
-						} else {
-							//1200,700,650 PGM AND PREVIEW INPUT
-							pos = buffer.indexOf('56000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('PGM to', buffer[pos + 4]);
-								this.pgm_in_src = buffer[pos + 4];
-								this.processSourceAssignment('pgm_in', 'pgm_in', this.pgm_in_src, this.model.pgm);
-
-							}
-							pos = buffer.indexOf('57000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('PVW to', buffer[pos + 4]);
-								this.pvw_in_src = buffer[pos + 4];
-								this.processSourceAssignment('pvw_in', 'pvw_in', this.pvw_in_src, this.model.pvw);
-							}
-						}
-
-						//ALL MODEL KEY 1
-						pos = buffer.indexOf('14000200', 0, "hex")
-						if (pos > -1) {
-							//console.log('KEY 1 to', buffer[pos + 4]);
-							this.key1_in_src = buffer[pos + 4];
-							this.processSourceAssignment('key1_in', 'key1_in', this.key1_in_src, this.model.key1);
-
-						}
-						//ALL MODEL KEY 2/PIP
-						pos = buffer.indexOf('32000200', 0, "hex")
-						if (pos > -1) {
-
-							this.key2_in_src = buffer[pos + 4];
-							//console.log('KEY 2 to', buffer[pos + 4]);
-							if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
-								this.key2_in_src = buffer[pos + 4];
-								this.processSourceAssignment('key2_in', 'key2_in', this.key2_in_src, this.model.key2);
-							} else {
-								//console.log('PIP to', buffer[pos + 4]);
-								this.pip_in_src = buffer[pos + 4];
-								this.processSourceAssignment('pip_in', 'pip_in', this.pip_in_src, this.model.pip);
-							}
-						}
-						//DSK 1 FOR SE1200, SE700 ETC
-						if (!this.config.modelID != 'se3200') {
-							pos = buffer.indexOf('5c000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('DSK 1 to', buffer[pos + 4]);
-								this.dsk1_in_src = buffer[pos + 4];
-								this.processSourceAssignment('dsk1_in', 'dsk1_in', this.dsk1_in_src, this.model.dsk1);
-							}
-							//DSK 2 FOR SE1200, SE700 ETC
-							pos = buffer.indexOf('6e000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('DSK 2 to', buffer[pos + 4]);
-								this.dsk2_in_src = buffer[pos + 4];
-								this.processSourceAssignment('dsk2_in', 'dsk2_in', this.dsk2_in_src, this.model.dsk2);
-
-							}
-						} else {
-							//3200 DSK1
-							pos = buffer.indexOf('9a000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('DSK 1 to', buffer[pos + 4]);
-								this.dsk1_in_src = buffer[pos + 4];
-								this.processSourceAssignment('dsk1_in', 'dsk1_in', this.dsk1_in_src, this.model.dsk1);
-							}
-
-
-							//3200 DSK2
-							pos = buffer.indexOf('ac000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('DSK 2 to', buffer[pos + 4]);
-								this.dsk2_in_src = buffer[pos + 4];
-								this.processSourceAssignment('dsk2_in', 'dsk2_in', this.dsk2_in_src, this.model.dsk2);
-							}
-
-							//3200 KEY 3
-							pos = buffer.indexOf('50000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('KEY 3 to', buffer[pos + 4]);
-								this.key3_in_src = buffer[pos + 4];
-								this.processSourceAssignment('key3_in', 'key3_in', this.key3_in_src, this.model.key3);
-							}
-							//3200 KEY 4
-							pos = buffer.indexOf('6e000200', 0, "hex")
-							if (pos > -1) {
-								//console.log('KEY 4 to', buffer[pos + 4]);
-								this.key4_in_src = buffer[pos + 4];
-								this.processSourceAssignment('key4_in', 'key4_in', this.key4_in_src, this.model.key4);
-							}
-							//3200 Aux1
-							pos = buffer.indexOf('00000500', 0, "hex")
-							if (pos > -1) {
-								//console.log('AUX 1 to', buffer[pos + 4]);
-								this.aux1_in_src = buffer[pos + 4];
-								this.processSourceAssignment('aux1_in', 'aux1_in', this.aux1_in_src, this.model.aux1);
-							}
-							//3200 Aux2
-							pos = buffer.indexOf('01000500', 0, "hex")
-							if (pos > -1) {
-								//console.log('AUX 2 to', buffer[pos + 4]);
-								this.aux2_in_src = buffer[pos + 4];
-								this.processSourceAssignment('aux2_in', 'aux2_in', this.aux2_in_src, this.model.aux2);
-							}
-							//3200 Aux3
-							pos = buffer.indexOf('02000500', 0, "hex")
-							if (pos > -1) {
-								//console.log('AUX 3 to', buffer[pos + 4]);
-								this.aux3_in_src = buffer[pos + 4];
-								this.processSourceAssignment('aux3_in', 'aux3_in', this.aux3_in_src, this.model.aux3);
-
-							}
-							//3200 Aux4
-							pos = buffer.indexOf('03000500', 0, "hex")
-							if (pos > -1) {
-								//console.log('AUX 4 to', buffer[pos + 4]);
-								this.aux4_in_src = buffer[pos + 4];
-								this.processSourceAssignment('aux4_in', 'aux4_in', this.aux4_in_src, this.model.aux4);
-
-							}
-						}
-						//GET CURRENT TRANS
-						//FOR SE3200
-						if (this.config.modelID == 'se3200') {
-							pos = buffer.indexOf('96000200', 0, "hex")
-							if (pos > -1) {
-								this.trans_current = buffer[pos + 4];
-								this.checkFeedbacks('trans_current');
-							}
-						} else {
-							//FOR OTHERS
-							pos = buffer.indexOf('58000200', 0, "hex")
-							if (pos > -1) {
-								this.trans_current = buffer[pos + 4];
-								this.checkFeedbacks('trans_current');
-							}
-						}
-
-						//GET ME/DSK/FTB FRAME DURATION
-						//ME
-						pos = buffer.indexOf('03000700', 0, "hex")
-						if (pos > -1) {
-							this.me_dur = buffer.readInt32LE(pos + 4);
-							this.setVariable('me_dur', this.me_dur);
-						}
-						//DSK
-						pos = buffer.indexOf('08000700', 0, "hex")
-						if (pos > -1) {
-							this.dsk_dur = buffer.readInt32LE(pos + 4);
-							this.setVariable('dsk_dur', this.dsk_dur);
-						}
-						//FTB
-						pos = buffer.indexOf('0d000700', 0, "hex")
-						if (pos > -1) {
-							this.ftb_dur = buffer.readInt32LE(pos + 4);
-							this.setVariable('ftb_dur', this.ftb_dur);
-						}
-
-						////BUTTON STATES/////
-						if (this.config.modelID != 'se3200') {
-							//Button states for 1200 700 650
-							//Key 1 State PGM
-							pos = buffer.indexOf('13000200', 0, "hex")
-							if (pos > -1) {
-								this.key1_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key1_pgm_state', this.key1_pgm_state);
-								this.checkFeedbacks('key1_in');
-							}
-							//Key 1 State PVW
-
-							pos = buffer.indexOf('50000200', 0, "hex")
-							if (pos > -1) {
-								this.key1_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key1_pvw_state', this.key1_pvw_state);
-							}
-
-							//Key 2 State PGM / PIP
-							pos = buffer.indexOf('31000200', 0, "hex")
-							if (pos > -1) {
-								if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
-									this.pip_pgm_state = buffer.readInt16LE(pos + 4);
-									this.setVariable('pip_pgm_state', this.pip_pgm_state);
-									this.checkFeedbacks('pip_in');
-								} else {
-									this.key2_pgm_state = buffer.readInt16LE(pos + 4);
-									this.setVariable('key2_pgm_state', this.key2_pgm_state);
-									this.checkFeedbacks('key2_in');
-								}
-							}
-							//Key 2 State PVW / PIP
-							pos = buffer.indexOf('51000200', 0, "hex")
-							if (pos > -1) {
-								if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
-									this.pip_pvw_state = buffer.readInt16LE(pos + 4);
-									this.setVariable('pip_pvw_state', this.pip_pvw_state);
-								} else {
-									this.key2_pvw_state = buffer.readInt16LE(pos + 4);
-									this.setVariable('key2_pvw_state', this.key2_pvw_state);
-								}
-
-							}
-
-							//DSK 1 State PGM
-							pos = buffer.indexOf('5b000200', 0, "hex")
-							if (pos > -1) {
-								this.dsk1_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
-								this.checkFeedbacks('dsk1_in');
-							}
-							//DSK 1 State PVW
-							pos = buffer.indexOf('7f000200', 0, "hex")
-							if (pos > -1) {
-								this.dsk1_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
-							}
-
-							//DSK 2 State PGM
-							pos = buffer.indexOf('6d000200', 0, "hex")
-							if (pos > -1) {
-								this.dsk2_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
-								this.checkFeedbacks('dsk2_in');
-							}
-							//DSK 2 State PVW
-							pos = buffer.indexOf('80000200', 0, "hex")
-							if (pos > -1) {
-								this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
-							}
-						} else {
-							//Button states for 3200
-							//Key 1 State PGM
-							pos = buffer.indexOf('13000200', 0, "hex")
-							if (pos > -1) {
-								this.key1_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key1_pgm_state', this.key1_pgm_state);
-								this.checkFeedbacks('key1_in');
-							}
-							//Key 1 State PVW
-
-							pos = buffer.indexOf('8c000200', 0, "hex")
-							if (pos > -1) {
-								this.key1_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key1_pvw_state', this.key1_pvw_state);
-							}
-
-							//Key 2 State PGM
-							pos = buffer.indexOf('31000200', 0, "hex")
-							if (pos > -1) {
-								this.key2_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key2_pgm_state', this.key2_pgm_state);
-								this.checkFeedbacks('key2_in');
-							}
-							//Key 2 State PVW
-							pos = buffer.indexOf('8d000200', 0, "hex")
-							if (pos > -1) {
-								this.key2_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key2_pvw_state', this.key2_pvw_state);
-							}
-
-							//Key 3 State PGM
-							pos = buffer.indexOf('4f000200', 0, "hex")
-							if (pos > -1) {
-								this.key3_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key3_pgm_state', this.key3_pgm_state);
-								this.checkFeedbacks('key3_in');
-							}
-							//Key 3 State PVW
-							pos = buffer.indexOf('8e000200', 0, "hex")
-							if (pos > -1) {
-								this.key3_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key3_pvw_state', this.key3_pvw_state);
-							}
-
-							//Key 4 State PGM
-							pos = buffer.indexOf('6d000200', 0, "hex")
-							if (pos > -1) {
-								this.key4_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key4_pgm_state', this.key4_pgm_state);
-								this.checkFeedbacks('key4_in');
-							}
-							//Key 4 State PVW
-							pos = buffer.indexOf('8f000200', 0, "hex")
-							if (pos > -1) {
-								this.key4_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('key4_pvw_state', this.key4_pvw_state);
-							}
-							//DSK 1 State PGM
-							pos = buffer.indexOf('5b000200', 0, "hex")
-							if (pos > -1) {
-								this.dsk1_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
-								this.checkFeedbacks('dsk1_in');
-							}
-							//DSK 1 State PVW
-							pos = buffer.indexOf('7f000200', 0, "hex")
-							if (pos > -1) {
-								this.dsk1_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
-							}
-
-							//DSK 2 State PGM
-							pos = buffer.indexOf('6d000200', 0, "hex")
-							if (pos > -1) {
-								this.dsk2_pgm_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
-								this.checkFeedbacks('dsk2_in');
-							}
-							//DSK 2 State PVW
-							pos = buffer.indexOf('80000200', 0, "hex")
-							if (pos > -1) {
-								this.dsk2_pvw_state = buffer.readInt16LE(pos + 4);
-								this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
-							}
-						}
-						////BUTTON STATES/////
-
-						//TBAR STATE
-
-						pos = buffer.indexOf('01000200', 0, "hex")
-						if (pos > -1) {
-							this.tbar_state = buffer.readInt32LE(pos + 4);
-							//console.log("tbar:", this.tbar_state);
-							this.checkFeedbacks('tbar_state');
-							this.checkFeedbacks('pvw_in')
-						}
-						//DSK Auto T Bar
-						pos = buffer.indexOf('81000200', 0, "hex")
-						if (pos > -1) {
-							this.dsk_tbar_state = buffer.readInt32LE(pos + 4);
-							//console.log("tbar:", this.tbar_state);
-							this.checkFeedbacks('dsk_tbar_state');
-						}
-
-						//Audio Source
-						if (!this.config.modelID != 'se650' && !this.config.modelID != 'se700') {
-							//Only on whole packet because I'm getting false hits.
-							//Currently it doesn't seem to send audio source on connect
-							pos = buffer.indexOf('100000000000000000000600', 0, "hex")
-							if (pos > -1) {
-								this.audio_src = buffer.readInt16LE(pos + 12);
-								this.processSourceAssignment('audio_src', 'audio_src', this.audio_src, this.model.audio_src);
-							}
-						}
 
 					}
 				});

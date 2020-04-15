@@ -5,6 +5,7 @@ var presets = require('./presets');
 var feedbacks = require('./feedbacks');
 var variables = require('./variables');
 var choices = require('./choices');
+var protocol = require('./protocol');
 let debug;
 let log;
 
@@ -12,6 +13,8 @@ class instance extends instance_skel {
 
 	constructor(system, id, config) {
 		super(system, id, config)
+
+		this.COMMANDS;
 
 		this.null_packet = Buffer.from([0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 		this.null_packet_cmd = Buffer.from([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]);
@@ -64,7 +67,8 @@ class instance extends instance_skel {
 			...feedbacks,
 			...presets,
 			...choices,
-			...variables
+			...variables,
+			...protocol
 		});
 
 		this.CONFIG_MODEL = {
@@ -444,6 +448,79 @@ class instance extends instance_skel {
 		this.initTCP();
 		this.init_presets();
 		this.actions();
+		this.init_commands();
+	}
+
+	processBuffer(buffer){
+		console.log("   ");
+		console.log("   ");
+		console.log("__________________PACKET START_____________________");
+		console.log("RECIEVED BUFFER:", buffer);
+		console.log("   ");
+		let left;
+		let right;
+		let value;
+		let data;
+		let command;
+		let element;
+		
+		//New handling code test
+		command = buffer.readInt16LE(4, true);
+		console.log("COMMAND ID: ", command)
+		//console.log("data array: ", data);
+		//console.log(this.COMMANDS[1]['sections']);
+		//let setctl = this.COMMANDS[1]['sections'];
+		let com = this.COMMANDS.find(element => element.id == command);
+		if (com !== undefined) {
+			
+
+			console.log("COMMAND: ", com.label);
+			for(let i = 8; i < buffer.length; i = i + 4) {
+				console.log("   ");
+				console.log("_____________SECTION LOOP______________");
+					 data = buffer.slice(i, i + 4);
+					console.log("CONTROL BUFFER: ", data);
+					console.log("NEXT 4 BITS: ", buffer.slice(i + 4, i + 8));
+					left = data.readInt16LE(0, true);
+					right = data.readInt16LE(2, true);
+			
+			element = com.sections.find(element => element.id == right);
+			if (element !== undefined) {
+				console.log("SECTION: ", element.label);
+				let element2 = element.controls.find(element => element.id == left);
+				if (element2 !== undefined) {
+					console.log("CONTROL: ", element2.label);
+
+					if(i+ 4 < buffer.length){
+					switch (element2.type){
+						case 'float':
+							value = buffer.readFloatLE(i + 4);
+							break;
+						case 'int':
+							value = buffer.readInt32LE(i + 4, true);
+							break;
+						case 'flag':
+							value = buffer.readInt8(i + 4, true);
+							break;
+					}
+				
+
+					console.log("VALUE: ", value);
+					if (element2.values != null) {
+						let element3 = element2.values.find(element => element.id == value);
+						if (element3 !== undefined) {
+							console.log("VALUE LABEL: ", element3.label);
+
+
+						}
+					}
+					
+				}
+				}
+			}
+			i = i + 4;
+		}
+	}
 	}
 
 	processSourceAssignment(fbID, varID, state, choices) {
@@ -591,6 +668,7 @@ class instance extends instance_skel {
 						this.socket.send(this.null_packet);
 					} else {
 						//console.log('Receive CMD: ', buffer);
+						this.processBuffer(buffer);
 						//Input name
 						//Slight downside is that the return packet does not included the request input number
 						//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
@@ -630,11 +708,14 @@ class instance extends instance_skel {
 					//Send the null packet when we recieve a packet
 					this.socket_realtime.send(this.null_packet);
 
+
 					//If it's not a null packet check what is inside
 					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-						//	console.log('Receive Realtime: ', buffer);
+						//console.log('Receive Realtime: ', buffer);
 						let pos;
 						let element;
+						this.processBuffer(buffer);
+
 
 						//User memory change
 						pos = buffer.indexOf('00000800', 0, "hex")
@@ -868,7 +949,7 @@ class instance extends instance_skel {
 								if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
 									this.pip_pvw_state = buffer.readInt16LE(pos + 4);
 									this.setVariable('pip_pvw_state', this.pip_pvw_state);
-								}else{
+								} else {
 									this.key2_pvw_state = buffer.readInt16LE(pos + 4);
 									this.setVariable('key2_pvw_state', this.key2_pvw_state);
 								}
@@ -1043,6 +1124,7 @@ class instance extends instance_skel {
 			this.init_feedbacks();
 			this.initTCP();
 			this.init_presets();
+			this.init_commands();
 			console.log('Connection reset after update.');
 		}
 	}
@@ -1057,6 +1139,10 @@ class instance extends instance_skel {
 
 	init_variables() {
 		this.setVariableDefinitions(this.getVariables());
+	};
+
+	init_commands() {
+		this.COMMANDS = this.getCommands();
 	};
 
 }

@@ -6,6 +6,8 @@ var feedbacks = require('./feedbacks');
 var variables = require('./variables');
 var choices = require('./choices');
 var protocol = require('./protocol');
+var protocol_common = require('./protocol_common');
+var protocol_3200 = require('./protocol_3200');
 let debug;
 let log;
 
@@ -68,7 +70,9 @@ class instance extends instance_skel {
 			...presets,
 			...choices,
 			...variables,
-			...protocol
+			...protocol,
+			...protocol_common,
+			...protocol_3200,
 		});
 
 		this.CONFIG_MODEL = {
@@ -596,6 +600,10 @@ class instance extends instance_skel {
 				this.curr_user = value;
 				this.checkFeedbacks('curr_user');
 				this.setVariable('curr_user', this.curr_user);
+				//Update names on MEMORY_SELECT
+				if (this.cur_input_request == 0) {
+					this.getInputNames(null);
+				}
 				break;
 			case 'SWITCHER_WIPE_LEVEL':
 				this.tbar_state = value;
@@ -628,7 +636,7 @@ class instance extends instance_skel {
 
 		//New handling code test
 		command = buffer.readInt16LE(4, true);
-		console.log("COMMAND ID: ", command)
+		//console.log("COMMAND ID: ", command)
 		//console.log("data array: ", data);
 		//console.log(this.COMMANDS[1]['sections']);
 		//let setctl = this.COMMANDS[1]['sections'];
@@ -641,8 +649,8 @@ class instance extends instance_skel {
 				console.log("   ");
 				console.log("_____________SECTION LOOP______________");
 				data = buffer.slice(i, i + 4);
-				console.log("CONTROL BUFFER: ", data);
-				console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
+				//console.log("CONTROL BUFFER: ", data);
+				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
 				left = data.readInt16LE(0, true);
 				right = data.readInt16LE(2, true);
 
@@ -687,7 +695,7 @@ class instance extends instance_skel {
 
 	processSourceAssignment(fbID, varID, state, choices) {
 		this.checkFeedbacks(fbID);
-		if (choices != null) {
+		if (choices !== undefined) {
 			let element = choices.find(element => element.id === state.toString());
 			if (element !== undefined) {
 				this.setVariable(varID, element.label);
@@ -804,8 +812,6 @@ class instance extends instance_skel {
 					this.socket.send(this.null_packet);
 					//Get input names
 					this.getInputNames(null);
-					//Get current audio source
-					//this.socket.send(this.get_audio_src_packet);
 				});
 				this.socket_realtime.on('status_change', (status, message) => {
 					this.status(status, message);

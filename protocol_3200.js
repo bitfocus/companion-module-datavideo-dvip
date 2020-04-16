@@ -1552,17 +1552,17 @@ module.exports = {
 		controls: [{
 			id: 0,
 			label: "INPUT_PROC_AMP_BLACK_LEVEL",
-			type: "int",
+			type: "float",
 		},
 		{
 			id: 1,
 			label: "INPUT_PROC_AMP_CHROMA_GAIN",
-			type: "int",
+			type: "float",
 		},
 		{
 			id: 2,
 			label: "INPUT_PROC_AMP_WHITE_CLIP",
-			type: "int",
+			type: "float",
 		},
 		{
 			id: 3,

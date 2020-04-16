@@ -1084,17 +1084,17 @@ module.exports = {
 		controls: [{
 			id: 0,
 			label: "INPUT_PROC_AMP_BLACK_LEVEL",
-			type: "int",
+			type: "float",
 		},
 		{
 			id: 1,
 			label: "INPUT_PROC_AMP_CHROMA_GAIN",
-			type: "int",
+			type: "float",
 		},
 		{
 			id: 2,
 			label: "INPUT_PROC_AMP_WHITE_CLIP",
-			type: "int",
+			type: "float",
 		},
 		{
 			id: 3,
@@ -1304,6 +1304,59 @@ module.exports = {
 				label: "OUTPUT_MULTI_OUT2_SELECT",
 				type: "int",
 			},
+			{
+				id: 18,
+				label: "OUTPUT_GPI_OUT_ENABLE",
+				type: "int",
+			},
+			{
+				id: 19,
+				label: "OUTPUT_GPI_OUT_MODE",
+				type: "int",
+			},
+			{
+				id: 20,
+				label: "OUTPUT_GPI_OUT_SRC",
+				type: "int",
+			},
+			{
+				id: 21,
+				label: "OUTPUT_GPI_OUT_DELAY",
+				type: "int",
+			},
+			{
+				id: 22,
+				label: "OUTPUT_GPI_OUT_WIDTH",
+				type: "int",
+			},
+			{
+				id: 23,
+				label: "OUTPUT_HDMI_MODE",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "1080_P"
+				},
+				{
+					id: 1,
+					label: "1080_I"
+				}
+				]
+			},
+			{
+				id: 24,
+				label: "OUTPUT_TALLY_MODE",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "NORMAL"
+				},
+				{
+					id: 1,
+					label: "AUDIO_MIXER"
+				}
+				]
+			},
 		]
 	},
 	{
@@ -1341,6 +1394,24 @@ module.exports = {
 				label: "TEST",
 			}
 			]
+		},
+		{
+			id: 4,
+			label: "AUDIO_SDI1_ENABLE",
+			type: "int"
+
+		},
+		{
+			id: 5,
+			label: "AUDIO_SDI2_ENABLE",
+			type: "int"
+
+		},
+		{
+			id: 6,
+			label: "AUDIO_HDMI1_ENABLE",
+			type: "int"
+
 		},
 		]
 	},

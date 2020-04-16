@@ -621,14 +621,16 @@ class instance extends instance_skel {
 
 	}
 
+
+
 	processBuffer(buffer) {
 		console.log("   ");
 		console.log("   ");
 		console.log("__________________PACKET START_____________________");
 		console.log("RECIEVED BUFFER:", buffer);
 		console.log("   ");
-		let left;
-		let right;
+		let section;
+		let control;
 		let value;
 		let data;
 		let command;
@@ -636,7 +638,7 @@ class instance extends instance_skel {
 
 		//New handling code test
 		command = buffer.readInt16LE(4, true);
-		//console.log("COMMAND ID: ", command)
+		console.log("COMMAND ID: ", command)
 		//console.log("data array: ", data);
 		//console.log(this.COMMANDS[1]['sections']);
 		//let setctl = this.COMMANDS[1]['sections'];
@@ -649,17 +651,30 @@ class instance extends instance_skel {
 				console.log("   ");
 				console.log("_____________SECTION LOOP______________");
 				data = buffer.slice(i, i + 4);
-				//console.log("CONTROL BUFFER: ", data);
-				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
-				left = data.readInt16LE(0, true);
-				right = data.readInt16LE(2, true);
+				console.log("CONTROL BUFFER: ", data);
+				console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
+				control = data.readInt16LE(0, true);
 
-				element = com.sections.find(element => element.id == right);
+				section = data.readInt16LE(2, true);
+				console.log("SECTION ID:", section);
+
+				//SECTION_INPUT is weird and splits the section into inputid/section as two nibbles so we need to check
+				//and handle it seperately
+				if (section == 3) {
+					var num = data.readInt8(0, true) & 0xFF;
+					var nibble1 = num & 0xF;
+					var nibble2 = num >> 4;
+					control = nibble1;
+					console.log("INPUT", nibble2);
+				}
+
+				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
 					console.log("SECTION: ", element.label);
-					let element2 = element.controls.find(element => element.id == left);
+					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
 						console.log("CONTROL: ", element2.label);
+						console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
 							switch (element2.type) {

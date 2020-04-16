@@ -455,7 +455,7 @@ class instance extends instance_skel {
 		this.init_commands();
 	}
 
-	processControl(section, control, value, value_label) {
+	processControl(section, control, value, value_label, input) {
 
 		switch (control) {
 			case 'SWITCHER_PGM_SRC':
@@ -635,6 +635,7 @@ class instance extends instance_skel {
 		let data;
 		let command;
 		let element;
+		let input = null;
 
 		//New handling code test
 		command = buffer.readInt16LE(4, true);
@@ -662,10 +663,10 @@ class instance extends instance_skel {
 				//and handle it seperately
 				if (section == 3) {
 					var num = data.readInt8(0, true) & 0xFF;
-					var nibble1 = num & 0xF;
-					var nibble2 = num >> 4;
-					control = nibble1;
-					console.log("INPUT", nibble2);
+					var nib1 = num & 0xF;
+					input = num >> 4;
+					control = nib1;
+					console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
@@ -694,10 +695,10 @@ class instance extends instance_skel {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
 									console.log("VALUE LABEL: ", element3.label);
-									this.processControl(element.label, element2.label, value, element3.label);
+									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {
-								this.processControl(element.label, element2.label, value, null);
+								this.processControl(element.label, element2.label, value, null, input);
 							}
 
 						}

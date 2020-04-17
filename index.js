@@ -324,6 +324,57 @@ class instance extends instance_skel {
 				element = this.model.keyer.find(element => element.id === options.keyer);
 				if (element !== undefined) {
 					cmd = element.cmd;
+					let setOn = true;
+
+					switch (element.label) {
+						case 'DSK 1 PGM':
+							if (this.dsk1_pgm_state == 1) { setOn = false; }
+							break;
+						case 'DSK 1 PVW':
+							if (this.dsk1_pvw_state == 1) { setOn = false; }
+							break;
+						case 'DSK 2 PGM':
+							if (this.dsk2_pgm_state == 1) { setOn = false; }
+							break;
+						case 'DSK 2 PVW':
+							if (this.dsk2_pvw_state == 1) { setOn = false; }
+							break;
+						case 'KEY 1 PGM':
+							if (this.key1_pgm_state == 1) { setOn = false; }
+							break;
+						case 'KEY 1 PVW':
+							if (this.key1_pvw_state == 1) { setOn = false; }
+							break;
+						case 'KEY 2 PGM':
+							if (this.key2_pgm_state == 1) { setOn = false; }
+							break;
+						case 'KEY 2 PVW':
+							if (this.key2_pvw_state == 1) { setOn = false; }
+							break;
+						case 'KEY 3 PGM':
+							if (this.key3_pgm_state == 1) { setOn = false; }
+							break;
+						case 'KEY 3 PVW':
+							if (this.key3_pvw_state == 1) { setOn = false; }
+							break;
+						case 'KEY 4 PGM':
+							if (this.key4_pgm_state == 1) { setOn = false; }
+							break;
+						case 'KEY 4 PVW':
+							if (this.key4_pvw_state == 1) { setOn = false; }
+							break;
+						case 'P-in-P PGM':
+							if (this.pip_pgm_state == 1) { setOn = false; }
+							break;
+						case 'P-in-P PVW':
+							if (this.pip_pvw_state == 1) { setOn = false; }
+							break;
+					}
+					if(setOn){
+						cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
+					}else{
+						cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
+					}
 				}
 				break;
 			case 'loaduser':
@@ -386,7 +437,7 @@ class instance extends instance_skel {
 
 				this.socket.send(cmd);
 				//Update input names on change
-				if (id == 'set_input_name' || id == 'load_user') {
+				if (id == 'set_input_name') {
 					if (this.cur_input_request == 0) {
 						this.getInputNames(null);
 					}
@@ -515,28 +566,34 @@ class instance extends instance_skel {
 				this.dsk1_pgm_state = value;
 				this.setVariable('dsk1_pgm_state', this.dsk1_pgm_state);
 				this.checkFeedbacks('dsk1_in');
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_DSK1_TRANS_ENABLE':
 				this.dsk1_pvw_state = value;
 				this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_DSK2_KEYER_ON':
 				this.dsk2_pgm_state = value;
 				this.setVariable('dsk2_pgm_state', this.dsk2_pgm_state);
 				this.checkFeedbacks('dsk2_in');
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_DSK2_TRANS_ENABLE':
 				this.dsk2_pvw_state = value;
 				this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_KEY1_KEYER_ON':
 				this.key1_pgm_state = value;
 				this.setVariable('key1_pgm_state', this.key1_pgm_state);
 				this.checkFeedbacks('key1_in');
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_TRANS_KEY1':
 				this.key1_pvw_state = value;
 				this.setVariable('key1_pvw_state', this.key1_pvw_state);
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_KEY2_KEYER_ON':
 				if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
@@ -548,6 +605,7 @@ class instance extends instance_skel {
 					this.setVariable('key2_pgm_state', this.key2_pgm_state);
 					this.checkFeedbacks('key2_in');
 				}
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_TRANS_KEY2':
 				if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
@@ -557,24 +615,29 @@ class instance extends instance_skel {
 					this.key2_pvw_state = value;
 					this.setVariable('key2_pvw_state', this.key2_pvw_state);
 				}
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_KEY3_KEYER_ON':
 				this.key3_pgm_state = value;
 				this.setVariable('key3_pgm_state', this.key3_pgm_state);
 				this.checkFeedbacks('key3_in');
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_TRANS_KEY3':
 				this.key3_pvw_state = value;
 				this.setVariable('key3_pvw_state', this.key3_pvw_state);
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_KEY4_KEYER_ON':
 				this.key4_pgm_state = value;
 				this.setVariable('key4_pgm_state', this.key4_pgm_state);
 				this.checkFeedbacks('key4_in');
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_TRANS_KEY4':
 				this.key4_pvw_state = value;
 				this.setVariable('key4_pvw_state', this.key4_pvw_state);
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_TRANS_TYPE':
 				this.trans_current = value;

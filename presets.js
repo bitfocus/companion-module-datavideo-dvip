@@ -373,6 +373,56 @@ exports.getPresets = function () {
 			}],
 
 		},
+		{
+			category: 'keyer',
+			label: 'KEY 1 PGM',
+			bank: {
+				style: 'text',
+				text: 'KEY 1 PGM',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '0'
+				}
+			}],
+			feedbacks: [{
+				type: 'trans_state',
+				options: {
+					keyer: '0'
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'KEY 1 PVW',
+			bank: {
+				style: 'text',
+				text: 'KEY 1 PVW',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '2'
+				}
+			}],
+			feedbacks: [{
+				type: 'trans_state',
+				options: {
+					keyer: '2'
+				}
+			}],
+
+		},
 
 
 	];

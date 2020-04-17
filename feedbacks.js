@@ -89,6 +89,87 @@ exports.getFeedbacks = function () {
 	}
 
 
+	feedbacks['keyer_state'] = {
+		label: 'Color for Keyer states',
+		description: 'Set Button colors for Key and DSK PGM/PVW states.',
+		options: [{
+			type: 'colorpicker',
+			label: 'Foreground color',
+			id: 'fg',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color',
+			id: 'bg',
+			default: this.rgb(255, 0, 0),
+		},
+		{
+			type: 'dropdown',
+			label: 'Input',
+			id: 'keyer',
+			default: '0',
+			choices: this.model.keyer
+		}
+		],
+		callback: (feedback, bank) => {
+			let element = this.model.keyer.find(element => element.id === feedback.options.keyer);
+			if (element !== undefined) {
+				let setOn = false;
+				switch (element.label) {
+					case 'DSK 1 PGM':
+						if (this.dsk1_pgm_state == 1) { setOn = true; }
+						break;
+					case 'DSK 1 PVW':
+						if (this.dsk1_pvw_state == 1) { setOn = true; }
+						break;
+					case 'DSK 2 PGM':
+						if (this.dsk2_pgm_state == 1) { setOn = true; }
+						break;
+					case 'DSK 2 PVW':
+						if (this.dsk2_pvw_state == 1) { setOn = true; }
+						break;
+					case 'KEY 1 PGM':
+						if (this.key1_pgm_state == 1) { setOn = true; }
+						break;
+					case 'KEY 1 PVW':
+						if (this.key1_pvw_state == 1) { setOn = true; }
+						break;
+					case 'KEY 2 PGM':
+						if (this.key2_pgm_state == 1) { setOn = true; }
+						break;
+					case 'KEY 2 PVW':
+						if (this.key2_pvw_state == 1) { setOn = true; }
+						break;
+					case 'KEY 3 PGM':
+						if (this.key3_pgm_state == 1) { setOn = true; }
+						break;
+					case 'KEY 3 PVW':
+						if (this.key3_pvw_state == 1) { setOn = true; }
+						break;
+					case 'KEY 4 PGM':
+						if (this.key4_pgm_state == 1) { setOn = true; }
+						break;
+					case 'KEY 4 PVW':
+						if (this.key4_pvw_state == 1) { setOn = true; }
+						break;
+					case 'P-in-P PGM':
+						if (this.pip_pgm_state == 1) { setOn = true; }
+						break;
+					case 'P-in-P PVW':
+						if (this.pip_pvw_state == 1) { setOn = true; }
+						break;
+			}
+		
+			if (setOn) {
+				return {
+					color: feedback.options.fg,
+					bgcolor: feedback.options.bg
+				};
+			}
+			}
+		}
+	}
 
 
 	feedbacks['key1_in'] = {

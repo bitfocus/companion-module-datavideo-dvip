@@ -39,6 +39,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Currently selected transition type
 * Current audio source
 * Currently selected user
+* Keyer Control (PGM/PVW) state
 
 
 **Available presets**
@@ -50,6 +51,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Transition Auto and DSK Auto with feedback
 * Transition Cut and DSK Cut
 * Audio source set with feedback
+* Keyer controls with feedback
 
 **Available variables**
 * Current PGM and PVW inputs sources

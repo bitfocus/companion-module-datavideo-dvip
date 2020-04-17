@@ -228,6 +228,30 @@ exports.getVariables = function () {
 		label: 'Current User Number',
 		name: 'curr_user'
 	},
+	{
+		label: 'Current NORM REV state',
+		name: 'normrev_state'
+	},
+	{
+		label: 'Current REV state',
+		name: 'rev_state'
+	},
+	{
+		label: 'Current TRANS PREVIEW state',
+		name: 'preview_state'
+	},
+	{
+		label: 'Current BACKGROUND state',
+		name: 'bgnd_state'
+	},
+	{
+		label: 'Current FTB ENABLE state',
+		name: 'ftbenable_state'
+	},
+	{
+		label: 'Current KEY PRIORITY state',
+		name: 'keypriority_state'
+	},
 	];
 
 	return variables;

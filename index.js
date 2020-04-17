@@ -63,6 +63,12 @@ class instance extends instance_skel {
 		this.dsk_tbar_state;
 		this.audio_src;
 		this.curr_user;
+		this.normrev_state;
+		this.rev_state;
+		this.preview_state;
+		this.bgnd_state;
+		this.ftbenable_state;
+		this.keypriority_state;
 
 		Object.assign(this, {
 			...actions,
@@ -136,7 +142,7 @@ class instance extends instance_skel {
 				sdi1: this.CHOICES_SWITCH_SDI1_700,
 				sdi2: this.CHOICES_SWITCH_SDI2_700,
 				hdmi1: this.CHOICES_SWITCH_HDMI1_700,
-				trans: this.CHOICES_TRANS_700,
+				trans: this.CHOICES_TRANS_1200,
 				ftb: this.CHOICES_FTB_1200,
 				keyer: this.CHOICES_KEYER_700,
 				audio: this.CHOICES_AUDIO_700,
@@ -152,7 +158,7 @@ class instance extends instance_skel {
 				dsk1: this.CHOICES_SWITCH_DSK1_700,
 				sdi1: this.CHOICES_SWITCH_SDI1_650,
 				hdmi1: this.CHOICES_SWITCH_HDMI1_650,
-				trans: this.CHOICES_TRANS_700,
+				trans: this.CHOICES_TRANS_1200,
 				ftb: this.CHOICES_FTB_1200,
 				keyer: this.CHOICES_KEYER_700,
 				inputs: this.CHOICES_INPUTS_700,
@@ -312,12 +318,58 @@ class instance extends instance_skel {
 				element = this.model.trans.find(element => element.id === options.trans);
 				if (element !== undefined) {
 					cmd = element.cmd;
+					let setOn = true;
+					let toggle = false;
+					switch (element.label) {
+						case 'NORM REV':
+							if (this.normrev_state == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'REV':
+							if (this.rev_state == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'TRANS PVW':
+							if (this.preview_state == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'BACKGROUND':
+							if (this.bgnd_state == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'KEY PRIORITY':
+							if (this.keypriority_state == 1) { setOn = false; }
+							toggle = true;
+							break;
+					}
+					if (toggle) {
+						if (setOn) {
+							cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
+						} else {
+							cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
+						}
+					}
 				}
 				break;
 			case 'ftb':
 				element = this.model.ftb.find(element => element.id === options.ftb);
 				if (element !== undefined) {
 					cmd = element.cmd;
+					let setOn = true;
+					let toggle = false;
+					switch (element.label) {
+						case 'FTB ENABLE':
+							if (this.ftbenable_state == 1) { setOn = false; }
+							toggle = true;
+							break;
+					}
+					if (toggle) {
+						if (setOn) {
+							cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
+						} else {
+							cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
+						}
+					}
 				}
 				break;
 			case 'keyer':
@@ -370,9 +422,9 @@ class instance extends instance_skel {
 							if (this.pip_pvw_state == 1) { setOn = false; }
 							break;
 					}
-					if(setOn){
+					if (setOn) {
 						cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
-					}else{
+					} else {
 						cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
 					}
 				}
@@ -433,7 +485,7 @@ class instance extends instance_skel {
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
 				cmd = Buffer.concat([pktsize, cmd]);
-				//console.log("Send: ", cmd);
+				console.log("Send: ", cmd);
 
 				this.socket.send(cmd);
 				//Update input names on change
@@ -638,6 +690,36 @@ class instance extends instance_skel {
 				this.key4_pvw_state = value;
 				this.setVariable('key4_pvw_state', this.key4_pvw_state);
 				this.checkFeedbacks('keyer_state');
+				break;
+			case 'SWITCHER_TRANS_NORMAL_REV':
+				this.normrev_state = value;
+				this.setVariable('normrev_state', this.normrev_state);
+				this.checkFeedbacks('trans_state');
+				break;
+			case 'SWITCHER_TRANS_REVERSE':
+				this.rev_state = value;
+				this.setVariable('rev_state', this.rev_state);
+				this.checkFeedbacks('trans_state');
+				break;
+			case 'SWITCHER_TRANS_PREVIEW':
+				this.preview_state = value;
+				this.setVariable('preview_state', this.preview_state);
+				this.checkFeedbacks('trans_state');
+				break;
+			case 'SWITCHER_TRANS_BGND':
+				this.bgnd_state = value;
+				this.setVariable('bgnd_state', this.bgnd_state);
+				this.checkFeedbacks('trans_state');
+				break;
+			case 'SWITCHER_FTB_ENABLE':
+				this.ftbenable_state = value;
+				this.setVariable('ftbenable_state', this.ftbenable_state);
+				this.checkFeedbacks('trans_state');
+				break;
+			case 'SWITCHER_TRANS_PRIORITY':
+				this.keypriority_state = value;
+				this.setVariable('keypriority_state', this.keypriority_state);
+				this.checkFeedbacks('trans_state');
 				break;
 			case 'SWITCHER_TRANS_TYPE':
 				this.trans_current = value;

@@ -375,10 +375,10 @@ exports.getPresets = function () {
 		},
 		{
 			category: 'keyer',
-			label: 'KEY 1 PGM',
+			label: 'DSK 1 PGM',
 			bank: {
 				style: 'text',
-				text: 'KEY 1 PGM',
+				text: 'DSK 1 PGM',
 				size: '18',
 				color: this.rgb(255, 255, 255),
 				bgcolor: this.rgb(0, 0, 0),
@@ -391,7 +391,7 @@ exports.getPresets = function () {
 				}
 			}],
 			feedbacks: [{
-				type: 'trans_state',
+				type: 'keyer_state',
 				options: {
 					keyer: '0'
 				}
@@ -400,10 +400,10 @@ exports.getPresets = function () {
 		},
 		{
 			category: 'keyer',
-			label: 'KEY 1 PVW',
+			label: 'DSK 1 PVW',
 			bank: {
 				style: 'text',
-				text: 'KEY 1 PVW',
+				text: 'DSK 1 PVW',
 				size: '18',
 				color: this.rgb(255, 255, 255),
 				bgcolor: this.rgb(0, 0, 0),
@@ -416,7 +416,7 @@ exports.getPresets = function () {
 				}
 			}],
 			feedbacks: [{
-				type: 'trans_state',
+				type: 'keyer_state',
 				options: {
 					keyer: '2'
 				}

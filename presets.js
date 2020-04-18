@@ -76,6 +76,30 @@ exports.getPresets = function () {
 			}],
 		},
 		{
+			category: 'dsk-2-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_dsk2',
+				options: {
+					switchdsk2: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'dsk2_in',
+				options: {
+					dsk2_in: '1'
+				}
+			}],
+		},
+		{
 			category: 'key-1-bus',
 			label: 'In 1',
 			bank: {
@@ -96,6 +120,102 @@ exports.getPresets = function () {
 				type: 'key1_in',
 				options: {
 					key1_in: '1'
+				}
+			}],
+		},
+		{
+			category: 'key-2-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_key2',
+				options: {
+					switchkey2: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'key2_in',
+				options: {
+					key2_in: '1'
+				}
+			}],
+		},
+		{
+			category: 'key-3-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_key3',
+				options: {
+					switchkey3: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'key3_in',
+				options: {
+					key3_in: '1'
+				}
+			}],
+		},
+		{
+			category: 'key-4-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_key4',
+				options: {
+					switchkey4: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'key4_in',
+				options: {
+					key4_in: '1'
+				}
+			}],
+		},
+		{
+			category: 'pip-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_pip',
+				options: {
+					switchpip: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'pip_in',
+				options: {
+					pip_in: '1'
 				}
 			}],
 		},
@@ -680,6 +800,57 @@ exports.getPresets = function () {
 
 		},
 		{
+			category: 'keyer',
+			label: 'PIP PGM',
+			bank: {
+				style: 'text',
+				text: 'PIP PGM',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '12'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '12'
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'PIP PVW',
+			bank: {
+				style: 'text',
+				text: 'PIP PVW',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '14'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '14',
+					bg: this.rgb(51, 102, 0)
+				}
+			}],
+
+		},
+		{
 			category: 'transition',
 			label: 'Background',
 			bank: {
@@ -896,6 +1067,102 @@ exports.getPresets = function () {
 				}
 			}],
 
+		},
+		{
+			category: 'aux-1-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_aux1',
+				options: {
+					switchaux1: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'aux1_in',
+				options: {
+					aux1_in: '1'
+				}
+			}],
+		},
+		{
+			category: 'aux-2-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_aux2',
+				options: {
+					switchaux2: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'aux2_in',
+				options: {
+					aux2_in: '1'
+				}
+			}],
+		},
+		{
+			category: 'aux-3-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_aux3',
+				options: {
+					switchaux3: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'aux3_in',
+				options: {
+					aux3_in: '1'
+				}
+			}],
+		},
+		{
+			category: 'aux-4-bus',
+			label: 'In 1',
+			bank: {
+				style: 'text',
+				text: `$(${this.config.label}:in1_name)`,
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'switch_aux4',
+				options: {
+					switchaux4: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'aux4_in',
+				options: {
+					aux4_in: '1'
+				}
+			}],
 		},
 	];
 

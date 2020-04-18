@@ -556,13 +556,13 @@ class instance extends instance_skel {
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
 				cmd = Buffer.concat([pktsize, cmd]);
-				console.log("Send: ", cmd);
+				//console.log("Send: ", cmd);
 
 				this.socket.send(cmd);
 				//Update input names on change
 				if (id == 'set_input_name') {
 					if (this.cur_input_request == 0) {
-						this.getInputNames(null);
+						setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
 					}
 				}
 				if (id = 'trans') {
@@ -844,7 +844,7 @@ class instance extends instance_skel {
 				this.setVariable('curr_user', this.curr_user);
 				//Update names on MEMORY_SELECT
 				if (this.cur_input_request == 0) {
-					this.getInputNames(null);
+					setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
 				}
 				break;
 			case 'SWITCHER_WIPE_LEVEL':
@@ -892,7 +892,7 @@ class instance extends instance_skel {
 	}
 
 	getKeyStates() {
-		console.log("----GET KEY STATES----")
+		//console.log("----GET KEY STATES----")
 		let cmd;
 		let cmdsize;
 		let pktsize = Buffer.alloc(4);
@@ -911,11 +911,11 @@ class instance extends instance_skel {
 	}
 
 	processBuffer(buffer) {
-		console.log("   ");
-		console.log("   ");
-		console.log("__________________PACKET START_____________________");
-		console.log("RECIEVED BUFFER:", buffer);
-		console.log("   ");
+	//	console.log("   ");
+	//	console.log("   ");
+	//	console.log("__________________PACKET START_____________________");
+	//	console.log("RECIEVED BUFFER:", buffer);
+	//	console.log("   ");
 		let section;
 		let control;
 		let value;
@@ -926,7 +926,7 @@ class instance extends instance_skel {
 
 		//New handling code test
 		command = buffer.readInt16LE(4, true);
-		console.log("COMMAND ID: ", command)
+		//console.log("COMMAND ID: ", command)
 		//console.log("data array: ", data);
 		//console.log(this.COMMANDS[1]['sections']);
 		//let setctl = this.COMMANDS[1]['sections'];
@@ -934,10 +934,10 @@ class instance extends instance_skel {
 		if (com !== undefined) {
 
 
-			console.log("COMMAND: ", com.label);
+			//console.log("COMMAND: ", com.label);
 			for (let i = 8; i < buffer.length; i = i + 4) {
-				console.log("   ");
-				console.log("_____________SECTION LOOP______________");
+			//	console.log("   ");
+			//	console.log("_____________SECTION LOOP______________");
 				data = buffer.slice(i, i + 4);
 				//console.log("CONTROL BUFFER: ", data);
 				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
@@ -953,15 +953,15 @@ class instance extends instance_skel {
 					var nib1 = num & 0xF;
 					input = num >> 4;
 					control = nib1;
-					console.log("INPUT", input);
+				//	console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-					console.log("SECTION: ", element.label);
+				//	console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-						console.log("CONTROL: ", element2.label);
+					//	console.log("CONTROL: ", element2.label);
 						//console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
@@ -977,11 +977,11 @@ class instance extends instance_skel {
 									break;
 							}
 
-							console.log("VALUE: ", value);
+						//	console.log("VALUE: ", value);
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
-									console.log("VALUE LABEL: ", element3.label);
+									//console.log("VALUE LABEL: ", element3.label);
 									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {
@@ -1114,7 +1114,7 @@ class instance extends instance_skel {
 					debug('Connected');
 					this.socket.send(this.null_packet);
 					//Get input names
-					this.getInputNames(null);
+					setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
 				});
 				this.socket_realtime.on('status_change', (status, message) => {
 					this.status(status, message);
@@ -1162,17 +1162,17 @@ class instance extends instance_skel {
 									this.getInputNames(null);
 								}
 
-							} else {
-								console.log("---------CMD BUFFER PROCESS--------------------")
+								} else {
+								//console.log("---------CMD BUFFER PROCESS--------------------")
 								//If we are not handling the weird name stuff process the input
 								this.processBuffer(buffer);
+									}
 							}
+
+
 						}
 
-
-					}
-
-				});
+					});
 
 				this.socket_realtime.on('data', (buffer) => {
 					//Send the null packet when we recieve a packet

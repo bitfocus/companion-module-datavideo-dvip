@@ -39,7 +39,18 @@ exports.getActions = function () {
 			}
 		]
 	};
-
+	actions['trans_btn'] = {
+		label: 'Additional Transition Controls',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Action',
+				id: 'trans',
+				default: '7',
+				choices: this.model.trans_btn
+			}
+		]
+	};
 	actions['keyer'] = {
 		label: 'Keyer Controls',
 		options: [

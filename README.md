@@ -40,6 +40,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Current audio source
 * Currently selected user
 * Keyer Control (PGM/PVW) state
+* Transition and FTB button states
 
 
 **Available presets**
@@ -52,6 +53,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Transition Cut and DSK Cut
 * Audio source set with feedback
 * Keyer controls with feedback
+* FTB controls with feedback
 
 **Available variables**
 * Current PGM and PVW inputs sources
@@ -63,3 +65,4 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * KEY and DSK button states (Just for testing for now)
 * Input name labels from mixer
 * Currently selected user
+* Transition and FTB button states

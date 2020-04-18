@@ -68,6 +68,7 @@ class instance extends instance_skel {
 		this.preview_state;
 		this.bgnd_state;
 		this.ftbenable_state;
+		this.ftb_trans_state;
 		this.keypriority_state;
 
 		Object.assign(this, {
@@ -101,6 +102,7 @@ class instance extends instance_skel {
 				audio: this.CHOICES_AUDIO_1200,
 				audio_src: this.CHOICES_AUDIO_SRC_1200,
 				inputs: this.CHOICES_INPUTS_1200,
+				trans_btn: this.CHOICES_TRANS_BTN_1200,
 			},
 			se3200: {
 				id: 'se3200',
@@ -130,6 +132,7 @@ class instance extends instance_skel {
 				audio: this.CHOICES_AUDIO_3200,
 				audio_src: this.CHOICES_AUDIO_SRC_3200,
 				inputs: this.CHOICES_INPUTS_3200,
+				trans_btn: this.CHOICES_TRANS_BTN_3200,
 			},
 			se700: {
 				id: 'se700',
@@ -147,6 +150,7 @@ class instance extends instance_skel {
 				keyer: this.CHOICES_KEYER_700,
 				audio: this.CHOICES_AUDIO_700,
 				inputs: this.CHOICES_INPUTS_700,
+				trans_btn: this.CHOICES_TRANS_BTN_1200,
 			},
 			se650: {
 				id: 'se650',
@@ -162,6 +166,7 @@ class instance extends instance_skel {
 				ftb: this.CHOICES_FTB_1200,
 				keyer: this.CHOICES_KEYER_700,
 				inputs: this.CHOICES_INPUTS_700,
+				trans_btn: this.CHOICES_TRANS_BTN_1200,
 			},
 
 		};
@@ -316,6 +321,12 @@ class instance extends instance_skel {
 				break;
 			case 'trans':
 				element = this.model.trans.find(element => element.id === options.trans);
+				if (element !== undefined) {
+					cmd = element.cmd;
+				}
+				break;
+			case 'trans_btn':
+				element = this.model.trans_btn.find(element => element.id === options.trans);
 				if (element !== undefined) {
 					cmd = element.cmd;
 					let setOn = true;
@@ -811,7 +822,12 @@ class instance extends instance_skel {
 			case 'SWITCHER_FTB_ENABLE':
 				this.ftbenable_state = value;
 				this.setVariable('ftbenable_state', this.ftbenable_state);
-				this.checkFeedbacks('trans_state');
+				this.checkFeedbacks('ftb_state');
+				break;
+			case 'SWITCHER_FTB_DIRN':
+				this.ftb_trans_state = value;
+				this.setVariable('ftb_trans_state', this.ftb_trans_state);
+				this.checkFeedbacks('ftb_state');
 				break;
 			case 'SWITCHER_TRANS_PRIORITY':
 				this.keypriority_state = value;
@@ -911,11 +927,11 @@ class instance extends instance_skel {
 	}
 
 	processBuffer(buffer) {
-	//	console.log("   ");
-	//	console.log("   ");
-	//	console.log("__________________PACKET START_____________________");
-	//	console.log("RECIEVED BUFFER:", buffer);
-	//	console.log("   ");
+		//	console.log("   ");
+		//	console.log("   ");
+		//	console.log("__________________PACKET START_____________________");
+		//	console.log("RECIEVED BUFFER:", buffer);
+		//	console.log("   ");
 		let section;
 		let control;
 		let value;
@@ -934,10 +950,10 @@ class instance extends instance_skel {
 		if (com !== undefined) {
 
 
-			//console.log("COMMAND: ", com.label);
+			console.log("COMMAND: ", com.label);
 			for (let i = 8; i < buffer.length; i = i + 4) {
-			//	console.log("   ");
-			//	console.log("_____________SECTION LOOP______________");
+				console.log("   ");
+				console.log("_____________SECTION LOOP______________");
 				data = buffer.slice(i, i + 4);
 				//console.log("CONTROL BUFFER: ", data);
 				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
@@ -953,15 +969,15 @@ class instance extends instance_skel {
 					var nib1 = num & 0xF;
 					input = num >> 4;
 					control = nib1;
-				//	console.log("INPUT", input);
+					console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-				//	console.log("SECTION: ", element.label);
+					console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-					//	console.log("CONTROL: ", element2.label);
+						console.log("CONTROL: ", element2.label);
 						//console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
@@ -977,11 +993,11 @@ class instance extends instance_skel {
 									break;
 							}
 
-						//	console.log("VALUE: ", value);
+							console.log("VALUE: ", value);
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
-									//console.log("VALUE LABEL: ", element3.label);
+									console.log("VALUE LABEL: ", element3.label);
 									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {
@@ -1162,17 +1178,17 @@ class instance extends instance_skel {
 									this.getInputNames(null);
 								}
 
-								} else {
+							} else {
 								//console.log("---------CMD BUFFER PROCESS--------------------")
 								//If we are not handling the weird name stuff process the input
 								this.processBuffer(buffer);
-									}
 							}
-
-
 						}
 
-					});
+
+					}
+
+				});
 
 				this.socket_realtime.on('data', (buffer) => {
 					//Send the null packet when we recieve a packet

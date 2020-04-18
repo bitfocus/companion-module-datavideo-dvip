@@ -423,6 +423,78 @@ exports.getPresets = function () {
 			}],
 
 		},
+		{
+			category: 'transition',
+			label: 'Background',
+			bank: {
+				style: 'text',
+				text: 'Clip',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'trans_btn',
+				options: {
+					trans: '40'
+				}
+			}],
+			feedbacks: [{
+				type: 'trans_state',
+				options: {
+					trans: '40'
+				}
+			}],
+		},
+		{
+			category: 'ftb',
+			label: 'FTB ENABLE',
+			bank: {
+				style: 'text',
+				text: 'FTB ENABLE',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'ftb',
+				options: {
+					trans: '0'
+				}
+			}],
+			feedbacks: [{
+				type: 'ftb_state',
+				options: {
+					trans: '0'
+				}
+			}],
+		},
+		{
+			category: 'ftb',
+			label: 'FTB',
+			bank: {
+				style: 'text',
+				text: 'FTB',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'ftb',
+				options: {
+					ftb: '2'
+				}
+			}],
+			feedbacks: [{
+				type: 'ftb_state',
+				options: {
+					ftb: '2'
+				}
+			}],
+		},
 
 
 	];

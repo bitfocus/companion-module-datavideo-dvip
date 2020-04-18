@@ -34,6 +34,7 @@ SE-3200/HS-3200
 * Current audio source
 * Currently selected user
 * Keyer Control (PGM/PVW) state
+* Transition and FTB button states
 
 
 **Available presets**
@@ -46,6 +47,7 @@ SE-3200/HS-3200
 * Transition Cut and DSK Cut
 * Audio source set with feedback
 * Keyer controls with feedback
+* FTB controls with feedback
 
 **Available variables**
 * Current PGM and PVW inputs sources
@@ -57,3 +59,4 @@ SE-3200/HS-3200
 * KEY and DSK button states (Just for testing for now)
 * Input name labels from mixer
 * Currently selected user
+* Transition and FTB button states

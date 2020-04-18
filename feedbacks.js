@@ -159,14 +159,115 @@ exports.getFeedbacks = function () {
 					case 'P-in-P PVW':
 						if (this.pip_pvw_state == 1) { setOn = true; }
 						break;
+				}
+
+				if (setOn) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
 			}
-		
-			if (setOn) {
-				return {
-					color: feedback.options.fg,
-					bgcolor: feedback.options.bg
-				};
+		}
+	}
+
+	feedbacks['trans_state'] = {
+		label: 'Color for Transition button states',
+		description: 'Set Button colors for Transition button states.',
+		options: [{
+			type: 'colorpicker',
+			label: 'Foreground color',
+			id: 'fg',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color',
+			id: 'bg',
+			default: this.rgb(51, 102, 0),
+		},
+		{
+			type: 'dropdown',
+			label: 'Input',
+			id: 'trans',
+			default: '7',
+			choices: this.model.trans_btn
+		}
+		],
+		callback: (feedback, bank) => {
+			let element = this.model.trans_btn.find(element => element.id === feedback.options.trans);
+			if (element !== undefined) {
+				let setOn = false;
+				switch (element.label) {
+					case 'NORM REV':
+						if (this.normrev_state == 1) { setOn = true; }
+						break;
+					case 'REV':
+						if (this.rev_state == 1) { setOn = true; }
+						break;
+					case 'TRANS PVW':
+						if (this.preview_state == 1) { setOn = true; }
+						break;
+					case 'KEY PRIORITY':
+						if (this.keypriority_state == 1) { setOn = true; }
+						break;
+					case 'BACKGROUND':
+						if (this.bgnd_state == 1) { setOn = true; }
+						break;
+				}
+
+				if (setOn) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
 			}
+		}
+	}
+
+	feedbacks['ftb_state'] = {
+		label: 'Color for FTB button states',
+		description: 'Set Button colors for FTB button states.',
+		options: [{
+			type: 'colorpicker',
+			label: 'Foreground color',
+			id: 'fg',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color',
+			id: 'bg',
+			default: this.rgb(51, 102, 0),
+		},
+		{
+			type: 'dropdown',
+			label: 'Input',
+			id: 'ftb',
+			default: '0',
+			choices: this.model.ftb
+		}
+		],
+		callback: (feedback, bank) => {
+			let element = this.model.ftb.find(element => element.id === feedback.options.ftb);
+			if (element !== undefined) {
+				let setOn = false;
+				switch (element.label) {
+					case 'FTB ENABLE':
+						if (this.ftbenable_state == 1) { setOn = true; }
+						break;
+					case 'FTB':
+						if (this.ftb_trans_state > 0) { setOn = true; }
+						break;
+				}
+
+				if (setOn) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
 			}
 		}
 	}

@@ -449,10 +449,10 @@ exports.getPresets = function () {
 		},
 		{
 			category: 'ftb',
-			label: 'FTB ENABLE',
+			label: 'FTB Enable',
 			bank: {
 				style: 'text',
-				text: 'FTB ENABLE',
+				text: 'FTB Enable',
 				size: '18',
 				color: this.rgb(255, 255, 255),
 				bgcolor: this.rgb(0, 0, 0),

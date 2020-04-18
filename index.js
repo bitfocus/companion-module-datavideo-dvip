@@ -1033,7 +1033,7 @@ class instance extends instance_skel {
 		let maxInputs = this.model.inputs.length;
 		let input = Buffer.alloc(4);
 		let lastInput;
-
+		console.log("GET NAMES RUNNING");
 		if (inputName == null) {
 			//Grab input 1
 			this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]));
@@ -1042,8 +1042,8 @@ class instance extends instance_skel {
 		} else if (this.cur_input_request > 1) {
 			//request current input name
 			lastInput = this.cur_input_request - 1;
-			//console.log("input: ", lastInput);
-			//console.log("input name:", inputName);
+			console.log("input: ", lastInput);
+			console.log("input name:", inputName);
 			this.setVariable('in' + lastInput.toString() + '_name', inputName);
 			this.input_names[lastInput] = inputName;
 			if (this.cur_input_request != 0 && this.cur_input_request <= maxInputs) {
@@ -1172,17 +1172,17 @@ class instance extends instance_skel {
 							}
 						} else {
 							//Grab names again on this packet
-							pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
-							if (pos > -1) {
-								if (this.cur_input_request == 0) {
-									this.getInputNames(null);
-								}
+							//pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
+							//if (pos > -1) {
+							//	if (this.cur_input_request == 0) {
+							//		this.getInputNames(null);
+							//	}
 
-							} else {
+							//} else {
 								//console.log("---------CMD BUFFER PROCESS--------------------")
 								//If we are not handling the weird name stuff process the input
 								this.processBuffer(buffer);
-							}
+							//}
 						}
 
 

@@ -63,6 +63,20 @@ exports.getActions = function () {
 			}
 		]
 	};
+
+	actions['set_wipe'] = {
+		label: 'Select Wipe',
+		options: [
+			{
+				type: 'number',
+				label: 'Wipe Number',
+				id: 'wipe',
+				min: 1,
+				max: 100,
+				default: '1'
+			}
+		]
+	};
 	actions['switch_key1'] = {
 		label: 'Switch Key 1 Aux',
 		options: [
@@ -331,6 +345,20 @@ exports.getActions = function () {
 			]
 		};
 	}
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+		actions['audio_level'] = {
+			label: 'Audio Level Controls',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select',
+					id: 'audio_level',
+					default: '8',
+					choices: this.model.audio_level
+				}
+			]
+		};
+	}
 	if (this.config.modelID != 'se650' && this.config.modelID != 'se700') {
 		actions['audio_src'] = {
 			label: 'Select Audio Source',
@@ -380,7 +408,7 @@ exports.getActions = function () {
 				id: 'trans',
 				default: '3',
 				choices: [
-					{ id: '3', label: 'ME Duration'},
+					{ id: '3', label: 'ME Duration' },
 					{ id: '8', label: 'DSK Duration' },
 					{ id: '13', label: 'FTB Duration' },
 				]
@@ -417,7 +445,7 @@ exports.getActions = function () {
 				id: 'input',
 				default: '1',
 				choices: this.model.inputs
-			},            
+			},
 			{
 				type: 'textinput',
 				label: 'Name',

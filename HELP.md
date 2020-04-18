@@ -24,6 +24,7 @@ SE-3200/HS-3200
 * User Load/User Save
 * Streamer Controls
 * Change input name on mixer
+* Select wipe
 
 
 **Available feedback**
@@ -35,6 +36,7 @@ SE-3200/HS-3200
 * Currently selected user
 * Keyer Control (PGM/PVW) state
 * Transition and FTB button states
+* Currently selected wipe
 
 
 **Available presets**
@@ -48,6 +50,8 @@ SE-3200/HS-3200
 * Audio source set with feedback
 * Keyer controls with feedback
 * FTB controls with feedback
+* Select wipe with feedback
+* Audio output state with feedback
 
 **Available variables**
 * Current PGM and PVW inputs sources
@@ -60,3 +64,5 @@ SE-3200/HS-3200
 * Input name labels from mixer
 * Currently selected user
 * Transition and FTB button states
+* Current wipe number
+* Audio output states

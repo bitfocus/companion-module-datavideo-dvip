@@ -115,49 +115,50 @@ exports.getFeedbacks = function () {
 		callback: (feedback, bank) => {
 			let element = this.model.keyer.find(element => element.id === feedback.options.keyer);
 			if (element !== undefined) {
-				let setOn = false;
+				let setOn = 0;
+
 				switch (element.label) {
 					case 'DSK 1 PGM':
-						if (this.dsk1_pgm_state == 1) { setOn = true; }
+						setOn = this.dsk1_pgm_state
 						break;
 					case 'DSK 1 PVW':
-						if (this.dsk1_pvw_state == 1) { setOn = true; }
+						setOn = this.dsk1_pvw_state
 						break;
 					case 'DSK 2 PGM':
-						if (this.dsk2_pgm_state == 1) { setOn = true; }
+						setOn = this.dsk2_pgm_state
 						break;
 					case 'DSK 2 PVW':
-						if (this.dsk2_pvw_state == 1) { setOn = true; }
+						setOn = this.dsk2_pvw_state;
 						break;
 					case 'KEY 1 PGM':
-						if (this.key1_pgm_state == 1) { setOn = true; }
+						setOn = this.key1_pgm_state;
 						break;
 					case 'KEY 1 PVW':
-						if (this.key1_pvw_state == 1) { setOn = true; }
+						setOn = this.key1_pvw_state;
 						break;
 					case 'KEY 2 PGM':
-						if (this.key2_pgm_state == 1) { setOn = true; }
+						setOn = this.key2_pgm_state;
 						break;
 					case 'KEY 2 PVW':
-						if (this.key2_pvw_state == 1) { setOn = true; }
+						setOn = this.key2_pvw_state;
 						break;
 					case 'KEY 3 PGM':
-						if (this.key3_pgm_state == 1) { setOn = true; }
+						setOn = this.key3_pgm_state;
 						break;
 					case 'KEY 3 PVW':
-						if (this.key3_pvw_state == 1) { setOn = true; }
+						setOn = this.key3_pvw_state;
 						break;
 					case 'KEY 4 PGM':
-						if (this.key4_pgm_state == 1) { setOn = true; }
+						setOn = this.key4_pgm_state;
 						break;
 					case 'KEY 4 PVW':
-						if (this.key4_pvw_state == 1) { setOn = true; }
+						setOn = this.key4_pvw_state;
 						break;
 					case 'P-in-P PGM':
-						if (this.pip_pgm_state == 1) { setOn = true; }
+						setOn = this.pip_pgm_state;
 						break;
 					case 'P-in-P PVW':
-						if (this.pip_pvw_state == 1) { setOn = true; }
+						setOn = this.pip_pvw_state;
 						break;
 				}
 
@@ -197,22 +198,22 @@ exports.getFeedbacks = function () {
 		callback: (feedback, bank) => {
 			let element = this.model.trans_btn.find(element => element.id === feedback.options.trans);
 			if (element !== undefined) {
-				let setOn = false;
+				let setOn = 0;
 				switch (element.label) {
 					case 'NORM REV':
-						if (this.normrev_state == 1) { setOn = true; }
+						setOn = this.normrev_state;
 						break;
 					case 'REV':
-						if (this.rev_state == 1) { setOn = true; }
+						setOn = this.rev_state;
 						break;
 					case 'TRANS PVW':
-						if (this.preview_state == 1) { setOn = true; }
+						setOn = this.preview_state;
 						break;
 					case 'KEY PRIORITY':
-						if (this.keypriority_state == 1) { setOn = true; }
+						setOn = this.keypriority_state;
 						break;
 					case 'BACKGROUND':
-						if (this.bgnd_state == 1) { setOn = true; }
+						setOn = this.bgnd_state;
 						break;
 				}
 
@@ -255,7 +256,7 @@ exports.getFeedbacks = function () {
 				let setOn = false;
 				switch (element.label) {
 					case 'FTB ENABLE':
-						if (this.ftbenable_state == 1) { setOn = true; }
+						setOn = this.ftbenable_state;
 						break;
 					case 'FTB':
 						if (this.ftb_trans_state > 0) { setOn = true; }
@@ -861,6 +862,79 @@ exports.getFeedbacks = function () {
 			}
 		}
 	}
+
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+
+		feedbacks['audio_state'] = {
+			label: 'Color for current Audio states',
+			description: 'Set Button colors for current Audio states.',
+			options: [{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(51, 102, 0),
+			},
+			{
+				type: 'dropdown',
+				label: 'Select',
+				id: 'audio',
+				default: '8',
+				choices: this.model.audio
+			}
+			],
+			callback: (feedback, bank) => {
+				let element = this.model.audio.find(element => element.id === feedback.options.audio);
+				if (element !== undefined) {
+					let setOn = 0;
+					switch (element.label) {
+						case 'External Audio':
+							if (this.audio_mode > 0) { setOn = 1; }
+							break;
+						case 'SDI 1 Audio':
+							setOn = this.audio_sdi1_enable;
+							break;
+						case 'SDI 2 Audio':
+							setOn = this.audio_sdi2_enable;
+							break;
+						case 'SDI 3 Audio':
+							setOn = this.audio_sdi3_enable;
+							break;
+						case 'SDI 4 Audio':
+							setOn = this.audio_sdi4_enable;
+						case 'SDI 5 Audio':
+							setOn = this.audio_sdi5_enable;
+							break;
+						case 'SDI 6 Audio':
+							setOn = this.audio_sdi6_enable;
+							break;
+						case 'HDMI 1 Audio':
+							setOn = this.audio_hdmi1_enable;
+							break;
+						case 'HDMI 2 Audio':
+							setOn = this.audio_hdmi2_enable;
+							break;
+						case 'HDMI 3 Audio':
+							setOn = this.audio_hdmi3_enable;
+							break;
+					}
+
+					if (setOn) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
+				}
+			}
+		}
+	}
+
 	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
 		feedbacks['audio_src'] = {
 			label: 'Color for current audio source',
@@ -930,6 +1004,39 @@ exports.getFeedbacks = function () {
 		}
 	}
 
+	feedbacks['wipe_state'] = {
+		label: 'Color for currently selected wipe',
+		description: 'Set Button colors for currently selected wipe',
+		options: [{
+			type: 'colorpicker',
+			label: 'Foreground color',
+			id: 'fg',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color',
+			id: 'bg',
+			default: this.rgb(51, 102, 0),
+		},
+		{
+			type: 'number',
+			label: 'Wipe Number',
+			id: 'wipe',
+			default: '1',
+			min: 1,
+			max: 100,
+		}
+		],
+		callback: (feedback, bank) => {
+			if (this.curr_wipe == feedback.options.wipe) {
+				return {
+					color: feedback.options.fg,
+					bgcolor: feedback.options.bg
+				};
+			}
+		}
+	}
 	return feedbacks;
 
 }

@@ -495,8 +495,56 @@ exports.getPresets = function () {
 				}
 			}],
 		},
+		{
+			category: 'wipe',
+			label: 'Wipe 1',
+			bank: {
+				style: 'text',
+				text: 'Wipe 1',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
 
+			},
+			actions: [{
+				action: 'set_wipe',
+				options: {
+					wipe: '1'
+				}
+			}],
+			feedbacks: [{
+				type: 'wipe_state',
+				options: {
+					wipe: '1'
+				}
+			}],
 
+		},
+		{
+			category: 'audio',
+			label: 'SDI 1 Enable',
+			bank: {
+				style: 'text',
+				text: 'SDI 1 Enable',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'audio',
+				options: {
+					audio: '10'
+				}
+			}],
+			feedbacks: [{
+				type: 'audio_state',
+				options: {
+					audio: '10'
+				}
+			}],
+
+		},
 	];
 
 	return presets;

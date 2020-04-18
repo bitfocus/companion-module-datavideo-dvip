@@ -70,6 +70,18 @@ class instance extends instance_skel {
 		this.ftbenable_state;
 		this.ftb_trans_state;
 		this.keypriority_state;
+		this.curr_wipe;
+
+		this.audio_mode;
+		this.audio_sdi1_enable;
+		this.audio_sdi2_enable;
+		this.audio_sdi3_enable;
+		this.audio_sdi4_enable;
+		this.audio_sdi5_enable;
+		this.audio_sdi6_enable;
+		this.audio_hdmi1_enable;
+		this.audio_hdmi2_enable;
+		this.audio_hdmi3_enable;
 
 		Object.assign(this, {
 			...actions,
@@ -103,6 +115,7 @@ class instance extends instance_skel {
 				audio_src: this.CHOICES_AUDIO_SRC_1200,
 				inputs: this.CHOICES_INPUTS_1200,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
+				audio_level: this.CHOICES_AUDIO_LEVEL_1200,
 			},
 			se3200: {
 				id: 'se3200',
@@ -133,6 +146,7 @@ class instance extends instance_skel {
 				audio_src: this.CHOICES_AUDIO_SRC_3200,
 				inputs: this.CHOICES_INPUTS_3200,
 				trans_btn: this.CHOICES_TRANS_BTN_3200,
+				audio_level: this.CHOICES_AUDIO_LEVEL_3200,
 			},
 			se700: {
 				id: 'se700',
@@ -151,6 +165,7 @@ class instance extends instance_skel {
 				audio: this.CHOICES_AUDIO_700,
 				inputs: this.CHOICES_INPUTS_700,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
+				audio_level: this.CHOICES_AUDIO_LEVEL_700,
 			},
 			se650: {
 				id: 'se650',
@@ -206,6 +221,7 @@ class instance extends instance_skel {
 		let name;
 		let input = Buffer.alloc(4);
 		let name_size = Buffer.alloc(4);
+		let wipe_id = Buffer.alloc(4);
 		let input_name_cmd;
 
 		const lf = '\u000a';
@@ -539,7 +555,68 @@ class instance extends instance_skel {
 				element = this.model.audio.find(element => element.id === options.audio);
 				if (element !== undefined) {
 					cmd = element.cmd;
+					let setOn = true;
+					let toggle = false;
+					switch (element.label) {
+						case 'External Audio':
+							if (this.audio_mode > 0) { setOn = false; }
+							toggle = true;
+							break;
+						case 'SDI 1 Audio':
+							if (this.audio_sdi1_enable == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'SDI 2 Audio':
+							if (this.audio_sdi2_enable == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'SDI 3 Audio':
+							if (this.audio_sdi3_enable == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'SDI 4 Audio':
+							if (this.audio_sdi4_enable == 1) { setOn = false; }
+							toggle = true;
+						case 'SDI 5 Audio':
+							if (this.audio_sdi5_enable == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'SDI 6 Audio':
+							if (this.audio_sdi6_enable == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'HDMI 1 Audio':
+							if (this.audio_hdmi1_enable == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'HDMI 2 Audio':
+							if (this.audio_hdmi2_enable == 1) { setOn = false; }
+							toggle = true;
+							break;
+						case 'HDMI 3 Audio':
+							if (this.audio_hdmi3_enable == 1) { setOn = false; }
+							toggle = true;
+							break;
+					}
+					if (toggle) {
+						if (setOn) {
+							if (element.label == "External Audio") {
+								cmd = Buffer.concat([cmd, Buffer.from([0x02, 0x00, 0x00, 0x00])]);
+							} else {
+								cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
+							}
+						} else {
+							cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
+						}
+					}
 				}
+				break;
+			case 'audio_level':
+				element = this.model.audio_level.find(element => element.id === options.audio_level);
+				if (element !== undefined) {
+					cmd = element.cmd;
+				}
+				break;
 			case 'audio_src':
 				element = this.model.audio_src.find(element => element.id === options.audio_src);
 				if (element !== undefined) {
@@ -556,7 +633,10 @@ class instance extends instance_skel {
 				name_size.writeUInt32LE(name.length / 2, 0);
 				input_name_cmd = Buffer.from([0x0a, 0x00, 0x00, 0x00, input[0], 0x00, 0x00, 0x00]);
 				cmd = Buffer.concat([input_name_cmd, name_size, name]);
-
+				break;
+			case 'set_wipe':
+				wipe_id.writeUInt16LE(options.wipe, 0);
+				cmd = Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, wipe_id[0], wipe_id[1], 0x00, 0x00]);
 				break;
 		}
 
@@ -567,7 +647,7 @@ class instance extends instance_skel {
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
 				cmd = Buffer.concat([pktsize, cmd]);
-				//console.log("Send: ", cmd);
+				console.log("Send: ", cmd);
 
 				this.socket.send(cmd);
 				//Update input names on change
@@ -902,6 +982,64 @@ class instance extends instance_skel {
 				setTimeout(function () { this.getKeyStates() }.bind(this), 100);
 				break;
 
+			case 'SWITCHER_WIPE_PATTERN_NUM':
+				this.curr_wipe = value;
+				this.setVariable('curr_wipe', this.curr_wipe);
+				this.checkFeedbacks('curr_wipe');
+				this.checkFeedbacks('wipe_state');
+				break;
+			case 'AUDIO_MODE':
+				this.audio_mode = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_mode', this.audio_mode);
+				break;
+			case 'AUDIO_SDI1_ENABLE':
+				this.audio_sdi1_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_sdi1', this.audio_sdi1_enable);
+				break;
+			case 'AUDIO_SDI2_ENABLE':
+				this.audio_sdi2_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_sdi2', this.audio_sdi2_enable);
+				break;
+			case 'AUDIO_SDI3_ENABLE':
+				this.audio_sdi3_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_sdi3', this.audio_sdi3_enable);
+				break;
+			case 'AUDIO_SDI4_ENABLE':
+				this.audio_sdi4_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_sdi4', this.audio_sdi4_enable);
+				break;
+			case 'AUDIO_SDI5_ENABLE':
+				this.audio_sdi5_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_sdi5', this.audio_sdi5_enable);
+				break;
+			case 'AUDIO_SDI6_ENABLE':
+				this.audio_sdi6_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_sdi6', this.audio_sdi6_enable);
+				break;
+			case 'AUDIO_HDMI1_ENABLE':
+				this.audio_hdmi1_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_hdmi1', this.audio_hdmi1_enable);
+				break;
+			case 'AUDIO_HDMI2_ENABLE':
+				this.audio_hdmi2_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_hdmi2', this.audio_hdmi2_enable);
+				break;
+			case 'AUDIO_HDMI3_ENABLE':
+				this.audio_hdmi3_enable = value;
+				this.checkFeedbacks('audio_state')
+				this.setVariable('audio_hdmi3', this.audio_hdmi3_enable);
+				break;
+
+
 
 		}
 
@@ -1033,7 +1171,7 @@ class instance extends instance_skel {
 		let maxInputs = this.model.inputs.length;
 		let input = Buffer.alloc(4);
 		let lastInput;
-		console.log("GET NAMES RUNNING");
+		//console.log("GET NAMES RUNNING");
 		if (inputName == null) {
 			//Grab input 1
 			this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]));
@@ -1042,8 +1180,8 @@ class instance extends instance_skel {
 		} else if (this.cur_input_request > 1) {
 			//request current input name
 			lastInput = this.cur_input_request - 1;
-			console.log("input: ", lastInput);
-			console.log("input name:", inputName);
+			//	console.log("input: ", lastInput);
+			//	console.log("input name:", inputName);
 			this.setVariable('in' + lastInput.toString() + '_name', inputName);
 			this.input_names[lastInput] = inputName;
 			if (this.cur_input_request != 0 && this.cur_input_request <= maxInputs) {
@@ -1179,9 +1317,9 @@ class instance extends instance_skel {
 							//	}
 
 							//} else {
-								//console.log("---------CMD BUFFER PROCESS--------------------")
-								//If we are not handling the weird name stuff process the input
-								this.processBuffer(buffer);
+							//console.log("---------CMD BUFFER PROCESS--------------------")
+							//If we are not handling the weird name stuff process the input
+							this.processBuffer(buffer);
 							//}
 						}
 

@@ -30,6 +30,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * User Load/User Save
 * Streamer Controls
 * Change input name on mixer
+* Select wipe
 
 
 **Available feedback**
@@ -41,6 +42,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Currently selected user
 * Keyer Control (PGM/PVW) state
 * Transition and FTB button states
+* Currently selected wipe
 
 
 **Available presets**
@@ -54,6 +56,8 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Audio source set with feedback
 * Keyer controls with feedback
 * FTB controls with feedback
+* Select wipe with feedback
+* Audio output state with feedback
 
 **Available variables**
 * Current PGM and PVW inputs sources
@@ -66,3 +70,5 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Input name labels from mixer
 * Currently selected user
 * Transition and FTB button states
+* Current wipe number
+* Audio output states

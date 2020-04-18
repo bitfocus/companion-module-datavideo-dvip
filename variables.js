@@ -143,7 +143,7 @@ exports.getVariables = function () {
 	{
 		label: 'Current Key 3 PVW state',
 		name: 'key3_pvw_state'
-	},	
+	},
 	{
 		label: 'Current Key 4 PGM state',
 		name: 'key4_pgm_state'
@@ -255,6 +255,46 @@ exports.getVariables = function () {
 	{
 		label: 'Current KEY PRIORITY state',
 		name: 'keypriority_state'
+	},
+	{
+		label: 'Currently selected wipe',
+		name: 'curr_wipe'
+	},
+	{
+		label: 'Current audio SDI 1 enable state',
+		name: 'audio_sdi1'
+	},
+	{
+		label: 'Current audio SDI 2 enable state',
+		name: 'audio_sdi2'
+	},
+	{
+		label: 'Current audio SDI 3 enable state',
+		name: 'audio_sdi3'
+	},
+	{
+		label: 'Current audio SDI 4 enable state',
+		name: 'audio_sdi4'
+	},
+	{
+		label: 'Current audio SDI 5 enable state',
+		name: 'audio_sdi5'
+	},
+	{
+		label: 'Current audio SDI 6 enable state',
+		name: 'audio_sdi6'
+	},
+	{
+		label: 'Current audio HDMI 1 enable state',
+		name: 'audio_hdmi1'
+	},
+	{
+		label: 'Current audio HDMI 2 enable state',
+		name: 'audio_hdmi2'
+	},
+	{
+		label: 'Current audio HDMI 3 enable state',
+		name: 'audio_hdmi3'
 	},
 	];
 

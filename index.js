@@ -375,57 +375,128 @@ class instance extends instance_skel {
 			case 'keyer':
 				element = this.model.keyer.find(element => element.id === options.keyer);
 				if (element !== undefined) {
-					cmd = element.cmd;
+					cmd = Buffer.from(element.cmd);
 					let setOn = true;
 
 					switch (element.label) {
 						case 'DSK 1 PGM':
-							if (this.dsk1_pgm_state == 1) { setOn = false; }
+							if (this.dsk1_pgm_state == 1) {
+								setOn = false;
+								if (this.dsk1_pvw_state == 1) {
+									cmd[16] = 1;
+								} else {
+									cmd[16] = 0;
+								}
+							} else {
+								if (this.dsk1_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+							}
 							break;
 						case 'DSK 1 PVW':
 							if (this.dsk1_pvw_state == 1) { setOn = false; }
+							if (this.dsk1_pgm_state == 1 && this.dsk1_pvw_state == 0) { setOn = false; } else if (this.dsk1_pgm_state == 1 && this.dsk1_pvw_state == 1) { setOn = true; }
 							break;
 						case 'DSK 2 PGM':
-							if (this.dsk2_pgm_state == 1) { setOn = false; }
+							if (this.dsk2_pgm_state == 1) {
+								setOn = false;
+								if (this.dsk2_pvw_state == 1) {
+									cmd[16] = 1;
+								} else {
+									cmd[16] = 0;
+								}
+							} else {
+								if (this.dsk2_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+							}
 							break;
 						case 'DSK 2 PVW':
 							if (this.dsk2_pvw_state == 1) { setOn = false; }
+							if (this.dsk2_pgm_state == 1 && this.dsk2_pvw_state == 0) { setOn = false; } else if (this.dsk2_pgm_state == 1 && this.dsk2_pvw_state == 1) { setOn = true; }
 							break;
 						case 'KEY 1 PGM':
-							if (this.key1_pgm_state == 1) { setOn = false; }
+							if (this.key1_pgm_state == 1) {
+								setOn = false;
+								if (this.key1_pvw_state == 1) {
+									cmd[16] = 1;
+								} else {
+									cmd[16] = 0;
+								}
+							} else {
+								if (this.key1_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+							}
 							break;
 						case 'KEY 1 PVW':
 							if (this.key1_pvw_state == 1) { setOn = false; }
+							if (this.key1_pgm_state == 1 && this.key1_pvw_state == 0) { setOn = false; } else if (this.key1_pgm_state == 1 && this.key1_pvw_state == 1) { setOn = true; }
 							break;
 						case 'KEY 2 PGM':
-							if (this.key2_pgm_state == 1) { setOn = false; }
+							if (this.key2_pgm_state == 1) {
+								setOn = false;
+								if (this.key2_pvw_state == 1) {
+									cmd[16] = 1;
+								} else {
+									cmd[16] = 0;
+								}
+							} else {
+								if (this.key2_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+							}
 							break;
 						case 'KEY 2 PVW':
 							if (this.key2_pvw_state == 1) { setOn = false; }
+							if (this.key2_pgm_state == 1 && this.key2_pvw_state == 0) { setOn = false; } else if (this.key2_pgm_state == 1 && this.key2_pvw_state == 1) { setOn = true; }
 							break;
 						case 'KEY 3 PGM':
-							if (this.key3_pgm_state == 1) { setOn = false; }
+							if (this.key3_pgm_state == 1) {
+								setOn = false;
+								if (this.key3_pvw_state == 1) {
+									cmd[16] = 1;
+								} else {
+									cmd[16] = 0;
+								}
+							} else {
+								if (this.key3_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+							}
 							break;
 						case 'KEY 3 PVW':
 							if (this.key3_pvw_state == 1) { setOn = false; }
+							if (this.key3_pgm_state == 1 && this.key3_pvw_state == 0) { setOn = false; } else if (this.key3_pgm_state == 1 && this.key3_pvw_state == 1) { setOn = true; }
 							break;
 						case 'KEY 4 PGM':
-							if (this.key4_pgm_state == 1) { setOn = false; }
+							if (this.key4_pgm_state == 1) {
+								setOn = false;
+								if (this.key4_pvw_state == 1) {
+									cmd[16] = 1;
+								} else {
+									cmd[16] = 0;
+								}
+							} else {
+								if (this.key4_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+							}
 							break;
 						case 'KEY 4 PVW':
 							if (this.key4_pvw_state == 1) { setOn = false; }
+							if (this.key4_pgm_state == 1 && this.key4_pvw_state == 0) { setOn = false; } else if (this.key4_pgm_state == 1 && this.key4_pvw_state == 1) { setOn = true; }
 							break;
 						case 'P-in-P PGM':
-							if (this.pip_pgm_state == 1) { setOn = false; }
+							if (this.pip_pgm_state == 1) {
+								setOn = false;
+								if (this.pip_pvw_state == 1) {
+									cmd[16] = 1;
+								} else {
+									cmd[16] = 0;
+								}
+							} else {
+								if (this.pip_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+							}
 							break;
 						case 'P-in-P PVW':
 							if (this.pip_pvw_state == 1) { setOn = false; }
+							if (this.pip_pgm_state == 1 && this.pip_pvw_state == 0) { setOn = false; } else if (this.pip_pgm_state == 1 && this.pip_pvw_state == 1) { setOn = true; }
 							break;
 					}
+
 					if (setOn) {
-						cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
+						cmd[8] = 1;
 					} else {
-						cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
+						cmd[8] = 0;
 					}
 				}
 				break;
@@ -493,6 +564,10 @@ class instance extends instance_skel {
 					if (this.cur_input_request == 0) {
 						this.getInputNames(null);
 					}
+				}
+				if (id = 'trans') {
+					//just delay doing this until I can find a better trigger for it.
+					setTimeout(function () { this.getKeyStates() }.bind(this), 200);
 				}
 
 			} else {
@@ -621,6 +696,9 @@ class instance extends instance_skel {
 				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_DSK1_TRANS_ENABLE':
+				if (this.dsk1_pgm_state == 1) {
+					if (value == 1) { value = 0; } else { value = 1; }
+				}
 				this.dsk1_pvw_state = value;
 				this.setVariable('dsk1_pvw_state', this.dsk1_pvw_state);
 				this.checkFeedbacks('keyer_state');
@@ -632,6 +710,9 @@ class instance extends instance_skel {
 				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_DSK2_TRANS_ENABLE':
+				if (this.dsk2_pgm_state == 1) {
+					if (value == 1) { value = 0; } else { value = 1; }
+				}
 				this.dsk2_pvw_state = value;
 				this.setVariable('dsk2_pvw_state', this.dsk2_pvw_state);
 				this.checkFeedbacks('keyer_state');
@@ -643,6 +724,10 @@ class instance extends instance_skel {
 				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_TRANS_KEY1':
+				//Keys have weird logic, if the keyer is in the pgm the trans state inverts
+				if (this.key1_pgm_state == 1) {
+					if (value == 1) { value = 0; } else { value = 1; }
+				}
 				this.key1_pvw_state = value;
 				this.setVariable('key1_pvw_state', this.key1_pvw_state);
 				this.checkFeedbacks('keyer_state');
@@ -661,9 +746,15 @@ class instance extends instance_skel {
 				break;
 			case 'SWITCHER_TRANS_KEY2':
 				if (this.config.modelID == 'se650' || this.config.modelID == 'se700') {
+					if (this.pip_pgm_state == 1) {
+						if (value == 1) { value = 0; } else { value = 1; }
+					}
 					this.pip_pvw_state = value;
 					this.setVariable('pip_pvw_state', this.pip_pvw_state);
 				} else {
+					if (this.key2_pgm_state == 1) {
+						if (value == 1) { value = 0; } else { value = 1; }
+					}
 					this.key2_pvw_state = value;
 					this.setVariable('key2_pvw_state', this.key2_pvw_state);
 				}
@@ -676,6 +767,9 @@ class instance extends instance_skel {
 				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_TRANS_KEY3':
+				if (this.key3_pgm_state == 1) {
+					if (value == 1) { value = 0; } else { value = 1; }
+				}
 				this.key3_pvw_state = value;
 				this.setVariable('key3_pvw_state', this.key3_pvw_state);
 				this.checkFeedbacks('keyer_state');
@@ -687,6 +781,9 @@ class instance extends instance_skel {
 				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_TRANS_KEY4':
+				if (this.key4_pgm_state == 1) {
+					if (value == 1) { value = 0; } else { value = 1; }
+				}
 				this.key4_pvw_state = value;
 				this.setVariable('key4_pvw_state', this.key4_pvw_state);
 				this.checkFeedbacks('keyer_state');
@@ -760,13 +857,58 @@ class instance extends instance_skel {
 				this.dsk_tbar_state = value;
 				//console.log("tbar:", this.tbar_state);
 				this.checkFeedbacks('dsk_tbar_state');
+
 				break;
+
+			case 'DSK_TRANS_STATE':
+			case 'ME_TRANS_STATE':
+				//Stopped	
+				if (value == 0) {
+					setTimeout(function () { this.getKeyStates() }.bind(this), 200);
+				}
+				break;
+
+			case 'DSK_TRANS_COMMAND':
+				//READY	
+				if (value == 8) {
+					setTimeout(function () { this.getKeyStates() }.bind(this), 200);
+				}
+				break;
+			case 'STATUS_TALLY_DSK1_FILL_SRC':
+			case 'STATUS_TALLY_DSK2_FILL_SRC':
+			case 'STATUS_TALLY_DSK1_KEY_SRC':
+			case 'STATUS_TALLY_DSK2_KEY_SRC':
+			case 'STATUS_TALLY_KEY1_FILL_SRC':
+			case 'STATUS_TALLY_KEY2_FILL_SRC':
+			case 'STATUS_TALLY_KEY3_FILL_SRC':
+			case 'STATUS_TALLY_KEY4_FILL_SRC':
+			case 'SWITCHER_DSK_TRANS_LEVEL':
+				setTimeout(function () { this.getKeyStates() }.bind(this), 200);
+				break;
+
 
 		}
 
 	}
 
+	getKeyStates() {
+		console.log("----GET KEY STATES----")
+		let cmd;
+		let cmdsize;
+		let pktsize = Buffer.alloc(4);
 
+		for (let i = 0; i < this.model.keyer.length; i++) {
+			cmd = Buffer.from(this.model.keyer[i].cmd);
+			cmd = cmd.slice(0, 8);
+			cmd[0] = 0;
+			cmdsize = Buffer.byteLength(cmd) + 4;
+			pktsize.writeUInt32LE(cmdsize, 0);
+			cmd = Buffer.concat([pktsize, cmd]);
+			//console.log("REQ KEY STATE ", cmd);
+			this.socket.send(cmd);
+		}
+
+	}
 
 	processBuffer(buffer) {
 		console.log("   ");
@@ -797,12 +939,12 @@ class instance extends instance_skel {
 				console.log("   ");
 				console.log("_____________SECTION LOOP______________");
 				data = buffer.slice(i, i + 4);
-				console.log("CONTROL BUFFER: ", data);
-				console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
+				//console.log("CONTROL BUFFER: ", data);
+				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
 				control = data.readInt16LE(0, true);
 
 				section = data.readInt16LE(2, true);
-				console.log("SECTION ID:", section);
+				//console.log("SECTION ID:", section);
 
 				//SECTION_INPUT is weird and splits the section into inputid/section as two nibbles so we need to check
 				//and handle it seperately
@@ -820,7 +962,7 @@ class instance extends instance_skel {
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
 						console.log("CONTROL: ", element2.label);
-						console.log("CONTROL ID: ", control);
+						//console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
 							switch (element2.type) {
@@ -1012,15 +1154,21 @@ class instance extends instance_skel {
 								this.getInputNames(name.toString('utf16le'));
 
 							}
-						}
-						//Grab names again on this packet
-						pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
-						if (pos > -1) {
-							if (this.cur_input_request == 0) {
-								this.getInputNames(null);
-							}
+						} else {
+							//Grab names again on this packet
+							pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
+							if (pos > -1) {
+								if (this.cur_input_request == 0) {
+									this.getInputNames(null);
+								}
 
+							} else {
+								console.log("---------CMD BUFFER PROCESS--------------------")
+								//If we are not handling the weird name stuff process the input
+								this.processBuffer(buffer);
+							}
 						}
+
 
 					}
 

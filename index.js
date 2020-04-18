@@ -83,6 +83,9 @@ class instance extends instance_skel {
 		this.audio_hdmi2_enable;
 		this.audio_hdmi3_enable;
 
+		this.logo1_state;
+		this.logo2_state;
+
 		Object.assign(this, {
 			...actions,
 			...feedbacks,
@@ -647,7 +650,7 @@ class instance extends instance_skel {
 				cmdsize = Buffer.byteLength(cmd) + 4;
 				pktsize.writeUInt32LE(cmdsize, 0);
 				cmd = Buffer.concat([pktsize, cmd]);
-				console.log("Send: ", cmd);
+				//console.log("Send: ", cmd);
 
 				this.socket.send(cmd);
 				//Update input names on change

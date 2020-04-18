@@ -353,7 +353,6 @@ exports.getActions = function () {
 					type: 'dropdown',
 					label: 'Select',
 					id: 'audio_level',
-					default: '8',
 					choices: this.model.audio_level
 				}
 			]

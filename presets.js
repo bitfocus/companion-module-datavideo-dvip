@@ -418,7 +418,263 @@ exports.getPresets = function () {
 			feedbacks: [{
 				type: 'keyer_state',
 				options: {
-					keyer: '2'
+					keyer: '2',
+					bg: this.rgb(51, 102, 0)
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'DSK 2 PGM',
+			bank: {
+				style: 'text',
+				text: 'DSK 2 PGM',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '4'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '4'
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'DSK 2 PVW',
+			bank: {
+				style: 'text',
+				text: 'DSK 2 PVW',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '6'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '6',
+					bg: this.rgb(51, 102, 0)
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'Key 1 PGM',
+			bank: {
+				style: 'text',
+				text: 'Key 1 PGM',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '8'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '8'
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'Key 1 PVW',
+			bank: {
+				style: 'text',
+				text: 'Key 1 PVW',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '10'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '10',
+					bg: this.rgb(51, 102, 0)
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'Key 2 PGM',
+			bank: {
+				style: 'text',
+				text: 'Key 2 PGM',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '12'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '12'
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'Key 2 PVW',
+			bank: {
+				style: 'text',
+				text: 'Key 2 PVW',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '14'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '14',
+					bg: this.rgb(51, 102, 0)
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'Key 3 PGM',
+			bank: {
+				style: 'text',
+				text: 'Key 3 PGM',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '16'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '16'
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'Key 3 PVW',
+			bank: {
+				style: 'text',
+				text: 'Key 3 PVW',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '18'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '18',
+					bg: this.rgb(51, 102, 0)
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'Key 4 PGM',
+			bank: {
+				style: 'text',
+				text: 'Key 4 PGM',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '20'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '20'
+				}
+			}],
+
+		},
+		{
+			category: 'keyer',
+			label: 'Key 4 PVW',
+			bank: {
+				style: 'text',
+				text: 'Key 4 PVW',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'keyer',
+				options: {
+					keyer: '22'
+				}
+			}],
+			feedbacks: [{
+				type: 'keyer_state',
+				options: {
+					keyer: '22',
+					bg: this.rgb(51, 102, 0)
 				}
 			}],
 
@@ -428,7 +684,7 @@ exports.getPresets = function () {
 			label: 'Background',
 			bank: {
 				style: 'text',
-				text: 'Clip',
+				text: 'Background',
 				size: '18',
 				color: this.rgb(255, 255, 255),
 				bgcolor: this.rgb(0, 0, 0),
@@ -444,6 +700,102 @@ exports.getPresets = function () {
 				type: 'trans_state',
 				options: {
 					trans: '40'
+				}
+			}],
+		},
+		{
+			category: 'transition',
+			label: 'Prev Trans',
+			bank: {
+				style: 'text',
+				text: 'Prev Trans',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'trans_btn',
+				options: {
+					trans: '11'
+				}
+			}],
+			feedbacks: [{
+				type: 'trans_state',
+				options: {
+					trans: '11'
+				}
+			}],
+		},
+		{
+			category: 'transition',
+			label: 'Norm Rev',
+			bank: {
+				style: 'text',
+				text: 'Norm Rev',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'trans_btn',
+				options: {
+					trans: '7'
+				}
+			}],
+			feedbacks: [{
+				type: 'trans_state',
+				options: {
+					trans: '7'
+				}
+			}],
+		},
+		{
+			category: 'transition',
+			label: 'Rev',
+			bank: {
+				style: 'text',
+				text: 'Rev',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'trans_btn',
+				options: {
+					trans: '9'
+				}
+			}],
+			feedbacks: [{
+				type: 'trans_state',
+				options: {
+					trans: '9'
+				}
+			}],
+		},
+		{
+			category: 'transition',
+			label: 'Key Priority',
+			bank: {
+				style: 'text',
+				text: 'Key Priority',
+				size: '18',
+				color: this.rgb(255, 255, 255),
+				bgcolor: this.rgb(0, 0, 0),
+
+			},
+			actions: [{
+				action: 'trans_btn',
+				options: {
+					trans: '13'
+				}
+			}],
+			feedbacks: [{
+				type: 'trans_state',
+				options: {
+					trans: '13'
 				}
 			}],
 		},

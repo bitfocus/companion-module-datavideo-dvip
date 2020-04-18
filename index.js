@@ -864,14 +864,14 @@ class instance extends instance_skel {
 			case 'ME_TRANS_STATE':
 				//Stopped	
 				if (value == 0) {
-					this.getKeyStates();
+					setTimeout(function () { this.getKeyStates() }.bind(this), 100);
 				}
 				break;
 
 			case 'DSK_TRANS_COMMAND':
 				//READY	
 				if (value == 8) {
-					this.getKeyStates();
+					setTimeout(function () { this.getKeyStates() }.bind(this), 100);
 				}
 				break;
 			case 'STATUS_TALLY_DSK1_FILL_SRC':
@@ -883,7 +883,7 @@ class instance extends instance_skel {
 			case 'STATUS_TALLY_KEY3_FILL_SRC':
 			case 'STATUS_TALLY_KEY4_FILL_SRC':
 			case 'SWITCHER_DSK_TRANS_LEVEL':
-				this.getKeyStates();
+				setTimeout(function () { this.getKeyStates() }.bind(this), 100);
 				break;
 
 
@@ -911,11 +911,11 @@ class instance extends instance_skel {
 	}
 
 	processBuffer(buffer) {
-		//	console.log("   ");
-		//	console.log("   ");
-		//	console.log("__________________PACKET START_____________________");
-		//	console.log("RECIEVED BUFFER:", buffer);
-		//	console.log("   ");
+	//	console.log("   ");
+	//	console.log("   ");
+	//	console.log("__________________PACKET START_____________________");
+	//	console.log("RECIEVED BUFFER:", buffer);
+	//	console.log("   ");
 		let section;
 		let control;
 		let value;
@@ -936,8 +936,8 @@ class instance extends instance_skel {
 
 			//console.log("COMMAND: ", com.label);
 			for (let i = 8; i < buffer.length; i = i + 4) {
-				//	console.log("   ");
-				//	console.log("_____________SECTION LOOP______________");
+			//	console.log("   ");
+			//	console.log("_____________SECTION LOOP______________");
 				data = buffer.slice(i, i + 4);
 				//console.log("CONTROL BUFFER: ", data);
 				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
@@ -953,15 +953,15 @@ class instance extends instance_skel {
 					var nib1 = num & 0xF;
 					input = num >> 4;
 					control = nib1;
-					//	console.log("INPUT", input);
+				//	console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-					//	console.log("SECTION: ", element.label);
+				//	console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-						//	console.log("CONTROL: ", element2.label);
+					//	console.log("CONTROL: ", element2.label);
 						//console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
@@ -977,7 +977,7 @@ class instance extends instance_skel {
 									break;
 							}
 
-							//	console.log("VALUE: ", value);
+						//	console.log("VALUE: ", value);
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
@@ -1162,17 +1162,17 @@ class instance extends instance_skel {
 									this.getInputNames(null);
 								}
 
-							} else {
+								} else {
 								//console.log("---------CMD BUFFER PROCESS--------------------")
 								//If we are not handling the weird name stuff process the input
 								this.processBuffer(buffer);
+									}
 							}
+
+
 						}
 
-
-					}
-
-				});
+					});
 
 				this.socket_realtime.on('data', (buffer) => {
 					//Send the null packet when we recieve a packet

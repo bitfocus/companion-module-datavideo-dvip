@@ -1,13 +1,5 @@
 module.exports = {
 
-	CHOICES_PORT: [
-		{ id: '0', label: 'AUTO' },
-		{ id: '5001', label: '5001/2' },
-		{ id: '5003', label: '5003/4' },
-		{ id: '5005', label: '5005/6' },
-		{ id: '5007', label: '5007/8' }
-	],
-
 	////3200/////
 
 	// Switch 3200 Program Bus

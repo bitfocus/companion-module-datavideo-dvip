@@ -11,6 +11,7 @@ Currently supports:
 SE-650  
 SE-700  
 SE-1200MU/HS-1300  
+SE-2200/HS-2200 (Work in Progress)  
 SE-3200/HS-3200  
 
 Please add an issue for other Datavision vision mixers you would like to see added or any feedback you have.

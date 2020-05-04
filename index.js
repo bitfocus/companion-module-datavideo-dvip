@@ -163,15 +163,10 @@ class instance extends instance_skel {
 				key1: this.CHOICES_SWITCH_KEY1_1200,
 				key2: this.CHOICES_SWITCH_KEY2_1200,
 				dsk1: this.CHOICES_SWITCH_DSK1_1200,
-				dsk2: this.CHOICES_SWITCH_DSK2_1200,
-				hdmi1: this.CHOICES_SWITCH_HDMI1_1200,
-				sdi1: this.CHOICES_SWITCH_SDI1_1200,
-				sdi2: this.CHOICES_SWITCH_SDI2_1200,
-				trans: this.CHOICES_TRANS_1200,
+				trans: this.CHOICES_TRANS_2200, //2200 specific
 				ftb: this.CHOICES_FTB_1200,
-				keyer: this.CHOICES_KEYER_1200,
-				streamer: this.CHOICES_STREAMER_1200,
-				audio: this.CHOICES_AUDIO_1200,
+				keyer: this.CHOICES_KEYER_2200, //2200 specific
+				audio: this.CHOICES_AUDIO_2200, //2200 specific
 				audio_src: this.CHOICES_AUDIO_SRC_1200,
 				inputs: this.CHOICES_INPUTS_1200,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
@@ -700,7 +695,7 @@ class instance extends instance_skel {
 			id: 'info',
 			width: 12,
 			label: 'Information',
-			value: 'This module will control a Datavideo vision mixer.'
+			value: 'This module controls a Datavideo vision mixer.</br>Note: Companion needs to be restarted if the model is changed.</br></br>The SE-2200 requires manual port selection (5001)'
 		},
 		{
 			type: 'textinput',
@@ -1122,8 +1117,8 @@ class instance extends instance_skel {
 
 			//console.log("COMMAND: ", com.label);
 			for (let i = 8; i < buffer.length; i = i + 4) {
-			//	console.log("   ");
-			//	console.log("_____________SECTION LOOP______________");
+				//	console.log("   ");
+				//	console.log("_____________SECTION LOOP______________");
 				data = buffer.slice(i, i + 4);
 				//console.log("CONTROL BUFFER: ", data);
 				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
@@ -1139,15 +1134,15 @@ class instance extends instance_skel {
 					var nib1 = num & 0xF;
 					input = num >> 4;
 					control = nib1;
-				//	console.log("INPUT", input);
+					//	console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-				//	console.log("SECTION: ", element.label);
+					//	console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-					//	console.log("CONTROL: ", element2.label);
+						//	console.log("CONTROL: ", element2.label);
 						//console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
@@ -1167,7 +1162,7 @@ class instance extends instance_skel {
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
-							//		console.log("VALUE LABEL: ", element3.label);
+									//		console.log("VALUE LABEL: ", element3.label);
 									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {
@@ -1259,11 +1254,10 @@ class instance extends instance_skel {
 
 			if (this.config.port == 0) {
 				//Automatic Port selection
-				console.log("Auto Port Selection");
 				this.requestPort();
 			} else {
 				this.config.port_cmd = parseInt(this.config.port) + 1;
-				console.log("Selected Port Port ", this.config.port);
+				console.log("Selected Port ", this.config.port);
 				this.setupConnection();
 			}
 
@@ -1271,7 +1265,7 @@ class instance extends instance_skel {
 	}
 
 
-	requestPort(){
+	requestPort() {
 		//Request available realtime port for models that support it
 
 		this.socket_request = new tcp(this.config.host, 5009);
@@ -1296,12 +1290,12 @@ class instance extends instance_skel {
 			this.config.port = buffer.readInt16LE(4);
 			this.config.port_cmd = parseInt(this.config.port) + 1;
 			console.log("Available Port ", this.config.port);
-			
+
 			this.setupConnection();
 		});
 	}
 
-	setupConnection(){
+	setupConnection() {
 
 		this.socket = new tcp(this.config.host, this.config.port_cmd);
 		this.socket_realtime = new tcp(this.config.host, this.config.port);
@@ -1313,7 +1307,7 @@ class instance extends instance_skel {
 		this.socket.on('error', (err) => {
 			debug('Network error', err);
 			this.log('error', 'Network error: ' + err.message);
-			//Request new port if the command socket has an error
+			//Start again if the command socket has an error
 			this.initTCP();
 		});
 
@@ -1328,8 +1322,12 @@ class instance extends instance_skel {
 		});
 
 		this.socket_realtime.on('error', (err) => {
-			debug('Network error', err);
-			this.log('error', 'Network error: ' + err.message);
+			//The SE2200 *may* not use the realtime protocol,
+			//So don't error if the connection fails
+			if (this.config.modelID != 'se2200') {
+				debug('Network error', err);
+				this.log('error', 'Network error: ' + err.message);
+			}
 		});
 
 		this.socket_realtime.on('connect', () => {
@@ -1359,16 +1357,11 @@ class instance extends instance_skel {
 						let name;
 						name = buffer.slice(pos + 8, buffer.length);
 						this.getInputNames(name.toString('utf16le'));
-
 					}
 				} else {
 					this.processBuffer(buffer);
-
 				}
-
-
 			}
-
 		});
 
 		this.socket_realtime.on('data', (buffer) => {
@@ -1380,7 +1373,6 @@ class instance extends instance_skel {
 				//console.log('Receive Realtime: ', buffer);
 
 				this.processBuffer(buffer);
-
 			}
 		});
 	}

@@ -160,7 +160,7 @@ exports.getActions = function () {
 		]
 	};
 
-	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+	if (this.config.modelID != 'se700' && this.config.modelID != 'se650' && this.config.modelID != 'se2200') {
 		actions['switch_dsk2'] = {
 			label: 'Switch DSK 2 Aux',
 			options: [
@@ -231,19 +231,20 @@ exports.getActions = function () {
 		};
 	}
 
-
-	actions['switch_hdmi1'] = {
-		label: 'Switch HDMI 1 Output',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'switchhdmi1',
-				default: '1',
-				choices: this.model.hdmi1
-			}
-		]
-	};
+	if (this.config.modelID != 'se2200') {
+		actions['switch_hdmi1'] = {
+			label: 'Switch HDMI 1 Output',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'switchhdmi1',
+					default: '1',
+					choices: this.model.hdmi1
+				}
+			]
+		};
+	}
 
 
 	if (this.config.modelID == 'se3200') {
@@ -274,7 +275,7 @@ exports.getActions = function () {
 			]
 		};
 	}
-
+	if (this.config.modelID != 'se2200') {
 	actions['switch_sdi1'] = {
 		label: 'Switch SDI 1 Output',
 		options: [
@@ -287,7 +288,8 @@ exports.getActions = function () {
 			}
 		]
 	};
-	if (this.config.modelID != 'se650') {
+}
+	if (this.config.modelID != 'se650' && this.config.modelID != 'se2200') {
 		actions['switch_sdi2'] = {
 			label: 'Switch SDI 2 Output',
 			options: [
@@ -331,7 +333,7 @@ exports.getActions = function () {
 			]
 		};
 	}
-	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se2200' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
 		actions['audio'] = {
 			label: 'Audio Controls',
 			options: [
@@ -345,7 +347,7 @@ exports.getActions = function () {
 			]
 		};
 	}
-	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se2200' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
 		actions['audio_level'] = {
 			label: 'Audio Level Controls',
 			options: [
@@ -420,7 +422,7 @@ exports.getActions = function () {
 			}
 		]
 	};
-	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+	if (this.config.modelID != 'se700' && this.config.modelID != 'se650' && this.config.modelID != 'se2200') {
 		actions['streamer'] = {
 			label: 'Streamer Options',
 			options: [

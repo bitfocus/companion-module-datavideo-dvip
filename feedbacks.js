@@ -863,7 +863,7 @@ exports.getFeedbacks = function () {
 		}
 	}
 
-	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se2200' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
 
 		feedbacks['audio_state'] = {
 			label: 'Color for current Audio states',

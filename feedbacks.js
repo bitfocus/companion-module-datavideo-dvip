@@ -717,7 +717,7 @@ exports.getFeedbacks = function () {
 			}
 		}
 	}
-	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+	if (this.config.modelID != 'se700' && this.config.modelID != 'se650' && this.config.modelID != 'se2200') {
 		feedbacks['dsk2_in'] = {
 			label: 'Color for DSK 2 Aux',
 			description: 'Set Button colors for DSK 2 Aux Bus',
@@ -937,7 +937,7 @@ exports.getFeedbacks = function () {
 
 	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
 		feedbacks['audio_src'] = {
-			label: 'Color for current audio source',
+			label: 'Color for current Audio Source',
 			description: 'Set Button colors for current audio source',
 			options: [{
 				type: 'colorpicker',

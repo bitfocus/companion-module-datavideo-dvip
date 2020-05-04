@@ -8,6 +8,7 @@ Currently supports:
 SE-650  
 SE-700  
 SE-1200MU/HS-1300  
+SE-2200/HS-2200 (Work in Progress)  
 SE-3200/HS-3200  
 
 **Available commands**

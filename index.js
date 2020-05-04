@@ -98,6 +98,41 @@ class instance extends instance_skel {
 		});
 
 		this.CONFIG_MODEL = {
+			se650: {
+				id: 'se650',
+				label: 'SE-650',
+				pgm: this.CHOICES_SWITCH_PGM_700,
+				pvw: this.CHOICES_SWITCH_PVW_700,
+				key1: this.CHOICES_SWITCH_KEY1_700,
+				pip: this.CHOICES_SWITCH_PIP_700,
+				dsk1: this.CHOICES_SWITCH_DSK1_700,
+				sdi1: this.CHOICES_SWITCH_SDI1_650,
+				hdmi1: this.CHOICES_SWITCH_HDMI1_650,
+				trans: this.CHOICES_TRANS_1200,
+				ftb: this.CHOICES_FTB_1200,
+				keyer: this.CHOICES_KEYER_700,
+				inputs: this.CHOICES_INPUTS_700,
+				trans_btn: this.CHOICES_TRANS_BTN_1200,
+			},
+			se700: {
+				id: 'se700',
+				label: 'SE-700',
+				pgm: this.CHOICES_SWITCH_PGM_700,
+				pvw: this.CHOICES_SWITCH_PVW_700,
+				key1: this.CHOICES_SWITCH_KEY1_700,
+				pip: this.CHOICES_SWITCH_PIP_700,
+				dsk1: this.CHOICES_SWITCH_DSK1_700,
+				sdi1: this.CHOICES_SWITCH_SDI1_700,
+				sdi2: this.CHOICES_SWITCH_SDI2_700,
+				hdmi1: this.CHOICES_SWITCH_HDMI1_700,
+				trans: this.CHOICES_TRANS_1200,
+				ftb: this.CHOICES_FTB_1200,
+				keyer: this.CHOICES_KEYER_700,
+				audio: this.CHOICES_AUDIO_700,
+				inputs: this.CHOICES_INPUTS_700,
+				trans_btn: this.CHOICES_TRANS_BTN_1200,
+				audio_level: this.CHOICES_AUDIO_LEVEL_700,
+			},
 			se1200mu: {
 				id: 'se1200mu',
 				label: 'SE-1200MU/HS-1300',
@@ -115,6 +150,23 @@ class instance extends instance_skel {
 				keyer: this.CHOICES_KEYER_1200,
 				streamer: this.CHOICES_STREAMER_1200,
 				audio: this.CHOICES_AUDIO_1200,
+				audio_src: this.CHOICES_AUDIO_SRC_1200,
+				inputs: this.CHOICES_INPUTS_1200,
+				trans_btn: this.CHOICES_TRANS_BTN_1200,
+				audio_level: this.CHOICES_AUDIO_LEVEL_1200,
+			},
+			se2200: {
+				id: 'se2200',
+				label: 'SE-2200/HS-2200',
+				pgm: this.CHOICES_SWITCH_PGM_1200,
+				pvw: this.CHOICES_SWITCH_PVW_1200,
+				key1: this.CHOICES_SWITCH_KEY1_1200,
+				key2: this.CHOICES_SWITCH_KEY2_1200,
+				dsk1: this.CHOICES_SWITCH_DSK1_1200,
+				trans: this.CHOICES_TRANS_2200, //2200 specific
+				ftb: this.CHOICES_FTB_1200,
+				keyer: this.CHOICES_KEYER_2200, //2200 specific
+				audio: this.CHOICES_AUDIO_2200, //2200 specific
 				audio_src: this.CHOICES_AUDIO_SRC_1200,
 				inputs: this.CHOICES_INPUTS_1200,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
@@ -151,42 +203,6 @@ class instance extends instance_skel {
 				trans_btn: this.CHOICES_TRANS_BTN_3200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_3200,
 			},
-			se700: {
-				id: 'se700',
-				label: 'SE-700',
-				pgm: this.CHOICES_SWITCH_PGM_700,
-				pvw: this.CHOICES_SWITCH_PVW_700,
-				key1: this.CHOICES_SWITCH_KEY1_700,
-				pip: this.CHOICES_SWITCH_PIP_700,
-				dsk1: this.CHOICES_SWITCH_DSK1_700,
-				sdi1: this.CHOICES_SWITCH_SDI1_700,
-				sdi2: this.CHOICES_SWITCH_SDI2_700,
-				hdmi1: this.CHOICES_SWITCH_HDMI1_700,
-				trans: this.CHOICES_TRANS_1200,
-				ftb: this.CHOICES_FTB_1200,
-				keyer: this.CHOICES_KEYER_700,
-				audio: this.CHOICES_AUDIO_700,
-				inputs: this.CHOICES_INPUTS_700,
-				trans_btn: this.CHOICES_TRANS_BTN_1200,
-				audio_level: this.CHOICES_AUDIO_LEVEL_700,
-			},
-			se650: {
-				id: 'se650',
-				label: 'SE-650',
-				pgm: this.CHOICES_SWITCH_PGM_700,
-				pvw: this.CHOICES_SWITCH_PVW_700,
-				key1: this.CHOICES_SWITCH_KEY1_700,
-				pip: this.CHOICES_SWITCH_PIP_700,
-				dsk1: this.CHOICES_SWITCH_DSK1_700,
-				sdi1: this.CHOICES_SWITCH_SDI1_650,
-				hdmi1: this.CHOICES_SWITCH_HDMI1_650,
-				trans: this.CHOICES_TRANS_1200,
-				ftb: this.CHOICES_FTB_1200,
-				keyer: this.CHOICES_KEYER_700,
-				inputs: this.CHOICES_INPUTS_700,
-				trans_btn: this.CHOICES_TRANS_BTN_1200,
-			},
-
 		};
 
 		this.CHOICES_MODEL = Object.values(this.CONFIG_MODEL);
@@ -679,7 +695,7 @@ class instance extends instance_skel {
 			id: 'info',
 			width: 12,
 			label: 'Information',
-			value: 'This module will control a Datavideo vision mixer.'
+			value: 'This module controls a Datavideo vision mixer.</br>Note: Companion needs to be restarted if the model is changed.</br></br>The SE-2200 requires manual port selection (5001)'
 		},
 		{
 			type: 'textinput',
@@ -688,6 +704,14 @@ class instance extends instance_skel {
 			width: 6,
 			default: '192.168.1.101',
 			regex: this.REGEX_IP
+		},
+		{
+			type: 'dropdown',
+			id: 'port',
+			label: 'Port',
+			width: 4,
+			choices: this.CHOICES_PORT,
+			default: '0',
 		},
 		{
 			type: 'dropdown',
@@ -1091,10 +1115,10 @@ class instance extends instance_skel {
 		if (com !== undefined) {
 
 
-			console.log("COMMAND: ", com.label);
+			//console.log("COMMAND: ", com.label);
 			for (let i = 8; i < buffer.length; i = i + 4) {
-				console.log("   ");
-				console.log("_____________SECTION LOOP______________");
+				//	console.log("   ");
+				//	console.log("_____________SECTION LOOP______________");
 				data = buffer.slice(i, i + 4);
 				//console.log("CONTROL BUFFER: ", data);
 				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
@@ -1110,15 +1134,15 @@ class instance extends instance_skel {
 					var nib1 = num & 0xF;
 					input = num >> 4;
 					control = nib1;
-					console.log("INPUT", input);
+					//	console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-					console.log("SECTION: ", element.label);
+					//	console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-						console.log("CONTROL: ", element2.label);
+						//	console.log("CONTROL: ", element2.label);
 						//console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
@@ -1134,11 +1158,11 @@ class instance extends instance_skel {
 									break;
 							}
 
-							console.log("VALUE: ", value);
+							//console.log("VALUE: ", value);
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
-									console.log("VALUE LABEL: ", element3.label);
+									//		console.log("VALUE LABEL: ", element3.label);
 									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {
@@ -1221,134 +1245,137 @@ class instance extends instance_skel {
 		}
 
 		if (this.config.port === undefined) {
-			this.config.port = 5005;
+			this.config.port = 0;
 		}
 
 
 		if (this.config.host) {
+			//Setup socket objects
 
-			//Automatic Port selection
-			this.socket_request = new tcp(this.config.host, 5009);
-
-			this.socket_request.on('status_change', (status, message) => {
-				this.status(status, message);
-			});
-
-			this.socket_request.on('error', (err) => {
-				debug('Network error', err);
-				this.log('error', 'Network error: ' + err.message);
-			});
-
-			this.socket_request.on('connect', () => {
-				debug('Connected');
-				this.socket_request.send(Buffer.from([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0xaa, 0x55]));
-			});
-
-
-			this.socket_request.on('data', (buffer) => {
-				this.socket_request.destroy();
-
-				this.config.port = buffer.readInt16LE(4);
-				//console.log("Available Port ", this.config.port);
+			if (this.config.port == 0) {
+				//Automatic Port selection
+				this.requestPort();
+			} else {
 				this.config.port_cmd = parseInt(this.config.port) + 1;
-				this.socket = new tcp(this.config.host, this.config.port_cmd);
-				this.socket_realtime = new tcp(this.config.host, this.config.port);
-
-
-
-				this.socket.on('status_change', (status, message) => {
-					this.status(status, message);
-				});
-
-				this.socket.on('error', (err) => {
-					debug('Network error', err);
-					this.log('error', 'Network error: ' + err.message);
-					//Request new port if the command socket has an error
-					this.initTCP();
-				});
-
-				this.socket.on('connect', () => {
-					debug('Connected');
-					this.socket.send(this.null_packet);
-					//Get input names
-					setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
-				});
-				this.socket_realtime.on('status_change', (status, message) => {
-					this.status(status, message);
-				});
-
-				this.socket_realtime.on('error', (err) => {
-					debug('Network error', err);
-					this.log('error', 'Network error: ' + err.message);
-				});
-
-				this.socket_realtime.on('connect', () => {
-					debug('Connected');
-					this.socket_realtime.send(this.null_packet);
-				});
-
-				//Command socket data recieve
-				this.socket.on('data', (buffer) => {
-					let pos;
-
-					//Reply with the null packet
-					if (buffer.equals(this.null_packet_cmd)) {
-						this.socket.send(this.null_packet_cmd);
-					} else if (buffer.equals(this.null_packet)) {
-						this.socket.send(this.null_packet);
-					} else {
-						//console.log('Receive CMD: ', buffer);
-						//this.processBuffer(buffer);
-						//Input name
-						//Slight downside is that the return packet does not included the request input number
-						//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
-						//This is also done when set_input_name action is ran.
-						if (this.cur_input_request != 0) {
-							pos = buffer.indexOf('03000000', 0, "hex")
-							if (pos > -1) {
-								let name;
-								name = buffer.slice(pos + 8, buffer.length);
-								this.getInputNames(name.toString('utf16le'));
-
-							}
-						} else {
-							//Grab names again on this packet
-							//pos = buffer.indexOf('08000000010000000800000001000000', 0, "hex")
-							//if (pos > -1) {
-							//	if (this.cur_input_request == 0) {
-							//		this.getInputNames(null);
-							//	}
-
-							//} else {
-							//console.log("---------CMD BUFFER PROCESS--------------------")
-							//If we are not handling the weird name stuff process the input
-							this.processBuffer(buffer);
-							//}
-						}
-
-
-					}
-
-				});
-
-				this.socket_realtime.on('data', (buffer) => {
-					//Send the null packet when we recieve a packet
-					this.socket_realtime.send(this.null_packet);
-
-					//If it's not a null packet check what is inside
-					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-						//console.log('Receive Realtime: ', buffer);
-
-						this.processBuffer(buffer);
-
-					}
-				});
-
-			});
+				console.log("Selected Port ", this.config.port);
+				this.setupConnection();
+			}
 
 		}
 	}
 
+
+	requestPort() {
+		//Request available realtime port for models that support it
+
+		this.socket_request = new tcp(this.config.host, 5009);
+
+		this.socket_request.on('status_change', (status, message) => {
+			this.status(status, message);
+		});
+
+		this.socket_request.on('error', (err) => {
+			debug('Network error', err);
+			this.log('error', 'Network error: ' + err.message);
+		});
+
+		this.socket_request.on('connect', () => {
+			debug('Connected');
+			this.socket_request.send(Buffer.from([0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0xaa, 0x55]));
+		});
+
+		this.socket_request.on('data', (buffer) => {
+			this.socket_request.destroy();
+
+			this.config.port = buffer.readInt16LE(4);
+			this.config.port_cmd = parseInt(this.config.port) + 1;
+			console.log("Available Port ", this.config.port);
+
+			this.setupConnection();
+		});
+	}
+
+	setupConnection() {
+
+		this.socket = new tcp(this.config.host, this.config.port_cmd);
+		this.socket_realtime = new tcp(this.config.host, this.config.port);
+
+		this.socket.on('status_change', (status, message) => {
+			this.status(status, message);
+		});
+
+		this.socket.on('error', (err) => {
+			debug('Network error', err);
+			this.log('error', 'Network error: ' + err.message);
+			//Start again if the command socket has an error
+			this.initTCP();
+		});
+
+		this.socket.on('connect', () => {
+			debug('Connected');
+			this.socket.send(this.null_packet);
+			//Get input names
+			setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
+		});
+		this.socket_realtime.on('status_change', (status, message) => {
+			this.status(status, message);
+		});
+
+		this.socket_realtime.on('error', (err) => {
+			//The SE2200 *may* not use the realtime protocol,
+			//So don't error if the connection fails
+			if (this.config.modelID != 'se2200') {
+				debug('Network error', err);
+				this.log('error', 'Network error: ' + err.message);
+			}
+		});
+
+		this.socket_realtime.on('connect', () => {
+			debug('Connected');
+			this.socket_realtime.send(this.null_packet);
+		});
+
+		//Command socket data recieve
+		this.socket.on('data', (buffer) => {
+			let pos;
+
+			//Reply with the null packet
+			if (buffer.equals(this.null_packet_cmd)) {
+				this.socket.send(this.null_packet_cmd);
+			} else if (buffer.equals(this.null_packet)) {
+				this.socket.send(this.null_packet);
+			} else {
+				//console.log('Receive CMD: ', buffer);
+				//this.processBuffer(buffer);
+				//Input name
+				//Slight downside is that the return packet does not included the request input number
+				//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
+				//This is also done when set_input_name action is ran.
+				if (this.cur_input_request != 0) {
+					pos = buffer.indexOf('03000000', 0, "hex")
+					if (pos > -1) {
+						let name;
+						name = buffer.slice(pos + 8, buffer.length);
+						this.getInputNames(name.toString('utf16le'));
+					}
+				} else {
+					this.processBuffer(buffer);
+				}
+			}
+		});
+
+		this.socket_realtime.on('data', (buffer) => {
+			//Send the null packet when we recieve a packet
+			this.socket_realtime.send(this.null_packet);
+
+			//If it's not a null packet check what is inside
+			if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
+				//console.log('Receive Realtime: ', buffer);
+
+				this.processBuffer(buffer);
+			}
+		});
+	}
 
 	updateConfig(config) {
 		var resetConnection = false;

@@ -1,6 +1,11 @@
 exports.getFeedbacks = function () {
 
 	let feedbacks = {};
+	if (this.model.legacy_dvip) {
+		//No feedback for legacy DVIP yet
+		return feedbacks;
+	}
+	
 	feedbacks['pgm_in'] = {
 		label: 'Color for PGM',
 		description: 'Set Button colors for PGM Bus',

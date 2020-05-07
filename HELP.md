@@ -10,6 +10,8 @@ SE-700
 SE-1200MU/HS-1300  
 SE-2200/HS-2200 (Work in Progress)  
 SE-3200/HS-3200  
+  
+The SE-2200 uses the "LAN Service" port for control with the PC Control button enabled  
 
 **Available commands**
 

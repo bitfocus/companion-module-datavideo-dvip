@@ -39,18 +39,20 @@ exports.getActions = function () {
 			}
 		]
 	};
-	actions['trans_btn'] = {
-		label: 'Additional Transition Controls',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Action',
-				id: 'trans',
-				default: '7',
-				choices: this.model.trans_btn
-			}
-		]
-	};
+	if (this.config.modelID != 'se2200') {
+		actions['trans_btn'] = {
+			label: 'Additional Transition Controls',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Action',
+					id: 'trans',
+					default: '7',
+					choices: this.model.trans_btn
+				}
+			]
+		};
+	}
 	actions['keyer'] = {
 		label: 'Keyer Controls',
 		options: [
@@ -63,46 +65,62 @@ exports.getActions = function () {
 			}
 		]
 	};
-
-	actions['set_wipe'] = {
-		label: 'Select Wipe',
-		options: [
-			{
-				type: 'number',
-				label: 'Wipe Number',
-				id: 'wipe',
-				min: 1,
-				max: 100,
-				default: '1'
-			}
-		]
-	};
-	actions['switch_key1'] = {
-		label: 'Switch Key 1 Aux',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'switchkey1',
-				default: '0',
-				choices: this.model.key1
-			}
-		]
-	};
-
-	if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
-		actions['switch_key2'] = {
-			label: 'Switch Key 2 Aux',
+	if (!this.model.legacy_dvip) {
+		actions['set_wipe'] = {
+			label: 'Select Wipe',
+			options: [
+				{
+					type: 'number',
+					label: 'Wipe Number',
+					id: 'wipe',
+					min: 1,
+					max: 100,
+					default: '1'
+				}
+			]
+		};
+	} else {
+		actions['set_wipe'] = {
+			label: 'Select Wipe',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Wipe',
+					id: 'wipe',
+					default: '0',
+					choices: this.model.wipe
+				}
+			]
+		};
+	}
+	if (this.config.modelID != 'se2200') {
+		actions['switch_key1'] = {
+			label: 'Switch Key 1 Aux',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Input',
-					id: 'switchkey2',
+					id: 'switchkey1',
 					default: '0',
-					choices: this.model.key2
+					choices: this.model.key1
 				}
 			]
 		};
+
+		if (this.config.modelID != 'se700' && this.config.modelID != 'se650') {
+			actions['switch_key2'] = {
+				label: 'Switch Key 2 Aux',
+				options: [
+					{
+						type: 'dropdown',
+						label: 'Input',
+						id: 'switchkey2',
+						default: '0',
+						choices: this.model.key2
+					}
+				]
+			};
+		}
 	}
 	if (this.config.modelID == 'se3200') {
 		actions['switch_key3'] = {
@@ -147,18 +165,20 @@ exports.getActions = function () {
 			]
 		};
 	}
-	actions['switch_dsk1'] = {
-		label: 'Switch DSK 1 Aux',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'switchdsk1',
-				default: '0',
-				choices: this.model.dsk1
-			}
-		]
-	};
+	if (this.config.modelID != 'se2200') {
+		actions['switch_dsk1'] = {
+			label: 'Switch DSK 1 Aux',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'switchdsk1',
+					default: '0',
+					choices: this.model.dsk1
+				}
+			]
+		};
+	}
 
 	if (this.config.modelID != 'se700' && this.config.modelID != 'se650' && this.config.modelID != 'se2200') {
 		actions['switch_dsk2'] = {
@@ -231,20 +251,19 @@ exports.getActions = function () {
 		};
 	}
 
-	if (this.config.modelID != 'se2200') {
-		actions['switch_hdmi1'] = {
-			label: 'Switch HDMI 1 Output',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Input',
-					id: 'switchhdmi1',
-					default: '1',
-					choices: this.model.hdmi1
-				}
-			]
-		};
-	}
+	actions['switch_hdmi1'] = {
+		label: 'Switch HDMI 1 Output',
+		options: [
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'switchhdmi1',
+				default: '1',
+				choices: this.model.hdmi1
+			}
+		]
+	};
+
 
 
 	if (this.config.modelID == 'se3200') {
@@ -276,19 +295,19 @@ exports.getActions = function () {
 		};
 	}
 	if (this.config.modelID != 'se2200') {
-	actions['switch_sdi1'] = {
-		label: 'Switch SDI 1 Output',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'switchsdi1',
-				default: '1',
-				choices: this.model.sdi1
-			}
-		]
-	};
-}
+		actions['switch_sdi1'] = {
+			label: 'Switch SDI 1 Output',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'switchsdi1',
+					default: '1',
+					choices: this.model.sdi1
+				}
+			]
+		};
+	}
 	if (this.config.modelID != 'se650' && this.config.modelID != 'se2200') {
 		actions['switch_sdi2'] = {
 			label: 'Switch SDI 2 Output',
@@ -319,7 +338,7 @@ exports.getActions = function () {
 
 
 
-	if (this.config.modelID == 'se3200') {
+	if (this.config.modelID == 'se3200' || this.config.modelID == 'se2200') {
 		actions['logo'] = {
 			label: 'Logo Controls',
 			options: [
@@ -333,7 +352,7 @@ exports.getActions = function () {
 			]
 		};
 	}
-	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se2200' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
 		actions['audio'] = {
 			label: 'Audio Controls',
 			options: [
@@ -347,7 +366,7 @@ exports.getActions = function () {
 			]
 		};
 	}
-	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se2200' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
+	if (this.config.modelID == 'se1200mu' || this.config.modelID == 'se3200' || this.config.modelID == 'se700') {
 		actions['audio_level'] = {
 			label: 'Audio Level Controls',
 			options: [
@@ -374,54 +393,58 @@ exports.getActions = function () {
 			]
 		};
 	}
-	actions['loaduser'] = {
-		label: 'Load User',
-		options: [
-			{
-				type: 'number',
-				label: 'User 1-999',
-				id: 'userid',
-				min: 1,
-				max: 999,
-				default: '1'
-			}
-		]
-	};
-	actions['saveuser'] = {
-		label: 'Save User',
-		options: [
-			{
-				type: 'number',
-				label: 'User 1-999',
-				id: 'userid',
-				min: 1,
-				max: 999,
-				default: '1'
-			}
-		]
-	};
-	actions['trans_durations'] = {
-		label: 'Transition Duration',
-		options: [
-			{
-				type: 'dropdown',
-				label: 'Select',
-				id: 'trans',
-				default: '3',
-				choices: [
-					{ id: '3', label: 'ME Duration' },
-					{ id: '8', label: 'DSK Duration' },
-					{ id: '13', label: 'FTB Duration' },
-				]
-			},
-			{
-				type: 'number',
-				label: 'Frames',
-				id: 'frames',
-				default: '10'
-			}
-		]
-	};
+	if (this.config.modelID != 'se2200') {
+		actions['loaduser'] = {
+			label: 'Load User',
+			options: [
+				{
+					type: 'number',
+					label: 'User 1-999',
+					id: 'userid',
+					min: 1,
+					max: 999,
+					default: '1'
+				}
+			]
+		};
+		actions['saveuser'] = {
+			label: 'Save User',
+			options: [
+				{
+					type: 'number',
+					label: 'User 1-999',
+					id: 'userid',
+					min: 1,
+					max: 999,
+					default: '1'
+				}
+			]
+		};
+	}
+	if (this.config.modelID != 'se2200') {
+		actions['trans_durations'] = {
+			label: 'Transition Duration',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Select',
+					id: 'trans',
+					default: '3',
+					choices: [
+						{ id: '3', label: 'ME Duration' },
+						{ id: '8', label: 'DSK Duration' },
+						{ id: '13', label: 'FTB Duration' },
+					]
+				},
+				{
+					type: 'number',
+					label: 'Frames',
+					id: 'frames',
+					default: '10'
+				}
+			]
+		};
+	}
 	if (this.config.modelID != 'se700' && this.config.modelID != 'se650' && this.config.modelID != 'se2200') {
 		actions['streamer'] = {
 			label: 'Streamer Options',
@@ -436,24 +459,56 @@ exports.getActions = function () {
 			]
 		};
 	}
-	actions['set_input_name'] = {
-		label: 'Set Input Name',
-		options: [
+	if (this.config.modelID != 'se2200') {
+		actions['set_input_name'] = {
+			label: 'Set Input Name',
+			options: [
 
-			{
-				type: 'dropdown',
-				label: 'Input',
-				id: 'input',
-				default: '1',
-				choices: this.model.inputs
-			},
-			{
-				type: 'textinput',
-				label: 'Name',
-				id: 'name',
-			}
-		]
-	};
+				{
+					type: 'dropdown',
+					label: 'Input',
+					id: 'input',
+					default: '1',
+					choices: this.model.inputs
+				},
+				{
+					type: 'textinput',
+					label: 'Name',
+					id: 'name',
+				}
+			]
+		};
+	}
+
+	if (this.config.modelID == 'se2200') {
+		actions['menu'] = {
+			label: 'Menu Controls',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Action',
+					id: 'menu',
+					default: '0',
+					choices: this.model.menu
+				}
+			]
+		};
+	}
+
+	if (this.config.modelID == 'se2200') {
+		actions['crosspoint'] = {
+			label: 'Crosspoint Controls',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Action',
+					id: 'crosspoint',
+					default: '0',
+					choices: this.model.crosspoint
+				}
+			]
+		};
+	}
 	actions['send_hex'] = {
 		label: 'Send Hex Value',
 		options: [

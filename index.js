@@ -113,6 +113,7 @@ class instance extends instance_skel {
 				keyer: this.CHOICES_KEYER_700,
 				inputs: this.CHOICES_INPUTS_700,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
+				legacy_dvip: false,
 			},
 			se700: {
 				id: 'se700',
@@ -132,6 +133,7 @@ class instance extends instance_skel {
 				inputs: this.CHOICES_INPUTS_700,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_700,
+				legacy_dvip: false,
 			},
 			se1200mu: {
 				id: 'se1200mu',
@@ -154,23 +156,23 @@ class instance extends instance_skel {
 				inputs: this.CHOICES_INPUTS_1200,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_1200,
+				legacy_dvip: false,
 			},
 			se2200: {
 				id: 'se2200',
 				label: 'SE-2200/HS-2200',
-				pgm: this.CHOICES_SWITCH_PGM_1200,
-				pvw: this.CHOICES_SWITCH_PVW_1200,
-				key1: this.CHOICES_SWITCH_KEY1_1200,
-				key2: this.CHOICES_SWITCH_KEY2_1200,
-				dsk1: this.CHOICES_SWITCH_DSK1_1200,
-				trans: this.CHOICES_TRANS_2200, //2200 specific
-				ftb: this.CHOICES_FTB_1200,
-				keyer: this.CHOICES_KEYER_2200, //2200 specific
-				audio: this.CHOICES_AUDIO_2200, //2200 specific
-				audio_src: this.CHOICES_AUDIO_SRC_1200,
-				inputs: this.CHOICES_INPUTS_1200,
-				trans_btn: this.CHOICES_TRANS_BTN_1200,
-				audio_level: this.CHOICES_AUDIO_LEVEL_1200,
+				pgm: this.CHOICES_SWITCH_PGM_2200,
+				pvw: this.CHOICES_SWITCH_PVW_2200,
+				trans: this.CHOICES_TRANS_2200,
+				ftb: this.CHOICES_FTB_2200,
+				keyer: this.CHOICES_KEYER_2200,
+				audio_src: this.CHOICES_AUDIO_SRC_2200,
+				inputs: this.CHOICES_INPUTS_2200,
+				menu: this.CHOICES_MENU_2200,
+				logo: this.CHOICES_LOGO_2200,
+				crosspoint: this.CHOICES_CROSSPOINT_2200,
+				wipe: this.CHOICES_WIPE_2200,
+				legacy_dvip: true,
 			},
 			se3200: {
 				id: 'se3200',
@@ -202,6 +204,7 @@ class instance extends instance_skel {
 				inputs: this.CHOICES_INPUTS_3200,
 				trans_btn: this.CHOICES_TRANS_BTN_3200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_3200,
+				legacy_dvip: false,
 			},
 		};
 
@@ -400,20 +403,25 @@ class instance extends instance_skel {
 			case 'ftb':
 				element = this.model.ftb.find(element => element.id === options.ftb);
 				if (element !== undefined) {
-					cmd = element.cmd;
-					let setOn = true;
-					let toggle = false;
-					switch (element.label) {
-						case 'FTB ENABLE':
-							if (this.ftbenable_state == 1) { setOn = false; }
-							toggle = true;
-							break;
-					}
-					if (toggle) {
-						if (setOn) {
-							cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
-						} else {
-							cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
+					if (this.model.legacy_dvip) {
+						//legacy DVIP
+						cmd = element.cmd;
+					} else {
+						cmd = element.cmd;
+						let setOn = true;
+						let toggle = false;
+						switch (element.label) {
+							case 'FTB ENABLE':
+								if (this.ftbenable_state == 1) { setOn = false; }
+								toggle = true;
+								break;
+						}
+						if (toggle) {
+							if (setOn) {
+								cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
+							} else {
+								cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
+							}
 						}
 					}
 				}
@@ -421,128 +429,133 @@ class instance extends instance_skel {
 			case 'keyer':
 				element = this.model.keyer.find(element => element.id === options.keyer);
 				if (element !== undefined) {
-					cmd = Buffer.from(element.cmd);
-					let setOn = true;
-
-					switch (element.label) {
-						case 'DSK 1 PGM':
-							if (this.dsk1_pgm_state == 1) {
-								setOn = false;
-								if (this.dsk1_pvw_state == 1) {
-									cmd[16] = 1;
-								} else {
-									cmd[16] = 0;
-								}
-							} else {
-								if (this.dsk1_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
-							}
-							break;
-						case 'DSK 1 PVW':
-							if (this.dsk1_pvw_state == 1) { setOn = false; }
-							if (this.dsk1_pgm_state == 1 && this.dsk1_pvw_state == 0) { setOn = false; } else if (this.dsk1_pgm_state == 1 && this.dsk1_pvw_state == 1) { setOn = true; }
-							break;
-						case 'DSK 2 PGM':
-							if (this.dsk2_pgm_state == 1) {
-								setOn = false;
-								if (this.dsk2_pvw_state == 1) {
-									cmd[16] = 1;
-								} else {
-									cmd[16] = 0;
-								}
-							} else {
-								if (this.dsk2_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
-							}
-							break;
-						case 'DSK 2 PVW':
-							if (this.dsk2_pvw_state == 1) { setOn = false; }
-							if (this.dsk2_pgm_state == 1 && this.dsk2_pvw_state == 0) { setOn = false; } else if (this.dsk2_pgm_state == 1 && this.dsk2_pvw_state == 1) { setOn = true; }
-							break;
-						case 'KEY 1 PGM':
-							if (this.key1_pgm_state == 1) {
-								setOn = false;
-								if (this.key1_pvw_state == 1) {
-									cmd[16] = 1;
-								} else {
-									cmd[16] = 0;
-								}
-							} else {
-								if (this.key1_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
-							}
-							break;
-						case 'KEY 1 PVW':
-							if (this.key1_pvw_state == 1) { setOn = false; }
-							if (this.key1_pgm_state == 1 && this.key1_pvw_state == 0) { setOn = false; } else if (this.key1_pgm_state == 1 && this.key1_pvw_state == 1) { setOn = true; }
-							break;
-						case 'KEY 2 PGM':
-							if (this.key2_pgm_state == 1) {
-								setOn = false;
-								if (this.key2_pvw_state == 1) {
-									cmd[16] = 1;
-								} else {
-									cmd[16] = 0;
-								}
-							} else {
-								if (this.key2_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
-							}
-							break;
-						case 'KEY 2 PVW':
-							if (this.key2_pvw_state == 1) { setOn = false; }
-							if (this.key2_pgm_state == 1 && this.key2_pvw_state == 0) { setOn = false; } else if (this.key2_pgm_state == 1 && this.key2_pvw_state == 1) { setOn = true; }
-							break;
-						case 'KEY 3 PGM':
-							if (this.key3_pgm_state == 1) {
-								setOn = false;
-								if (this.key3_pvw_state == 1) {
-									cmd[16] = 1;
-								} else {
-									cmd[16] = 0;
-								}
-							} else {
-								if (this.key3_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
-							}
-							break;
-						case 'KEY 3 PVW':
-							if (this.key3_pvw_state == 1) { setOn = false; }
-							if (this.key3_pgm_state == 1 && this.key3_pvw_state == 0) { setOn = false; } else if (this.key3_pgm_state == 1 && this.key3_pvw_state == 1) { setOn = true; }
-							break;
-						case 'KEY 4 PGM':
-							if (this.key4_pgm_state == 1) {
-								setOn = false;
-								if (this.key4_pvw_state == 1) {
-									cmd[16] = 1;
-								} else {
-									cmd[16] = 0;
-								}
-							} else {
-								if (this.key4_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
-							}
-							break;
-						case 'KEY 4 PVW':
-							if (this.key4_pvw_state == 1) { setOn = false; }
-							if (this.key4_pgm_state == 1 && this.key4_pvw_state == 0) { setOn = false; } else if (this.key4_pgm_state == 1 && this.key4_pvw_state == 1) { setOn = true; }
-							break;
-						case 'P-in-P PGM':
-							if (this.pip_pgm_state == 1) {
-								setOn = false;
-								if (this.pip_pvw_state == 1) {
-									cmd[16] = 1;
-								} else {
-									cmd[16] = 0;
-								}
-							} else {
-								if (this.pip_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
-							}
-							break;
-						case 'P-in-P PVW':
-							if (this.pip_pvw_state == 1) { setOn = false; }
-							if (this.pip_pgm_state == 1 && this.pip_pvw_state == 0) { setOn = false; } else if (this.pip_pgm_state == 1 && this.pip_pvw_state == 1) { setOn = true; }
-							break;
-					}
-
-					if (setOn) {
-						cmd[8] = 1;
+					if (this.model.legacy_dvip) {
+						//legacy DVIP
+						cmd = element.cmd;
 					} else {
-						cmd[8] = 0;
+						cmd = Buffer.from(element.cmd);
+						let setOn = true;
+
+						switch (element.label) {
+							case 'DSK 1 PGM':
+								if (this.dsk1_pgm_state == 1) {
+									setOn = false;
+									if (this.dsk1_pvw_state == 1) {
+										cmd[16] = 1;
+									} else {
+										cmd[16] = 0;
+									}
+								} else {
+									if (this.dsk1_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+								}
+								break;
+							case 'DSK 1 PVW':
+								if (this.dsk1_pvw_state == 1) { setOn = false; }
+								if (this.dsk1_pgm_state == 1 && this.dsk1_pvw_state == 0) { setOn = false; } else if (this.dsk1_pgm_state == 1 && this.dsk1_pvw_state == 1) { setOn = true; }
+								break;
+							case 'DSK 2 PGM':
+								if (this.dsk2_pgm_state == 1) {
+									setOn = false;
+									if (this.dsk2_pvw_state == 1) {
+										cmd[16] = 1;
+									} else {
+										cmd[16] = 0;
+									}
+								} else {
+									if (this.dsk2_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+								}
+								break;
+							case 'DSK 2 PVW':
+								if (this.dsk2_pvw_state == 1) { setOn = false; }
+								if (this.dsk2_pgm_state == 1 && this.dsk2_pvw_state == 0) { setOn = false; } else if (this.dsk2_pgm_state == 1 && this.dsk2_pvw_state == 1) { setOn = true; }
+								break;
+							case 'KEY 1 PGM':
+								if (this.key1_pgm_state == 1) {
+									setOn = false;
+									if (this.key1_pvw_state == 1) {
+										cmd[16] = 1;
+									} else {
+										cmd[16] = 0;
+									}
+								} else {
+									if (this.key1_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+								}
+								break;
+							case 'KEY 1 PVW':
+								if (this.key1_pvw_state == 1) { setOn = false; }
+								if (this.key1_pgm_state == 1 && this.key1_pvw_state == 0) { setOn = false; } else if (this.key1_pgm_state == 1 && this.key1_pvw_state == 1) { setOn = true; }
+								break;
+							case 'KEY 2 PGM':
+								if (this.key2_pgm_state == 1) {
+									setOn = false;
+									if (this.key2_pvw_state == 1) {
+										cmd[16] = 1;
+									} else {
+										cmd[16] = 0;
+									}
+								} else {
+									if (this.key2_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+								}
+								break;
+							case 'KEY 2 PVW':
+								if (this.key2_pvw_state == 1) { setOn = false; }
+								if (this.key2_pgm_state == 1 && this.key2_pvw_state == 0) { setOn = false; } else if (this.key2_pgm_state == 1 && this.key2_pvw_state == 1) { setOn = true; }
+								break;
+							case 'KEY 3 PGM':
+								if (this.key3_pgm_state == 1) {
+									setOn = false;
+									if (this.key3_pvw_state == 1) {
+										cmd[16] = 1;
+									} else {
+										cmd[16] = 0;
+									}
+								} else {
+									if (this.key3_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+								}
+								break;
+							case 'KEY 3 PVW':
+								if (this.key3_pvw_state == 1) { setOn = false; }
+								if (this.key3_pgm_state == 1 && this.key3_pvw_state == 0) { setOn = false; } else if (this.key3_pgm_state == 1 && this.key3_pvw_state == 1) { setOn = true; }
+								break;
+							case 'KEY 4 PGM':
+								if (this.key4_pgm_state == 1) {
+									setOn = false;
+									if (this.key4_pvw_state == 1) {
+										cmd[16] = 1;
+									} else {
+										cmd[16] = 0;
+									}
+								} else {
+									if (this.key4_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+								}
+								break;
+							case 'KEY 4 PVW':
+								if (this.key4_pvw_state == 1) { setOn = false; }
+								if (this.key4_pgm_state == 1 && this.key4_pvw_state == 0) { setOn = false; } else if (this.key4_pgm_state == 1 && this.key4_pvw_state == 1) { setOn = true; }
+								break;
+							case 'P-in-P PGM':
+								if (this.pip_pgm_state == 1) {
+									setOn = false;
+									if (this.pip_pvw_state == 1) {
+										cmd[16] = 1;
+									} else {
+										cmd[16] = 0;
+									}
+								} else {
+									if (this.pip_pvw_state == 1) { cmd[16] = 0; } else { cmd[16] = 1; }
+								}
+								break;
+							case 'P-in-P PVW':
+								if (this.pip_pvw_state == 1) { setOn = false; }
+								if (this.pip_pgm_state == 1 && this.pip_pvw_state == 0) { setOn = false; } else if (this.pip_pgm_state == 1 && this.pip_pvw_state == 1) { setOn = true; }
+								break;
+						}
+
+						if (setOn) {
+							cmd[8] = 1;
+						} else {
+							cmd[8] = 0;
+						}
 					}
 				}
 				break;
@@ -573,59 +586,64 @@ class instance extends instance_skel {
 			case 'audio':
 				element = this.model.audio.find(element => element.id === options.audio);
 				if (element !== undefined) {
-					cmd = element.cmd;
-					let setOn = true;
-					let toggle = false;
-					switch (element.label) {
-						case 'External Audio':
-							if (this.audio_mode > 0) { setOn = false; }
-							toggle = true;
-							break;
-						case 'SDI 1 Audio':
-							if (this.audio_sdi1_enable == 1) { setOn = false; }
-							toggle = true;
-							break;
-						case 'SDI 2 Audio':
-							if (this.audio_sdi2_enable == 1) { setOn = false; }
-							toggle = true;
-							break;
-						case 'SDI 3 Audio':
-							if (this.audio_sdi3_enable == 1) { setOn = false; }
-							toggle = true;
-							break;
-						case 'SDI 4 Audio':
-							if (this.audio_sdi4_enable == 1) { setOn = false; }
-							toggle = true;
-						case 'SDI 5 Audio':
-							if (this.audio_sdi5_enable == 1) { setOn = false; }
-							toggle = true;
-							break;
-						case 'SDI 6 Audio':
-							if (this.audio_sdi6_enable == 1) { setOn = false; }
-							toggle = true;
-							break;
-						case 'HDMI 1 Audio':
-							if (this.audio_hdmi1_enable == 1) { setOn = false; }
-							toggle = true;
-							break;
-						case 'HDMI 2 Audio':
-							if (this.audio_hdmi2_enable == 1) { setOn = false; }
-							toggle = true;
-							break;
-						case 'HDMI 3 Audio':
-							if (this.audio_hdmi3_enable == 1) { setOn = false; }
-							toggle = true;
-							break;
-					}
-					if (toggle) {
-						if (setOn) {
-							if (element.label == "External Audio") {
-								cmd = Buffer.concat([cmd, Buffer.from([0x02, 0x00, 0x00, 0x00])]);
+					if (this.model.legacy_dvip) {
+						//legacy DVIP
+						cmd = element.cmd;
+					} else {
+						cmd = element.cmd;
+						let setOn = true;
+						let toggle = false;
+						switch (element.label) {
+							case 'External Audio':
+								if (this.audio_mode > 0) { setOn = false; }
+								toggle = true;
+								break;
+							case 'SDI 1 Audio':
+								if (this.audio_sdi1_enable == 1) { setOn = false; }
+								toggle = true;
+								break;
+							case 'SDI 2 Audio':
+								if (this.audio_sdi2_enable == 1) { setOn = false; }
+								toggle = true;
+								break;
+							case 'SDI 3 Audio':
+								if (this.audio_sdi3_enable == 1) { setOn = false; }
+								toggle = true;
+								break;
+							case 'SDI 4 Audio':
+								if (this.audio_sdi4_enable == 1) { setOn = false; }
+								toggle = true;
+							case 'SDI 5 Audio':
+								if (this.audio_sdi5_enable == 1) { setOn = false; }
+								toggle = true;
+								break;
+							case 'SDI 6 Audio':
+								if (this.audio_sdi6_enable == 1) { setOn = false; }
+								toggle = true;
+								break;
+							case 'HDMI 1 Audio':
+								if (this.audio_hdmi1_enable == 1) { setOn = false; }
+								toggle = true;
+								break;
+							case 'HDMI 2 Audio':
+								if (this.audio_hdmi2_enable == 1) { setOn = false; }
+								toggle = true;
+								break;
+							case 'HDMI 3 Audio':
+								if (this.audio_hdmi3_enable == 1) { setOn = false; }
+								toggle = true;
+								break;
+						}
+						if (toggle) {
+							if (setOn) {
+								if (element.label == "External Audio") {
+									cmd = Buffer.concat([cmd, Buffer.from([0x02, 0x00, 0x00, 0x00])]);
+								} else {
+									cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
+								}
 							} else {
-								cmd = Buffer.concat([cmd, Buffer.from([0x01, 0x00, 0x00, 0x00])]);
+								cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
 							}
-						} else {
-							cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
 						}
 					}
 				}
@@ -654,32 +672,55 @@ class instance extends instance_skel {
 				cmd = Buffer.concat([input_name_cmd, name_size, name]);
 				break;
 			case 'set_wipe':
-				wipe_id.writeUInt16LE(options.wipe, 0);
-				cmd = Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, wipe_id[0], wipe_id[1], 0x00, 0x00]);
+				if (this.model.legacy_dvip) {
+					//legacy DVIP
+					element = this.model.wipe.find(element => element.id === options.wipe);
+					if (element !== undefined) {
+						cmd = element.cmd;
+					}
+				} else {
+					wipe_id.writeUInt16LE(options.wipe, 0);
+					cmd = Buffer.from([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, wipe_id[0], wipe_id[1], 0x00, 0x00]);
+				}
+				break;
+			case 'menu':
+				element = this.model.menu.find(element => element.id === options.menu);
+				if (element !== undefined) {
+					cmd = element.cmd;
+				}
+			case 'crosspoint':
+				element = this.model.crosspoint.find(element => element.id === options.crosspoint);
+				if (element !== undefined) {
+					cmd = element.cmd;
+				}
 				break;
 		}
 
 		if (cmd !== undefined) {
 			if (this.socket !== undefined && this.socket.connected) {
-				//Calculate packet length and prepend
-				//Add 4 bytes to include pack size value
-				cmdsize = Buffer.byteLength(cmd) + 4;
-				pktsize.writeUInt32LE(cmdsize, 0);
-				cmd = Buffer.concat([pktsize, cmd]);
-				//console.log("Send: ", cmd);
+				if (!this.model.legacy_dvip) {
+					//Calculate packet length and prepend
+					//Add 4 bytes to include pack size value
+					cmdsize = Buffer.byteLength(cmd) + 4;
+					pktsize.writeUInt32LE(cmdsize, 0);
+					cmd = Buffer.concat([pktsize, cmd]);
+					//console.log("Send: ", cmd);
 
-				this.socket.send(cmd);
-				//Update input names on change
-				if (id == 'set_input_name') {
-					if (this.cur_input_request == 0) {
-						setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
+					this.socket.send(cmd);
+					//Update input names on change
+					if (id == 'set_input_name') {
+						if (this.cur_input_request == 0) {
+							setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
+						}
 					}
+					if (id = 'trans') {
+						//just delay doing this until I can find a better trigger for it.
+						setTimeout(function () { this.getKeyStates() }.bind(this), 100);
+					}
+				} else {
+					//Legacy DVIP command processing
+					this.socket.send(cmd);
 				}
-				if (id = 'trans') {
-					//just delay doing this until I can find a better trigger for it.
-					setTimeout(function () { this.getKeyStates() }.bind(this), 100);
-				}
-
 			} else {
 				debug('Socket not connected :(');
 			}
@@ -743,6 +784,7 @@ class instance extends instance_skel {
 	init() {
 		debug = this.debug;
 		log = this.log;
+
 		this.init_feedbacks();
 		this.init_variables();
 		this.initTCP();
@@ -1065,9 +1107,6 @@ class instance extends instance_skel {
 				this.checkFeedbacks('audio_state')
 				this.setVariable('audio_hdmi3', this.audio_hdmi3_enable);
 				break;
-
-
-
 		}
 
 	}
@@ -1324,7 +1363,7 @@ class instance extends instance_skel {
 		this.socket_realtime.on('error', (err) => {
 			//The SE2200 *may* not use the realtime protocol,
 			//So don't error if the connection fails
-			if (this.config.modelID != 'se2200') {
+			if (!this.model.legacy_dvip) {
 				debug('Network error', err);
 				this.log('error', 'Network error: ' + err.message);
 			}
@@ -1338,41 +1377,44 @@ class instance extends instance_skel {
 		//Command socket data recieve
 		this.socket.on('data', (buffer) => {
 			let pos;
-
-			//Reply with the null packet
-			if (buffer.equals(this.null_packet_cmd)) {
-				this.socket.send(this.null_packet_cmd);
-			} else if (buffer.equals(this.null_packet)) {
-				this.socket.send(this.null_packet);
-			} else {
-				//console.log('Receive CMD: ', buffer);
-				//this.processBuffer(buffer);
-				//Input name
-				//Slight downside is that the return packet does not included the request input number
-				//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
-				//This is also done when set_input_name action is ran.
-				if (this.cur_input_request != 0) {
-					pos = buffer.indexOf('03000000', 0, "hex")
-					if (pos > -1) {
-						let name;
-						name = buffer.slice(pos + 8, buffer.length);
-						this.getInputNames(name.toString('utf16le'));
-					}
+			if (!this.model.legacy_dvip) {
+				//Reply with the null packet
+				if (buffer.equals(this.null_packet_cmd)) {
+					this.socket.send(this.null_packet_cmd);
+				} else if (buffer.equals(this.null_packet)) {
+					this.socket.send(this.null_packet);
 				} else {
-					this.processBuffer(buffer);
+					//console.log('Receive CMD: ', buffer);
+					//this.processBuffer(buffer);
+					//Input name
+					//Slight downside is that the return packet does not included the request input number
+					//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
+					//This is also done when set_input_name action is ran.
+					if (this.cur_input_request != 0) {
+						pos = buffer.indexOf('03000000', 0, "hex")
+						if (pos > -1) {
+							let name;
+							name = buffer.slice(pos + 8, buffer.length);
+							this.getInputNames(name.toString('utf16le'));
+						}
+					} else {
+						this.processBuffer(buffer);
+					}
 				}
 			}
 		});
 
 		this.socket_realtime.on('data', (buffer) => {
-			//Send the null packet when we recieve a packet
-			this.socket_realtime.send(this.null_packet);
+			if (!this.model.legacy_dvip) {
+				//Send the null packet when we recieve a packet
+				this.socket_realtime.send(this.null_packet);
 
-			//If it's not a null packet check what is inside
-			if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-				//console.log('Receive Realtime: ', buffer);
+				//If it's not a null packet check what is inside
+				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
+					//console.log('Receive Realtime: ', buffer);
 
-				this.processBuffer(buffer);
+					this.processBuffer(buffer);
+				}
 			}
 		});
 	}
@@ -1388,12 +1430,7 @@ class instance extends instance_skel {
 		this.model = this.CONFIG_MODEL[config.modelID];
 
 		if (resetConnection === true || this.socket === undefined) {
-			this.actions();
-			this.init_variables();
-			this.init_feedbacks();
-			this.initTCP();
-			this.init_presets();
-			this.init_commands();
+			this.init();
 			console.log('Connection reset after update.');
 		}
 	}

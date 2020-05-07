@@ -1,4 +1,9 @@
 exports.getPresets = function () {
+	
+	if (this.model.legacy_dvip) {
+		//No presets for legacy DVIP yet
+		return presets = {};
+	}
 
 	var presets = [
 

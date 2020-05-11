@@ -5,7 +5,7 @@ exports.getFeedbacks = function () {
 		//No feedback for legacy DVIP yet
 		return feedbacks;
 	}
-	
+
 	feedbacks['pgm_in'] = {
 		label: 'Color for PGM',
 		description: 'Set Button colors for PGM Bus',
@@ -777,6 +777,172 @@ exports.getFeedbacks = function () {
 
 	}
 
+	feedbacks['sdi1_in'] = {
+		label: 'Color for SDI 1 Output',
+		description: 'Set Button colors for SDI 1 Output',
+		options: [{
+			type: 'colorpicker',
+			label: 'Foreground color',
+			id: 'fg',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color',
+			id: 'bg',
+			default: this.rgb(51, 102, 0),
+		},
+		{
+			type: 'dropdown',
+			label: 'Input',
+			id: 'sdi1_in',
+			default: '1',
+			choices: this.model.sdi1
+		}
+		],
+		callback: (feedback, bank) => {
+			if (this.sdi1_in_src == feedback.options.sdi1_in) {
+				return {
+					color: feedback.options.fg,
+					bgcolor: feedback.options.bg
+				};
+			}
+		}
+	}
+
+	if (this.config.modelID != 'se650') {
+		feedbacks['sdi2_in'] = {
+			label: 'Color for SDI 2 Output',
+			description: 'Set Button colors for SDI 2 Output',
+			options: [{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(51, 102, 0),
+			},
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'sdi2_in',
+				default: '1',
+				choices: this.model.sdi1
+			}
+			],
+			callback: (feedback, bank) => {
+				if (this.sdi2_in_src == feedback.options.sdi2_in) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
+			}
+		}
+	}
+
+	feedbacks['hdmi1_in'] = {
+		label: 'Color for HDMI 1 Output',
+		description: 'Set Button colors for HDMI 1 Output',
+		options: [{
+			type: 'colorpicker',
+			label: 'Foreground color',
+			id: 'fg',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color',
+			id: 'bg',
+			default: this.rgb(51, 102, 0),
+		},
+		{
+			type: 'dropdown',
+			label: 'Input',
+			id: 'hdmi1_in',
+			default: '1',
+			choices: this.model.hdmi1
+		}
+		],
+		callback: (feedback, bank) => {
+			if (this.hdmi1_in_src == feedback.options.hdmi1_in) {
+				return {
+					color: feedback.options.fg,
+					bgcolor: feedback.options.bg
+				};
+			}
+		}
+	}
+	if (this.config.modelID == 'se3200') {
+		feedbacks['hdmi2_in'] = {
+			label: 'Color for HDMI 2 Output',
+			description: 'Set Button colors for HDMI 2 Output',
+			options: [{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(51, 102, 0),
+			},
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'hdmi2_in',
+				default: '1',
+				choices: this.model.hdmi2
+			}
+			],
+			callback: (feedback, bank) => {
+				if (this.hdmi2_in_src == feedback.options.hdmi2_in) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
+			}
+		}
+		feedbacks['hdmi3_in'] = {
+			label: 'Color for HDMI 3 Output',
+			description: 'Set Button colors for HDMI 3 Output',
+			options: [{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: '16777215'
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: this.rgb(51, 102, 0),
+			},
+			{
+				type: 'dropdown',
+				label: 'Input',
+				id: 'hdmi2_in',
+				default: '1',
+				choices: this.model.hdmi3
+			}
+			],
+			callback: (feedback, bank) => {
+				if (this.hdmi3_in_src == feedback.options.hdmi3_in) {
+					return {
+						color: feedback.options.fg,
+						bgcolor: feedback.options.bg
+					};
+				}
+			}
+		}
+	}
 	feedbacks['trans_current'] = {
 		label: 'Color for current transition',
 		description: 'Set Button colors for current transition selection.',

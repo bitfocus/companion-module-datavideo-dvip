@@ -33,6 +33,7 @@ The SE-2200 uses the "LAN Service" port for control with the PC Control button e
 **Available feedback**
 * Current PGM and PVW Bus selected input feedback (PVW bus also has running transition feedback)
 * Current Key, DSK and Aux Bus selected input feedback (Key and DSK also feedback when live in PGM)
+* HDMI/SDI selected output source
 * T Bar and DSK T Bar transition active indication
 * Currently selected transition type
 * Current audio source
@@ -61,6 +62,8 @@ The SE-2200 uses the "LAN Service" port for control with the PC Control button e
 * Current PGM and PVW inputs source names
 * Current Key, DSK and Aux bus inputs sources
 * Current Key, DSK and Aux bus inputs source names
+* Current HDMI and SDI output sources
+* Current HDMI and SDI output source names
 * Current audio source
 * Current ME, DSK and FTB duration frames
 * KEY and DSK button states (Just for testing for now)

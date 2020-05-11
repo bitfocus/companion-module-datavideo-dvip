@@ -41,9 +41,17 @@ class instance extends instance_skel {
 		this.aux2_in_src;
 		this.aux3_in_src;
 		this.aux4_in_src;
+		this.hdmi1_in_src;
+		this.hdmi2_in_src;
+		this.hdmi3_in_src;
+		this.sdi1_in_src;
+		this.sdi2_in_src;
+		this.sdi3_in_src;
+
 		this.me_dur;
 		this.dsk_dur;
 		this.ftb_dur;
+
 		this.key1_pgm_state;
 		this.key1_pvw_state;
 		this.key2_pgm_state;
@@ -58,6 +66,7 @@ class instance extends instance_skel {
 		this.dsk1_pvw_state;
 		this.dsk2_pgm_state;
 		this.dsk2_pvw_state;
+
 		this.trans_current;
 		this.tbar_state;
 		this.dsk_tbar_state;
@@ -848,6 +857,29 @@ class instance extends instance_skel {
 			case 'OUTPUT_AUX_CTRL_AUX4_SRC':
 				this.aux4_in_src = value;
 				this.processSourceAssignment('aux4_in', 'aux4_in', this.aux4_in_src, this.model.aux4);
+				break;
+			case 'OUTPUT_HDMI1_OUT_SELECT':
+			case 'OUTPUT_DVI_OUT_SELECT':
+				this.hdmi1_in_src = value;
+				this.processSourceAssignment('hdmi1_in', 'hdmi1_in', this.hdmi1_in_src, this.model.hdmi1);
+				break;
+			case 'OUTPUT_HDMI2_OUT_SELECT':
+				this.hdmi2_in_src = value;
+				this.processSourceAssignment('hdmi2_in', 'hdmi2_in', this.hdmi2_in_src, this.model.hdmi2);
+				break;
+			case 'OUTPUT_HDMI3_OUT_SELECT':
+				this.hdmi3_in_src = value;
+				this.processSourceAssignment('hdmi3_in', 'hdmi3_in', this.hdmi3_in_src, this.model.hdmi3);
+				break;
+			case 'OUTPUT_SDI_OUT1_SELECT':
+			case 'OUTPUT_MULTI_OUT1_SELECT':
+				this.sdi1_in_src = value;
+				this.processSourceAssignment('sdi1_in', 'sdi1_in', this.sdi1_in_src, this.model.sdi1);
+				break;
+			case 'OUTPUT_SDI_OUT2_SELECT':
+			case 'OUTPUT_MULTI_OUT2_SELECT':
+				this.sdi2_in_src = value;
+				this.processSourceAssignment('sdi2_in', 'sdi2_in', this.sdi2_in_src, this.model.sdi2);
 				break;
 			case 'SWITCHER_DSK1_KEYER_ON':
 				this.dsk1_pgm_state = value;

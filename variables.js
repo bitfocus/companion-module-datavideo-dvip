@@ -118,6 +118,46 @@ exports.getVariables = function () {
 			name: 'aux4_in_name'
 		},
 		{
+			label: 'Current HDMI 1 output',
+			name: 'hdmi1_in'
+		},
+		{
+			label: 'Current HDMI 1 output name',
+			name: 'hdmi1_in_name'
+		},
+		{
+			label: 'Current HDMI 2 output',
+			name: 'hdmi2_in'
+		},
+		{
+			label: 'Current HDMI 2 output name',
+			name: 'hdmi2_in_name'
+		},
+		{
+			label: 'Current HDMI 3 output',
+			name: 'hdmi3_in'
+		},
+		{
+			label: 'Current HDMI 3 output name',
+			name: 'hdmi3_in_name'
+		},
+		{
+			label: 'Current SDI 1 output',
+			name: 'sdi1_in'
+		},
+		{
+			label: 'Current SDI 1 output',
+			name: 'sdi1_in_name'
+		},
+		{
+			label: 'Current SDI 1 output',
+			name: 'sdi2_in'
+		},
+		{
+			label: 'Current SDI 2 output',
+			name: 'sdi2_in_name'
+		},
+		{
 			label: 'Current ME Duration in Frames',
 			name: 'me_dur'
 		},

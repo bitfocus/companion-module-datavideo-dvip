@@ -736,7 +736,7 @@ class instance extends instance_skel {
 			id: 'info',
 			width: 12,
 			label: 'Information',
-			value: 'This module controls a Datavideo vision mixer.</br>Note: Companion needs to be restarted if the model is changed.</br></br>The SE-2200 requires manual port selection (5001)'
+			value: 'This module controls a Datavideo vision mixer.</br>Note: Companion needs to be restarted if the model is changed.'
 		},
 		{
 			type: 'textinput',
@@ -1293,7 +1293,13 @@ class instance extends instance_skel {
 
 			if (this.config.port == 0) {
 				//Automatic Port selection
-				this.requestPort();
+				if (this.model.legacy_dvip) {
+					//Legacy DVIP uses port 9000
+					this.config.port_cmd = 9000;
+					this.setupConnection();
+				} else {
+					this.requestPort();
+				}
 			} else {
 				this.config.port_cmd = parseInt(this.config.port) + 1;
 				console.log("Selected Port ", this.config.port);
@@ -1337,7 +1343,43 @@ class instance extends instance_skel {
 	setupConnection() {
 
 		this.socket = new tcp(this.config.host, this.config.port_cmd);
-		this.socket_realtime = new tcp(this.config.host, this.config.port);
+
+
+		this.setVariable('command_port', this.config.port_cmd);
+		this.setVariable('realtime_port', this.config.port);
+
+		if (!this.model.legacy_dvip) {
+			//Legacy DVIP does not use realtime port
+			this.socket_realtime = new tcp(this.config.host, this.config.port);
+
+			this.socket_realtime.on('status_change', (status, message) => {
+				this.status(status, message);
+			});
+
+			this.socket_realtime.on('error', (err) => {
+				debug('Network error', err);
+				this.log('error', 'Network error: ' + err.message);
+			});
+
+			this.socket_realtime.on('connect', () => {
+				debug('Connected');
+				this.socket_realtime.send(this.null_packet);
+			});
+
+			this.socket_realtime.on('data', (buffer) => {
+				if (!this.model.legacy_dvip) {
+					//Send the null packet when we recieve a packet
+					this.socket_realtime.send(this.null_packet);
+
+					//If it's not a null packet check what is inside
+					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
+						//console.log('Receive Realtime: ', buffer);
+
+						this.processBuffer(buffer);
+					}
+				}
+			});
+		}
 
 		this.socket.on('status_change', (status, message) => {
 			this.status(status, message);
@@ -1352,26 +1394,12 @@ class instance extends instance_skel {
 
 		this.socket.on('connect', () => {
 			debug('Connected');
-			this.socket.send(this.null_packet);
-			//Get input names
-			setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
-		});
-		this.socket_realtime.on('status_change', (status, message) => {
-			this.status(status, message);
-		});
-
-		this.socket_realtime.on('error', (err) => {
-			//The SE2200 *may* not use the realtime protocol,
-			//So don't error if the connection fails
 			if (!this.model.legacy_dvip) {
-				debug('Network error', err);
-				this.log('error', 'Network error: ' + err.message);
-			}
-		});
+				this.socket.send(this.null_packet);
 
-		this.socket_realtime.on('connect', () => {
-			debug('Connected');
-			this.socket_realtime.send(this.null_packet);
+				//Get input names
+				setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
+			}
 		});
 
 		//Command socket data recieve
@@ -1404,19 +1432,6 @@ class instance extends instance_skel {
 			}
 		});
 
-		this.socket_realtime.on('data', (buffer) => {
-			if (!this.model.legacy_dvip) {
-				//Send the null packet when we recieve a packet
-				this.socket_realtime.send(this.null_packet);
-
-				//If it's not a null packet check what is inside
-				if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-					//console.log('Receive Realtime: ', buffer);
-
-					this.processBuffer(buffer);
-				}
-			}
-		});
 	}
 
 	updateConfig(config) {

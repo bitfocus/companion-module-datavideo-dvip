@@ -11,10 +11,11 @@ Currently supports:
 SE-650  
 SE-700  
 SE-1200MU/HS-1300  
-SE-2200/HS-2200 (Work in Progress)  
+SE-2200/HS-2200 (Work in Progress, no feedback)
 SE-3200/HS-3200  
   
 The SE-2200 uses the "LAN Service" port for control with the PC Control button enabled  
+Use the Presets to setup the SE-2200  
 
 Please add an issue for other Datavision vision mixers you would like to see added or any feedback you have.
 
@@ -72,7 +73,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Current HDMI and SDI output source names
 * Current audio source
 * Current ME, DSK and FTB duration frames
-* KEY and DSK button states (Just for testing for now)
+* KEY and DSK button states
 * Input name labels from mixer
 * Currently selected user
 * Transition and FTB button states

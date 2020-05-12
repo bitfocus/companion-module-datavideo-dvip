@@ -488,7 +488,7 @@ exports.getActions = function () {
 					type: 'dropdown',
 					label: 'Action',
 					id: 'menu',
-					default: '1',
+					default: '0',
 					choices: this.model.menu
 				}
 			]
@@ -505,6 +505,32 @@ exports.getActions = function () {
 					id: 'crosspoint',
 					default: '0',
 					choices: this.model.crosspoint
+				}
+			]
+		};
+
+		actions['timer'] = {
+			label: 'Timer Controls',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Action',
+					id: 'timer',
+					default: '0',
+					choices: this.model.timer
+				}
+			]
+		};
+
+		actions['func'] = {
+			label: 'Function Buttons',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Action',
+					id: 'func',
+					default: '0',
+					choices: this.model.func
 				}
 			]
 		};

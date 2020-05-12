@@ -25,6 +25,8 @@ class instance extends instance_skel {
 		this.disconnect_packet = Buffer.from([0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00]);
 		this.get_audio_src_packet = Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00]);
 
+		this.legacy_req_state = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x22, 0x00, 0x00, 0x9f, 0x0d]);
+
 		this.cur_input_request = 0;
 		this.input_names = [];
 
@@ -188,6 +190,9 @@ class instance extends instance_skel {
 				logo: this.CHOICES_LOGO_2200,
 				crosspoint: this.CHOICES_CROSSPOINT_2200,
 				wipe: this.CHOICES_WIPE_2200,
+				timer: this.CHOICES_TIMER_2200,
+				func: this.CHOICES_FUNC_2200,
+				hdmi1: this.CHOICES_SWITCH_HDMI1_2200,
 				legacy_dvip: true,
 			},
 			se3200: {
@@ -709,8 +714,21 @@ class instance extends instance_skel {
 				if (element !== undefined) {
 					cmd = element.cmd;
 				}
+				break;
 			case 'crosspoint':
 				element = this.model.crosspoint.find(element => element.id === options.crosspoint);
+				if (element !== undefined) {
+					cmd = element.cmd;
+				}
+				break;
+			case 'timer':
+				element = this.model.timer.find(element => element.id === options.timer);
+				if (element !== undefined) {
+					cmd = element.cmd;
+				}
+				break;
+			case 'func':
+				element = this.model.func.find(element => element.id === options.func);
 				if (element !== undefined) {
 					cmd = element.cmd;
 				}
@@ -740,7 +758,9 @@ class instance extends instance_skel {
 					}
 				} else {
 					//Legacy DVIP command processing
+					console.log("Send: ", cmd);
 					this.socket.send(cmd);
+					this.socket.send(this.legacy_req_state);
 				}
 			} else {
 				debug('Socket not connected :(');
@@ -1476,6 +1496,9 @@ class instance extends instance_skel {
 						this.processBuffer(buffer);
 					}
 				}
+			}else{
+				//Legacy DVIP processing
+				console.log("Recieve: ", buffer);
 			}
 		});
 

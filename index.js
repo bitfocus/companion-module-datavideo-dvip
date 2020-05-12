@@ -777,7 +777,7 @@ class instance extends instance_skel {
 			id: 'info',
 			width: 12,
 			label: 'Information',
-			value: 'This module controls a Datavideo vision mixer.</br>Note: Companion needs to be restarted if the model is changed.'
+			value: 'This module controls a Datavideo vision mixer.</br>Note: Companion needs to be restarted if the model is changed.</br>Use Auto port selection for SE-2200.</br>'
 		},
 		{
 			type: 'textinput',

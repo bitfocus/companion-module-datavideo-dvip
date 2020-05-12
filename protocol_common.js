@@ -923,7 +923,7 @@ module.exports = {
 			},
 			{
 				id: 135,
-				label: "SWITCHER_FTB_DIRN",
+				label: "SWITCHER_FTB_LEVEL",
 				type: "float",
 			},
 			{

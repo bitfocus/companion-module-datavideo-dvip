@@ -248,6 +248,18 @@ exports.getFeedbacks = function () {
 			default: this.rgb(51, 102, 0),
 		},
 		{
+			type: 'colorpicker',
+			label: 'Foreground color for FTB Running State',
+			id: 'fg_run',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color for FTB Running State',
+			id: 'bg_run',
+			default: this.rgb(255, 56, 0),
+		},
+		{
 			type: 'dropdown',
 			label: 'Input',
 			id: 'ftb',
@@ -264,15 +276,22 @@ exports.getFeedbacks = function () {
 						setOn = this.ftbenable_state;
 						break;
 					case 'FTB':
-						if (this.ftb_trans_state > 0) { setOn = true; }
+						if (this.ftb_trans_state > 0 || this.ftb_dirn_state == 1 && this.ftbenable_state == 1) { setOn = true; }
 						break;
 				}
 
 				if (setOn) {
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
+					if (this.ftb_trans_state > 0 && this.ftbenable_state == 1 && element.label == "FTB") {
+						return {
+							color: feedback.options.fg_run,
+							bgcolor: feedback.options.bg_run
+						};
+					} else {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					}
 				}
 			}
 		}

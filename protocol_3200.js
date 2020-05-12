@@ -1381,7 +1381,7 @@ module.exports = {
 			},
 			{
 				id: 197,
-				label: "SWITCHER_FTB_DIRN",
+				label: "SWITCHER_FTB_LEVEL",
 				type: "float",
 			},
 			{

@@ -78,6 +78,7 @@ class instance extends instance_skel {
 		this.bgnd_state;
 		this.ftbenable_state;
 		this.ftb_trans_state;
+		this.ftb_dirn_state;
 		this.keypriority_state;
 		this.curr_wipe;
 
@@ -431,6 +432,10 @@ class instance extends instance_skel {
 							} else {
 								cmd = Buffer.concat([cmd, Buffer.from([0x00, 0x00, 0x00, 0x00])]);
 							}
+						}
+						//Only send FTB command if FTB is enabled otherwise it causes a transition when re-enabled. Which doesn't happen in the software
+						if(element.label == "FTB" && this.ftbenable_state == 0){
+							return
 						}
 					}
 				}
@@ -1005,9 +1010,14 @@ class instance extends instance_skel {
 				this.setVariable('ftbenable_state', this.ftbenable_state);
 				this.checkFeedbacks('ftb_state');
 				break;
-			case 'SWITCHER_FTB_DIRN':
+			case 'SWITCHER_FTB_LEVEL':
 				this.ftb_trans_state = value;
 				this.setVariable('ftb_trans_state', this.ftb_trans_state);
+				this.checkFeedbacks('ftb_state');
+				break;
+			case 'SWITCHER_FTB_DIRN':
+				this.ftb_dirn_state = value;
+				this.setVariable('ftb_dirn_state', this.ftb_dirn_state);
 				this.checkFeedbacks('ftb_state');
 				break;
 			case 'SWITCHER_TRANS_PRIORITY':
@@ -1049,14 +1059,11 @@ class instance extends instance_skel {
 				this.checkFeedbacks('tbar_state');
 				this.checkFeedbacks('pvw_in')
 				break;
-
 			case 'SWITCHER_DSK_TRANS_LEVEL':
 				this.dsk_tbar_state = value;
 				//console.log("tbar:", this.tbar_state);
 				this.checkFeedbacks('dsk_tbar_state');
-
 				break;
-
 			case 'DSK_TRANS_STATE':
 			case 'ME_TRANS_STATE':
 				//Stopped	
@@ -1064,7 +1071,6 @@ class instance extends instance_skel {
 					setTimeout(function () { this.getKeyStates() }.bind(this), 100);
 				}
 				break;
-
 			case 'DSK_TRANS_COMMAND':
 				//READY	
 				if (value == 8) {
@@ -1163,9 +1169,7 @@ class instance extends instance_skel {
 	}
 
 	processBuffer(buffer) {
-		//	console.log("   ");
-		//	console.log("   ");
-		//	console.log("__________________PACKET START_____________________");
+		// console.log("   ");
 		//	console.log("RECIEVED BUFFER:", buffer);
 		//	console.log("   ");
 		let section;
@@ -1179,8 +1183,6 @@ class instance extends instance_skel {
 		//New handling code test
 		command = buffer.readInt16LE(4, true);
 		//console.log("COMMAND ID: ", command)
-		//console.log("data array: ", data);
-		//console.log(this.COMMANDS[1]['sections']);
 		//let setctl = this.COMMANDS[1]['sections'];
 		let com = this.COMMANDS.find(element => element.id == command);
 		if (com !== undefined) {
@@ -1205,16 +1207,16 @@ class instance extends instance_skel {
 					var nib1 = num & 0xF;
 					input = num >> 4;
 					control = nib1;
-					//	console.log("INPUT", input);
+					//console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-					//	console.log("SECTION: ", element.label);
+					//console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-						//	console.log("CONTROL: ", element2.label);
-						//console.log("CONTROL ID: ", control);
+					//	console.log("CONTROL: ", element2.label);
+					//	console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
 							switch (element2.type) {
@@ -1229,11 +1231,11 @@ class instance extends instance_skel {
 									break;
 							}
 
-							//console.log("VALUE: ", value);
+						//	console.log("VALUE: ", value);
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
-									//		console.log("VALUE LABEL: ", element3.label);
+							//		console.log("VALUE LABEL: ", element3.label);
 									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {

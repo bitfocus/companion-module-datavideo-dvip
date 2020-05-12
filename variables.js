@@ -345,6 +345,14 @@ exports.getVariables = function () {
 			label: 'Current audio HDMI 3 enable state',
 			name: 'audio_hdmi3'
 		},
+		{
+			label: 'Current System Standard ID',
+			name: 'sys_standard'
+		},
+		{
+			label: 'Current System Standard Format',
+			name: 'sys_standard_label'
+		},
 	];
 
 	return variables;

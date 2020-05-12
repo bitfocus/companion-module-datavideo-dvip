@@ -96,6 +96,10 @@ class instance extends instance_skel {
 		this.logo1_state;
 		this.logo2_state;
 
+
+		this.sys_standard;
+		this.sys_standard_label;
+
 		Object.assign(this, {
 			...actions,
 			...feedbacks,
@@ -434,7 +438,7 @@ class instance extends instance_skel {
 							}
 						}
 						//Only send FTB command if FTB is enabled otherwise it causes a transition when re-enabled. Which doesn't happen in the software
-						if(element.label == "FTB" && this.ftbenable_state == 0){
+						if (element.label == "FTB" && this.ftbenable_state == 0) {
 							return
 						}
 					}
@@ -1145,6 +1149,12 @@ class instance extends instance_skel {
 				this.checkFeedbacks('audio_state')
 				this.setVariable('audio_hdmi3', this.audio_hdmi3_enable);
 				break;
+			case 'SYSTEM_STANDARD':
+				this.sys_standard = value;
+				this.sys_standard_label = value_label;
+				this.setVariable('sys_standard', this.sys_standard);
+				this.setVariable('sys_standard_label', this.sys_standard_label);
+				break;
 		}
 
 	}
@@ -1215,8 +1225,8 @@ class instance extends instance_skel {
 					//console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-					//	console.log("CONTROL: ", element2.label);
-					//	console.log("CONTROL ID: ", control);
+						//	console.log("CONTROL: ", element2.label);
+						//	console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
 							switch (element2.type) {
@@ -1231,11 +1241,11 @@ class instance extends instance_skel {
 									break;
 							}
 
-						//	console.log("VALUE: ", value);
+							//	console.log("VALUE: ", value);
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
-							//		console.log("VALUE LABEL: ", element3.label);
+									//		console.log("VALUE LABEL: ", element3.label);
 									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {

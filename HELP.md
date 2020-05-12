@@ -28,6 +28,7 @@ The SE-2200 uses the "LAN Service" port for control with the PC Control button e
 * Streamer Controls
 * Change input name on mixer
 * Select wipe
+* Menu Controls
 
 
 **Available feedback**

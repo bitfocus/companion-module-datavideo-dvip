@@ -480,7 +480,7 @@ exports.getActions = function () {
 		};
 	}
 
-	if (this.config.modelID == 'se2200') {
+	if (this.config.modelID == 'se2200' || this.config.modelID == 'se3200' || this.config.modelID == 'se700'|| this.config.modelID == 'se650') {
 		actions['menu'] = {
 			label: 'Menu Controls',
 			options: [
@@ -488,7 +488,7 @@ exports.getActions = function () {
 					type: 'dropdown',
 					label: 'Action',
 					id: 'menu',
-					default: '0',
+					default: '1',
 					choices: this.model.menu
 				}
 			]

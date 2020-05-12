@@ -33,6 +33,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Streamer Controls
 * Change input name on mixer
 * Select wipe
+* Menu Controls
 
 
 **Available feedback**

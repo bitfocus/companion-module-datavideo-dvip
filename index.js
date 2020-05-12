@@ -127,6 +127,7 @@ class instance extends instance_skel {
 				keyer: this.CHOICES_KEYER_700,
 				inputs: this.CHOICES_INPUTS_700,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
+				menu: this.CHOICES_MENU_700,
 				legacy_dvip: false,
 			},
 			se700: {
@@ -147,6 +148,7 @@ class instance extends instance_skel {
 				inputs: this.CHOICES_INPUTS_700,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_700,
+				menu: this.CHOICES_MENU_700,
 				legacy_dvip: false,
 			},
 			se1200mu: {
@@ -218,6 +220,7 @@ class instance extends instance_skel {
 				inputs: this.CHOICES_INPUTS_3200,
 				trans_btn: this.CHOICES_TRANS_BTN_3200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_3200,
+				menu: this.CHOICES_MENU_3200,
 				legacy_dvip: false,
 			},
 		};

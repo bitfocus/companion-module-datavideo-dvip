@@ -26,6 +26,8 @@ class instance extends instance_skel {
 		this.get_audio_src_packet = Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00]);
 
 		this.legacy_req_state = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x22, 0x00, 0x00, 0x9f, 0x0d]);
+		this.legacy_connection_packet = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x23, 0x00, 0x00, 0xce, 0xcd]);   
+
 
 		this.cur_input_request = 0;
 		this.input_names = [];
@@ -1466,6 +1468,9 @@ class instance extends instance_skel {
 
 				//Get input names
 				setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
+			}else{
+				//Send legacy connection packet
+				this.socket.send(this.legacy_connection_packet);
 			}
 		});
 

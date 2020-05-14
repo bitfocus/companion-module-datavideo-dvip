@@ -8,6 +8,7 @@ var choices = require('./choices');
 var protocol = require('./protocol');
 var protocol_common = require('./protocol_common');
 var protocol_3200 = require('./protocol_3200');
+var convert = require('color-convert');
 let debug;
 let log;
 
@@ -26,7 +27,7 @@ class instance extends instance_skel {
 		this.get_audio_src_packet = Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00]);
 
 		this.legacy_req_state = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x22, 0x00, 0x00, 0x9f, 0x0d]);
-		this.legacy_connection_packet = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x23, 0x00, 0x00, 0xce, 0xcd]);   
+		this.legacy_connection_packet = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x23, 0x00, 0x00, 0xce, 0xcd]);
 
 
 		this.cur_input_request = 0;
@@ -103,6 +104,9 @@ class instance extends instance_skel {
 
 		this.sys_standard;
 		this.sys_standard_label;
+
+		this.matte_hsl = [0, 0, 0];
+		this.matte_rgb = [0, 0, 0];
 
 		Object.assign(this, {
 			...actions,
@@ -688,6 +692,7 @@ class instance extends instance_skel {
 					cmd = element.cmd;
 				}
 				break;
+
 			case 'send_hex':
 				cmd = Buffer.from(options.hex.toString(), "hex");
 				break;
@@ -733,6 +738,37 @@ class instance extends instance_skel {
 				element = this.model.func.find(element => element.id === options.func);
 				if (element !== undefined) {
 					cmd = element.cmd;
+				}
+				break;
+			case 'set_bus_matte':
+				var rgb = {
+					r: (options.rgb & 0xff0000) >> 16,
+					g: (options.rgb & 0x00ff00) >> 8,
+					b: (options.rgb & 0x0000ff)
+				};
+				let hueID = Buffer.alloc(2);
+				let satID = Buffer.alloc(2);
+				let lumaID = Buffer.alloc(2);
+				let hue = Buffer.alloc(4);
+				let sat = Buffer.alloc(4);
+				let luma = Buffer.alloc(4);
+
+				let hsv = convert.rgb.hsv(rgb.r, rgb.g, rgb.b);
+				//Find control numbers automatically to build this command
+				let hue_control = this.COMMANDS[0]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_HUE");
+				let sat_control = this.COMMANDS[0]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_SAT");
+				let luma_control = this.COMMANDS[0]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_LUMA");
+				if (hue_control !== undefined && sat_control !== undefined && luma_control !== undefined) {
+					hueID.writeUInt16LE(hue_control.id, 0);
+					satID.writeUInt16LE(sat_control.id, 0);
+					lumaID.writeUInt16LE(luma_control.id, 0);
+
+					hue.writeFloatLE(hsv[0], 0);
+					sat.writeFloatLE(hsv[1], 0);
+					luma.writeFloatLE(hsv[2], 0);
+					//Build up the command to send
+					cmd = Buffer.from([0x01, 0x00, 0x00, 0x00, hueID[0], hueID[1], 0x02, 0x00, hue[0], hue[1], hue[2], hue[3], satID[0], satID[1], 0x02, 0x00, sat[0], sat[1], sat[2], sat[3], lumaID[0], lumaID[1], 0x02, 0x00, luma[0], luma[1], luma[2], luma[3]]);
+
 				}
 				break;
 		}
@@ -811,11 +847,15 @@ class instance extends instance_skel {
 	// When module gets deleted
 	destroy() {
 		if (this.socket !== undefined) {
-			this.socket.send(this.disconnect_packet);
+			if (!this.model.legacy_dvip) {
+				this.socket.send(this.disconnect_packet);
+			}
 			this.socket.destroy();
 		}
 		if (this.socket_realtime !== undefined) {
-			this.socket_realtime.send(this.disconnect_packet);
+			if (!this.model.legacy_dvip) {
+				this.socket_realtime.send(this.disconnect_packet);
+			}
 			this.socket_realtime.destroy();
 		}
 		if (this.socket_request !== undefined) {
@@ -1180,6 +1220,21 @@ class instance extends instance_skel {
 				this.setVariable('sys_standard', this.sys_standard);
 				this.setVariable('sys_standard_label', this.sys_standard_label);
 				break;
+			case 'SWITCHER_BUS_MATTE_HUE':
+				this.matte_hsl[0] = value;
+				this.matte_rgb = convert.hsv.rgb(this.matte_hsl);
+				this.checkFeedbacks('matte_color');
+				break;
+			case 'SWITCHER_BUS_MATTE_SAT':
+				this.matte_hsl[1] = value;
+				this.matte_rgb = convert.hsv.rgb(this.matte_hsl);
+				this.checkFeedbacks('matte_color');
+				break;
+			case 'SWITCHER_BUS_MATTE_LUMA':
+				this.matte_hsl[2] = value;
+				this.matte_rgb = convert.hsv.rgb(this.matte_hsl);
+				this.checkFeedbacks('matte_color');
+				break;
 		}
 
 	}
@@ -1205,8 +1260,8 @@ class instance extends instance_skel {
 
 	processBuffer(buffer) {
 		// console.log("   ");
-		//	console.log("RECIEVED BUFFER:", buffer);
-		//	console.log("   ");
+		//console.log("RECIEVED BUFFER:", buffer);
+		//console.log("   ");
 		let section;
 		let control;
 		let value;
@@ -1242,16 +1297,16 @@ class instance extends instance_skel {
 					var nib1 = num & 0xF;
 					input = num >> 4;
 					control = nib1;
-					//console.log("INPUT", input);
+					//	console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-					//console.log("SECTION: ", element.label);
+					//	console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-						//	console.log("CONTROL: ", element2.label);
-						//	console.log("CONTROL ID: ", control);
+						//		console.log("CONTROL: ", element2.label);
+						//		console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
 							switch (element2.type) {
@@ -1266,11 +1321,11 @@ class instance extends instance_skel {
 									break;
 							}
 
-							//	console.log("VALUE: ", value);
+							//		console.log("VALUE: ", value);
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
-									//		console.log("VALUE LABEL: ", element3.label);
+									//				console.log("VALUE LABEL: ", element3.label);
 									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {
@@ -1468,7 +1523,7 @@ class instance extends instance_skel {
 
 				//Get input names
 				setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
-			}else{
+			} else {
 				//Send legacy connection packet
 				this.socket.send(this.legacy_connection_packet);
 			}
@@ -1501,7 +1556,7 @@ class instance extends instance_skel {
 						this.processBuffer(buffer);
 					}
 				}
-			}else{
+			} else {
 				//Legacy DVIP processing
 				console.log("Recieve: ", buffer);
 			}
@@ -1541,7 +1596,9 @@ class instance extends instance_skel {
 		this.COMMANDS = this.getCommands();
 	};
 
+
 }
+
 
 
 exports = module.exports = instance;

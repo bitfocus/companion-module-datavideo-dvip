@@ -35,6 +35,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Change input name on mixer
 * Select wipe
 * Menu Controls
+* Set Bus Matte Color
 
 
 **Available feedback**
@@ -48,6 +49,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Keyer Control (PGM/PVW) state
 * Transition and FTB button states
 * Currently selected wipe
+* Current Bus Matte Colour
 
 
 **Available presets**

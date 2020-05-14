@@ -480,6 +480,19 @@ exports.getActions = function () {
 		};
 	}
 
+	if (!this.legacy_dvip) {
+		actions['set_bus_matte'] = {
+			label: 'Set Bus Matte Color',
+			options: [
+				{
+					type: 'colorpicker',
+					label: 'RGB color',
+					id: 'rgb',
+					default: this.rgb(255, 0, 0),
+				},
+			]
+		};
+	}
 	if (this.config.modelID == 'se2200' || this.config.modelID == 'se3200' || this.config.modelID == 'se700'|| this.config.modelID == 'se650') {
 		actions['menu'] = {
 			label: 'Menu Controls',

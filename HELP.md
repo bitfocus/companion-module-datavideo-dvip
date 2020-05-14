@@ -30,6 +30,7 @@ Use the Presets to setup the SE-2200
 * Change input name on mixer
 * Select wipe
 * Menu Controls
+* Set Bus Matte Color
 
 
 **Available feedback**
@@ -43,6 +44,7 @@ Use the Presets to setup the SE-2200
 * Keyer Control (PGM/PVW) state
 * Transition and FTB button states
 * Currently selected wipe
+* Current Bus Matte Colour
 
 
 **Available presets**

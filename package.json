@@ -21,5 +21,8 @@
 	"bugs": {
 		"url": "https://github.com/bitfocus/companion-module-datavideo-dvip/issues"
 	},
-	"homepage": "https://github.com/bitfocus/companion-module-datavideo-dvip#readme"
+	"homepage": "https://github.com/bitfocus/companion-module-datavideo-dvip#readme",
+	"dependencies": {
+		"color-convert": "^2.0.1"
+	}
 }

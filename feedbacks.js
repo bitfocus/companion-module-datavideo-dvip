@@ -1227,6 +1227,18 @@ exports.getFeedbacks = function () {
 			}
 		}
 	}
+	
+	feedbacks['matte_color'] = {
+		label: 'Color for Matte',
+		description: 'Set button color to current Matte color',
+		options: [],
+		callback: (feedback, bank) => {
+				return {
+					bgcolor: this.rgb(this.matte_rgb[0], this.matte_rgb[1], this.matte_rgb[2]),
+				};
+			
+		}
+	}
 	return feedbacks;
 
 }

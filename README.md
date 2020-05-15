@@ -86,8 +86,8 @@ Please add an issue for other Datavision vision mixers you would like to see add
 
 ## Screenshots
 
-![Mix](https://i.imgur.com/SEEgOy5.png)
-![Key Aux](https://i.imgur.com/319ad39.png)
-![Key](https://i.imgur.com/f6F74D2.png)
-![HDMI 1](https://i.imgur.com/6KDMizu.png)
-![Audio](https://i.imgur.com/OEByAvM.png)
+![Mix](/images/mix.png)
+![Key Aux](/images/keyaux.png)
+![Key](/images/key.png)
+![HDMI 1](/images/hdmi1.png)
+![Audio](/images/audio.png)

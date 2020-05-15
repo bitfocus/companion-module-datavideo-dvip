@@ -1312,7 +1312,7 @@ class instance extends instance_skel {
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-						console.log("SECTION: ", element.label);
+					//console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
 						//console.log("CONTROL: ", element2.label);

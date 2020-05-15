@@ -775,12 +775,12 @@ class instance extends instance_skel {
 
 				}
 				break;
-				case 'set_standard':
-					element = this.model.standard.find(element => element.id === options.standard);
-					if (element !== undefined) {
-						cmd = element.cmd;
-					}
-					break;
+			case 'set_standard':
+				element = this.model.standard.find(element => element.id === options.standard);
+				if (element !== undefined) {
+					cmd = element.cmd;
+				}
+				break;
 		}
 
 		if (cmd !== undefined) {
@@ -791,7 +791,6 @@ class instance extends instance_skel {
 					cmdsize = Buffer.byteLength(cmd) + 4;
 					pktsize.writeUInt32LE(cmdsize, 0);
 					cmd = Buffer.concat([pktsize, cmd]);
-					//console.log("Send: ", cmd);
 
 					this.socket.send(cmd);
 					//Update input names on change
@@ -806,10 +805,10 @@ class instance extends instance_skel {
 					}
 				} else {
 					//Legacy DVIP command processing
-					console.log("Send: ", cmd);
 					this.socket.send(cmd);
 					this.socket.send(this.legacy_req_state);
 				}
+				this.consoleLog("Send: ", cmd);
 			} else {
 				debug('Socket not connected :(');
 			}
@@ -850,7 +849,13 @@ class instance extends instance_skel {
 			width: 6,
 			choices: this.CHOICES_MODEL,
 			default: 'se1200mu'
-		}
+		},
+		{
+			type: 'checkbox',
+			id: 'debug',
+			label: 'Debug to console',
+			default: '0',
+		},
 		]
 	}
 
@@ -876,7 +881,6 @@ class instance extends instance_skel {
 
 	init() {
 		debug = this.debug;
-		log = this.log;
 
 		this.init_feedbacks();
 		this.init_variables();
@@ -1140,7 +1144,6 @@ class instance extends instance_skel {
 				break;
 			case 'SWITCHER_DSK_TRANS_LEVEL':
 				this.dsk_tbar_state = value;
-				//console.log("tbar:", this.tbar_state);
 				this.checkFeedbacks('dsk_tbar_state');
 				break;
 			case 'DSK_TRANS_STATE':
@@ -1250,7 +1253,6 @@ class instance extends instance_skel {
 	}
 
 	getKeyStates() {
-		//console.log("----GET KEY STATES----")
 		let cmd;
 		let cmdsize;
 		let pktsize = Buffer.alloc(4);
@@ -1262,64 +1264,48 @@ class instance extends instance_skel {
 			cmdsize = Buffer.byteLength(cmd) + 4;
 			pktsize.writeUInt32LE(cmdsize, 0);
 			cmd = Buffer.concat([pktsize, cmd]);
-			//console.log("REQ KEY STATE ", cmd);
 			this.socket.send(cmd);
 		}
 
 	}
 
 	processBuffer(buffer) {
-		 //console.log("   ");
-		//console.log("RECIEVED BUFFER:", buffer);
-		//console.log("   ");
-		let section;
-		let control;
+		this.consoleLog("----Packet Start----");
+		this.consoleLog("Recieve Buffer:", buffer);
+		this.consoleLog(" ");
+		let sectionID;
+		let controlID;
 		let value;
-		let data;
+		let controlSection;
 		let command;
-		let element;
 		let input = null;
+		let inputLog = "";
 
-		//New handling code test
 		command = buffer.readInt16LE(4, true);
-		//console.log("COMMAND ID: ", command)
-		//let setctl = this.COMMANDS[1]['sections'];
 		let com = this.COMMANDS.find(element => element.id == command);
 		if (com !== undefined) {
-
-
-			//console.log("COMMAND: ", com.label);
+			this.consoleLog("COMMAND: " + com.label + " ID: " + command);
 			for (let i = 8; i < buffer.length; i = i + 4) {
-				//	console.log("   ");
-				//	console.log("_____________SECTION LOOP______________");
-				data = buffer.slice(i, i + 4);
-				//console.log("CONTROL BUFFER: ", data);
-				//console.log("NEXT 4 BYTES: ", buffer.slice(i + 4, i + 8));
-				control = data.readInt16LE(0, true);
+				controlSection = buffer.slice(i, i + 4);
+				controlID = controlSection.readInt16LE(0, true);
 
-				section = data.readInt16LE(2, true);
-				//console.log("SECTION ID:", section);
+				sectionID = controlSection.readInt16LE(2, true);
 
 				//SECTION_INPUT is weird and splits the section into inputid/section as two nibbles so we need to check
 				//and handle it seperately
-				if (section == 3) {
-					var num = data.readInt8(0, true) & 0xFF;
-					var nib1 = num & 0xF;
-					input = num >> 4;
-					control = nib1;
-					//console.log("INPUT", input);
+				if (sectionID == 3) {
+					var controlInput = controlSection.readInt8(0, true) & 0xFF;
+					controlID = controlInput & 0xF;
+					input = controlInput >> 4;
+					inputLog = "- INPUT " + input + " ";
 				}
 
-				element = com.sections.find(element => element.id == section);
-				if (element !== undefined) {
-					//console.log("SECTION: ", element.label);
-					let element2 = element.controls.find(element => element.id == control);
-					if (element2 !== undefined) {
-						//console.log("CONTROL: ", element2.label);
-						//console.log("CONTROL ID: ", control);
-
+				let section = com.sections.find(element => element.id == sectionID);
+				if (section !== undefined) {
+					let control = section.controls.find(element => element.id == controlID);
+					if (control !== undefined) {
 						if (i + 4 < buffer.length) {
-							switch (element2.type) {
+							switch (control.type) {
 								case 'float':
 									value = buffer.readFloatLE(i + 4);
 									break;
@@ -1331,15 +1317,18 @@ class instance extends instance_skel {
 									break;
 							}
 
-							//console.log("VALUE: ", value);
-							if (element2.values != null) {
-								let element3 = element2.values.find(element => element.id == value);
-								if (element3 !== undefined) {
-									//console.log("VALUE LABEL: ", element3.label);
-									this.processControl(element.label, element2.label, value, element3.label, input);
+							if (control.values != null) {
+								let values = control.values.find(element => element.id == value);
+								if (values !== undefined) {
+									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + " " + inputLog + "- CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE LABEL: " + values.label);
+									this.processControl(section.label, control.label, value, values.label, input);
+								} else {
+									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + " " + inputLog + "- CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE LABEL: UNLABELLED");
+									this.processControl(section.label, control.label, value, null, input);
 								}
 							} else {
-								this.processControl(element.label, element2.label, value, null, input);
+								this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + " " + inputLog + "- CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value);
+								this.processControl(section.label, control.label, value, null, input);
 							}
 
 						}
@@ -1371,7 +1360,6 @@ class instance extends instance_skel {
 		let maxInputs = this.model.inputs.length;
 		let input = Buffer.alloc(4);
 		let lastInput;
-		//console.log("GET NAMES RUNNING");
 		if (inputName == null) {
 			//Grab input 1
 			this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]));
@@ -1380,8 +1368,6 @@ class instance extends instance_skel {
 		} else if (this.cur_input_request > 1) {
 			//request current input name
 			lastInput = this.cur_input_request - 1;
-			//	console.log("input: ", lastInput);
-			//	console.log("input name:", inputName);
 			this.setVariable('in' + lastInput.toString() + '_name', inputName);
 			this.input_names[lastInput] = inputName;
 			if (this.cur_input_request != 0 && this.cur_input_request <= maxInputs) {
@@ -1394,9 +1380,7 @@ class instance extends instance_skel {
 			} else if (this.cur_input_request > maxInputs) {
 				this.cur_input_request = 0;
 			}
-
 		}
-
 	}
 
 	initTCP() {
@@ -1436,7 +1420,7 @@ class instance extends instance_skel {
 				}
 			} else {
 				this.config.port_cmd = parseInt(this.config.port) + 1;
-				console.log("Selected Port ", this.config.port);
+				this.consoleLog("Selected Port ", this.config.port);
 				this.setupConnection();
 			}
 
@@ -1455,7 +1439,7 @@ class instance extends instance_skel {
 
 		this.socket_request.on('error', (err) => {
 			debug('Network error', err);
-			this.log('error', 'Network error: ' + err.message);
+			console.log('error', 'Network error: ' + err.message);
 		});
 
 		this.socket_request.on('connect', () => {
@@ -1468,7 +1452,7 @@ class instance extends instance_skel {
 
 			this.config.port = buffer.readInt16LE(4);
 			this.config.port_cmd = parseInt(this.config.port) + 1;
-			console.log("Available Port ", this.config.port);
+			this.consoleLog("Available Port ", this.config.port);
 
 			this.setupConnection();
 		});
@@ -1492,7 +1476,7 @@ class instance extends instance_skel {
 
 			this.socket_realtime.on('error', (err) => {
 				debug('Network error', err);
-				this.log('error', 'Network error: ' + err.message);
+				console.log('error', 'Network error: ' + err.message);
 			});
 
 			this.socket_realtime.on('connect', () => {
@@ -1507,7 +1491,7 @@ class instance extends instance_skel {
 
 					//If it's not a null packet check what is inside
 					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-						//console.log('Receive Realtime: ', buffer);
+						//this.consoleLog('Receive Realtime: ', buffer);
 
 						this.processBuffer(buffer);
 					}
@@ -1521,7 +1505,7 @@ class instance extends instance_skel {
 
 		this.socket.on('error', (err) => {
 			debug('Network error', err);
-			this.log('error', 'Network error: ' + err.message);
+			console.log('error', 'Network error: ' + err.message);
 			//Start again if the command socket has an error
 			this.initTCP();
 		});
@@ -1549,8 +1533,6 @@ class instance extends instance_skel {
 				} else if (buffer.equals(this.null_packet)) {
 					this.socket.send(this.null_packet);
 				} else {
-					//console.log('Receive CMD: ', buffer);
-					//this.processBuffer(buffer);
 					//Input name
 					//Slight downside is that the return packet does not included the request input number
 					//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
@@ -1568,7 +1550,7 @@ class instance extends instance_skel {
 				}
 			} else {
 				//Legacy DVIP processing
-				console.log("Recieve: ", buffer);
+				this.consoleLog("Legacy Buffer: ", buffer);
 			}
 		});
 
@@ -1576,6 +1558,7 @@ class instance extends instance_skel {
 
 	updateConfig(config) {
 		var resetConnection = false;
+		this.config.debug = config.debug;
 
 		if (this.config.label != config.label || this.config.host != config.host || this.config.port != config.port || this.config.modelID != config.modelID) {
 			resetConnection = true;
@@ -1586,7 +1569,7 @@ class instance extends instance_skel {
 
 		if (resetConnection === true || this.socket === undefined) {
 			this.init();
-			console.log('Connection reset after update.');
+			this.consoleLog('Connection reset after update.');
 		}
 	}
 
@@ -1606,6 +1589,16 @@ class instance extends instance_skel {
 		this.COMMANDS = this.getCommands();
 	};
 
+	consoleLog(text, variable = null) {
+		if (this.config.debug) {
+			if (variable == null) {
+				console.log(text);
+
+			} else {
+				console.log(text, variable);
+			}
+		}
+	}
 
 }
 

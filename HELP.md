@@ -31,6 +31,7 @@ Use the Presets to setup the SE-2200
 * Select wipe
 * Menu Controls
 * Set Bus Matte Color
+* Set System Standard
 
 
 **Available feedback**
@@ -45,6 +46,7 @@ Use the Presets to setup the SE-2200
 * Transition and FTB button states
 * Currently selected wipe
 * Current Bus Matte Colour
+* Current system standard
 
 
 **Available presets**

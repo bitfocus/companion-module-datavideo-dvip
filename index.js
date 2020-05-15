@@ -136,6 +136,7 @@ class instance extends instance_skel {
 				inputs: this.CHOICES_INPUTS_700,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
 				menu: this.CHOICES_MENU_700,
+				standard: this.CHOICES_SET_STANDARD_1200,
 				legacy_dvip: false,
 			},
 			se700: {
@@ -157,6 +158,7 @@ class instance extends instance_skel {
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_700,
 				menu: this.CHOICES_MENU_700,
+				standard: this.CHOICES_SET_STANDARD_1200,
 				legacy_dvip: false,
 			},
 			se1200mu: {
@@ -180,6 +182,7 @@ class instance extends instance_skel {
 				inputs: this.CHOICES_INPUTS_1200,
 				trans_btn: this.CHOICES_TRANS_BTN_1200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_1200,
+				standard: this.CHOICES_SET_STANDARD_1200,
 				legacy_dvip: false,
 			},
 			se2200: {
@@ -232,6 +235,7 @@ class instance extends instance_skel {
 				trans_btn: this.CHOICES_TRANS_BTN_3200,
 				audio_level: this.CHOICES_AUDIO_LEVEL_3200,
 				menu: this.CHOICES_MENU_3200,
+				standard: this.CHOICES_SET_STANDARD_3200,
 				legacy_dvip: false,
 			},
 		};
@@ -771,6 +775,12 @@ class instance extends instance_skel {
 
 				}
 				break;
+				case 'set_standard':
+					element = this.model.standard.find(element => element.id === options.standard);
+					if (element !== undefined) {
+						cmd = element.cmd;
+					}
+					break;
 		}
 
 		if (cmd !== undefined) {
@@ -1219,6 +1229,7 @@ class instance extends instance_skel {
 				this.sys_standard_label = value_label;
 				this.setVariable('sys_standard', this.sys_standard);
 				this.setVariable('sys_standard_label', this.sys_standard_label);
+				this.checkFeedbacks('system_standard');
 				break;
 			case 'SWITCHER_BUS_MATTE_HUE':
 				this.matte_hsl[0] = value;

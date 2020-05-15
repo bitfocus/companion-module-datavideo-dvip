@@ -1239,6 +1239,39 @@ exports.getFeedbacks = function () {
 			
 		}
 	}
+
+	feedbacks['system_standard'] = {
+		label: 'Color for current System Standard',
+		description: 'Set Button colors for current System Standard',
+		options: [{
+			type: 'colorpicker',
+			label: 'Foreground color',
+			id: 'fg',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color',
+			id: 'bg',
+			default: this.rgb(51, 102, 0),
+		},
+		{
+			type: 'dropdown',
+			label: 'Input',
+			id: 'standard',
+			default: '0',
+			choices: this.model.standard
+		}
+		],
+		callback: (feedback, bank) => {
+			if (this.sys_standard == feedback.options.standard) {
+				return {
+					color: feedback.options.fg,
+					bgcolor: feedback.options.bg
+				};
+			}
+		}
+	}
 	return feedbacks;
 
 }

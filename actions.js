@@ -493,6 +493,21 @@ exports.getActions = function () {
 			]
 		};
 	}
+
+	if (!this.legacy_dvip) {
+		actions['set_standard'] = {
+			label: 'Set System Standard',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Format',
+					id: 'standard',
+					default: '0',
+					choices: this.model.standard
+				},
+			]
+		};
+	}
 	if (this.config.modelID == 'se2200' || this.config.modelID == 'se3200' || this.config.modelID == 'se700'|| this.config.modelID == 'se650') {
 		actions['menu'] = {
 			label: 'Menu Controls',

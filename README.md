@@ -36,6 +36,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Select wipe
 * Menu Controls
 * Set Bus Matte Color
+* Set System Standard
 
 
 **Available feedback**
@@ -50,6 +51,7 @@ Please add an issue for other Datavision vision mixers you would like to see add
 * Transition and FTB button states
 * Currently selected wipe
 * Current Bus Matte Colour
+* Current system standard
 
 
 **Available presets**

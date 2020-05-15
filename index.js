@@ -800,7 +800,7 @@ class instance extends instance_skel {
 							setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
 						}
 					}
-					if (id = 'trans') {
+					if (id == 'trans') {
 						//just delay doing this until I can find a better trigger for it.
 						setTimeout(function () { this.getKeyStates() }.bind(this), 100);
 					}
@@ -1171,7 +1171,6 @@ class instance extends instance_skel {
 			case 'SWITCHER_WIPE_PATTERN_NUM':
 				this.curr_wipe = value;
 				this.setVariable('curr_wipe', this.curr_wipe);
-				this.checkFeedbacks('curr_wipe');
 				this.checkFeedbacks('wipe_state');
 				break;
 			case 'AUDIO_MODE':
@@ -1270,7 +1269,7 @@ class instance extends instance_skel {
 	}
 
 	processBuffer(buffer) {
-		// console.log("   ");
+		 console.log("   ");
 		//console.log("RECIEVED BUFFER:", buffer);
 		//console.log("   ");
 		let section;
@@ -1283,7 +1282,7 @@ class instance extends instance_skel {
 
 		//New handling code test
 		command = buffer.readInt16LE(4, true);
-		//console.log("COMMAND ID: ", command)
+		console.log("COMMAND ID: ", command)
 		//let setctl = this.COMMANDS[1]['sections'];
 		let com = this.COMMANDS.find(element => element.id == command);
 		if (com !== undefined) {
@@ -1299,7 +1298,7 @@ class instance extends instance_skel {
 				control = data.readInt16LE(0, true);
 
 				section = data.readInt16LE(2, true);
-				//console.log("SECTION ID:", section);
+				console.log("SECTION ID:", section);
 
 				//SECTION_INPUT is weird and splits the section into inputid/section as two nibbles so we need to check
 				//and handle it seperately
@@ -1308,16 +1307,16 @@ class instance extends instance_skel {
 					var nib1 = num & 0xF;
 					input = num >> 4;
 					control = nib1;
-					//	console.log("INPUT", input);
+					console.log("INPUT", input);
 				}
 
 				element = com.sections.find(element => element.id == section);
 				if (element !== undefined) {
-					//	console.log("SECTION: ", element.label);
+						console.log("SECTION: ", element.label);
 					let element2 = element.controls.find(element => element.id == control);
 					if (element2 !== undefined) {
-						//		console.log("CONTROL: ", element2.label);
-						//		console.log("CONTROL ID: ", control);
+								console.log("CONTROL: ", element2.label);
+								console.log("CONTROL ID: ", control);
 
 						if (i + 4 < buffer.length) {
 							switch (element2.type) {
@@ -1332,11 +1331,11 @@ class instance extends instance_skel {
 									break;
 							}
 
-							//		console.log("VALUE: ", value);
+									console.log("VALUE: ", value);
 							if (element2.values != null) {
 								let element3 = element2.values.find(element => element.id == value);
 								if (element3 !== undefined) {
-									//				console.log("VALUE LABEL: ", element3.label);
+												console.log("VALUE LABEL: ", element3.label);
 									this.processControl(element.label, element2.label, value, element3.label, input);
 								}
 							} else {

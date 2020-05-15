@@ -209,6 +209,16 @@ exports.getCommands = function () {
             controls: [{}]
         }],
     },
+    {
+        id: 21,
+        label: 'DV_COMMAND_MENU_COMMAND',
+        sections: [{
+            id: 0,
+            label: "Test Section",
+            type: "int",
+            controls: [{}]
+        }],
+    },
     ]
 
     return COMMANDS;

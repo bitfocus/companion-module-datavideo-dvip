@@ -796,7 +796,7 @@ class instance extends instance_skel {
 					//Update input names on change
 					if (id == 'set_input_name') {
 						if (this.cur_input_request == 0) {
-							setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
+							this.getInputNames(null);
 						}
 					}
 					if (id == 'trans') {
@@ -1135,7 +1135,7 @@ class instance extends instance_skel {
 				this.setVariable('curr_user', this.curr_user);
 				//Update names on MEMORY_SELECT
 				if (this.cur_input_request == 0) {
-					setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
+					this.getInputNames(null);
 				}
 				break;
 			case 'SWITCHER_WIPE_LEVEL':
@@ -1265,7 +1265,7 @@ class instance extends instance_skel {
 			cmdsize = Buffer.byteLength(cmd) + 4;
 			pktsize.writeUInt32LE(cmdsize, 0);
 			cmd = Buffer.concat([pktsize, cmd]);
-			if (this.socket != undefined) {
+			if (this.socket !== undefined) {
 				this.socket.send(cmd);
 			}
 		}
@@ -1286,8 +1286,8 @@ class instance extends instance_skel {
 
 		command = buffer.readInt16LE(4, true);
 		//Handle a weird case where the command ID for 1 is different, needs more investigation normally occurs on port 5001
-		let comBuf = buffer.slice(4,8);
-		if(comBuf.equals(Buffer.from([0x30, 0x4e, 0x13, 0x00]))){
+		let comBuf = buffer.slice(4, 8);
+		if (comBuf.equals(Buffer.from([0x30, 0x4e, 0x13, 0x00]))) {
 			command = 1;
 		}
 
@@ -1371,20 +1371,26 @@ class instance extends instance_skel {
 		let lastInput;
 		if (inputName == null) {
 			//Grab input 1
-			if (this.socket != undefined) {
+			if (this.socket !== undefined) {
 				this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]));
+			} else {
+				this.cur_input_request = 0;
+				return;
 			}
 			this.cur_input_request = 2;
 
 		} else if (this.cur_input_request > 1) {
-			//request current input name
-			lastInput = this.cur_input_request - 1;
-			this.setVariable('in' + lastInput.toString() + '_name', inputName);
-			this.input_names[lastInput] = inputName;
-			if (this.cur_input_request != 0 && this.cur_input_request <= maxInputs) {
-				input.writeInt32LE(this.cur_input_request);
-				if (this.socket != undefined) {
+			if (this.socket !== undefined) {
+				//request current input name
+				lastInput = this.cur_input_request - 1;
+				this.setVariable('in' + lastInput.toString() + '_name', inputName);
+				this.input_names[lastInput] = inputName;
+				if (this.cur_input_request !== 0 && this.cur_input_request <= maxInputs) {
+					input.writeInt32LE(this.cur_input_request);
 					this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, input[0], 0x00, 0x00, 0x00]));
+				} else {
+					this.cur_input_request = 0;
+					return;
 				}
 			}
 
@@ -1422,6 +1428,7 @@ class instance extends instance_skel {
 			this.config.port = 0;
 		}
 
+		this.cur_input_request = 0;
 
 		if (this.config.host) {
 			//Setup socket objects
@@ -1445,6 +1452,7 @@ class instance extends instance_skel {
 
 	requestPort() {
 		//Request available realtime port for models that support it
+		let port_realtime;
 
 		this.socket_request = new tcp(this.config.host, 5009);
 
@@ -1463,12 +1471,14 @@ class instance extends instance_skel {
 		});
 
 		this.socket_request.on('data', (buffer) => {
-			this.socket_request.destroy();
 			if (buffer.length == 8) {
-				this.config.port = buffer.readInt16LE(4);
-				this.config.port_cmd = parseInt(this.config.port) + 1;
-				this.consoleLog("Available Port ", this.config.port);
-				if (this.config.port == 5001 || this.config.port == 5003 || this.config.port == 5005 || this.config.port == 5007) {
+				port_realtime = buffer.readInt16LE(4);
+
+				this.consoleLog("Available Realtime Port ", port_realtime);
+				if (port_realtime == 5001 || port_realtime == 5003 || port_realtime == 5005 || port_realtime == 5007) {
+					this.config.port = port_realtime;
+					this.config.port_cmd = parseInt(this.config.port) + 1;
+					this.socket_request.destroy();
 					this.setupConnection();
 				} else {
 					//Port value is not valid, start again
@@ -1539,7 +1549,7 @@ class instance extends instance_skel {
 				this.socket.send(this.null_packet);
 
 				//Get input names
-				setTimeout(function () { this.getInputNames(null); }.bind(this), 1000);
+				this.getInputNames(null);
 			} else {
 				//Send legacy connection packet
 				this.socket.send(this.legacy_connection_packet);
@@ -1560,11 +1570,15 @@ class instance extends instance_skel {
 					//Slight downside is that the return packet does not included the request input number
 					//So I have made a way for it to loop through. No updates are sent to clients when other clients update the name either so we have to manually check it.
 					//This is also done when set_input_name action is ran.
-					if (this.cur_input_request != 0) {
+					if (this.cur_input_request !== 0) {
 						pos = buffer.indexOf('03000000', 0, "hex")
 						if (pos > -1) {
 							let name;
-							name = buffer.slice(pos + 8, buffer.length);
+							let nameBytes = Buffer.alloc(4);
+							//Take into account the number of bytes defined in the packet
+							nameBytes = buffer.slice(pos + 4, pos + 8);
+							nameBytes = nameBytes.readInt16LE(0, true) * 2; // Double for 16bit utf as this isn't accounted for
+							name = buffer.slice(pos + 8, pos + 8 + nameBytes);
 							this.getInputNames(name.toString('utf16le'));
 						}
 					} else {
@@ -1623,7 +1637,5 @@ class instance extends instance_skel {
 	}
 
 }
-
-
 
 exports = module.exports = instance;

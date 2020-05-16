@@ -1284,11 +1284,13 @@ class instance extends instance_skel {
 		let input = null;
 		let inputLog = "";
 
-		command = buffer.readInt16LE(4, true);
-		//Handle a weird case where the command ID for 1 is different, needs more investigation normally occurs on port 5001
-		let comBuf = buffer.slice(4, 8);
-		if (comBuf.equals(Buffer.from([0x30, 0x4e, 0x13, 0x00]))) {
-			command = 1;
+		//Read command ID from buffer 
+		command = buffer.readInt32LE(4, true);
+
+		//Handle a case where the command ID for DV_COMMAND_GET_CONTROL (0) different, needs more investigation normally occurs on port 5001
+		//0x30 0x4e 0x13 0x00
+		if (command == 1265200) {
+			command = 0;
 		}
 
 		let com = this.COMMANDS.find(element => element.id == command);
@@ -1297,7 +1299,6 @@ class instance extends instance_skel {
 			for (let i = 8; i < buffer.length; i = i + 4) {
 				controlSection = buffer.slice(i, i + 4);
 				controlID = controlSection.readInt16LE(0, true);
-
 				sectionID = controlSection.readInt16LE(2, true);
 
 				//SECTION_INPUT is weird and splits the section into inputid/section as two nibbles so we need to check
@@ -1306,7 +1307,7 @@ class instance extends instance_skel {
 					var controlInput = controlSection.readInt8(0, true) & 0xFF;
 					controlID = controlInput & 0xF;
 					input = controlInput >> 4;
-					inputLog = "- INPUT " + input + " ";
+					inputLog = "- INPUT: " + input + " ";
 				}
 
 				let section = com.sections.find(element => element.id == sectionID);

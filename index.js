@@ -29,7 +29,6 @@ class instance extends instance_skel {
 		this.legacy_req_state = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x22, 0x00, 0x00, 0x9f, 0x0d]);
 		this.legacy_connection_packet = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x23, 0x00, 0x00, 0xce, 0xcd]);
 
-
 		this.cur_input_request = 0;
 		this.input_names = [];
 
@@ -759,9 +758,9 @@ class instance extends instance_skel {
 
 				let hsv = convert.rgb.hsv(rgb.r, rgb.g, rgb.b);
 				//Find control numbers automatically to build this command
-				let hue_control = this.COMMANDS[0]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_HUE");
-				let sat_control = this.COMMANDS[0]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_SAT");
-				let luma_control = this.COMMANDS[0]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_LUMA");
+				let hue_control = this.COMMANDS[1]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_HUE");
+				let sat_control = this.COMMANDS[1]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_SAT");
+				let luma_control = this.COMMANDS[1]['sections'][2]['controls'].find(element => element.label == "SWITCHER_BUS_MATTE_LUMA");
 				if (hue_control !== undefined && sat_control !== undefined && luma_control !== undefined) {
 					hueID.writeUInt16LE(hue_control.id, 0);
 					satID.writeUInt16LE(sat_control.id, 0);
@@ -772,7 +771,6 @@ class instance extends instance_skel {
 					luma.writeFloatLE(hsv[2], 0);
 					//Build up the command to send
 					cmd = Buffer.from([0x01, 0x00, 0x00, 0x00, hueID[0], hueID[1], 0x02, 0x00, hue[0], hue[1], hue[2], hue[3], satID[0], satID[1], 0x02, 0x00, sat[0], sat[1], sat[2], sat[3], lumaID[0], lumaID[1], 0x02, 0x00, luma[0], luma[1], luma[2], luma[3]]);
-
 				}
 				break;
 			case 'set_standard':
@@ -818,7 +816,6 @@ class instance extends instance_skel {
 
 	// Return config fields for web config
 	config_fields() {
-
 		return [{
 			type: 'text',
 			id: 'info',
@@ -892,7 +889,6 @@ class instance extends instance_skel {
 	}
 
 	processControl(section, control, value, value_label, input) {
-
 		switch (control) {
 			case 'SWITCHER_PGM_SRC':
 				this.pgm_in_src = value;
@@ -1278,13 +1274,9 @@ class instance extends instance_skel {
 		this.consoleLog("----Packet Start----");
 		this.consoleLog("Recieve Buffer:", buffer);
 		
-		let sectionID;
-		let controlID;
-		let value;
-		let controlSection;
+
 		let commandID;
-		let input = null;
-		let inputLog = "";
+
 
 		//Read command ID from buffer 
 		commandID = buffer.readInt32LE(4, true);
@@ -1299,9 +1291,13 @@ class instance extends instance_skel {
 		if (command !== undefined) {
 			this.consoleLog("COMMAND: " + command.label + " ID: " + commandID);
 			for (let i = 8; i < buffer.length; i = i + 4) {
-				controlSection = buffer.slice(i, i + 4);
-				controlID = controlSection.readInt16LE(0, true);
-				sectionID = controlSection.readInt16LE(2, true);
+				let input = null;
+				let inputLog = "";
+				let value;
+				
+				let controlSection = buffer.slice(i, i + 4);
+				let controlID = controlSection.readInt16LE(0, true);
+				let sectionID = controlSection.readInt16LE(2, true);
 
 				//SECTION_INPUT is weird and splits the section into inputid/section as two nibbles so we need to check
 				//and handle it seperately
@@ -1495,9 +1491,7 @@ class instance extends instance_skel {
 	}
 
 	setupConnection() {
-
 		this.socket = new tcp(this.config.host, this.config.port_cmd);
-
 
 		this.setVariable('command_port', this.config.port_cmd);
 		this.setVariable('realtime_port', this.config.port);
@@ -1527,8 +1521,6 @@ class instance extends instance_skel {
 
 					//If it's not a null packet check what is inside
 					if (!buffer.equals(this.null_packet) && !buffer.equals(this.null_packet_cmd) && !buffer.equals(this.filter_packet)) {
-						//this.consoleLog('Receive Realtime: ', buffer);
-
 						this.processBuffer(buffer);
 					}
 				}

@@ -863,13 +863,13 @@ class instance extends instance_skel {
 	destroy() {
 		if (this.socket !== undefined) {
 			if (!this.model.legacy_dvip) {
-				this.socket.send(this.disconnect_packet);
+				//this.socket.send(this.disconnect_packet);
 			}
 			this.socket.destroy();
 		}
 		if (this.socket_realtime !== undefined) {
 			if (!this.model.legacy_dvip) {
-				this.socket_realtime.send(this.disconnect_packet);
+				//this.socket_realtime.send(this.disconnect_packet);
 			}
 			this.socket_realtime.destroy();
 		}
@@ -1265,7 +1265,9 @@ class instance extends instance_skel {
 			cmdsize = Buffer.byteLength(cmd) + 4;
 			pktsize.writeUInt32LE(cmdsize, 0);
 			cmd = Buffer.concat([pktsize, cmd]);
-			this.socket.send(cmd);
+			if (this.socket != undefined) {
+				this.socket.send(cmd);
+			}
 		}
 
 	}
@@ -1283,6 +1285,12 @@ class instance extends instance_skel {
 		let inputLog = "";
 
 		command = buffer.readInt16LE(4, true);
+		//Handle a weird case where the command ID for 1 is different, needs more investigation normally occurs on port 5001
+		let comBuf = buffer.slice(4,8);
+		if(comBuf.equals(Buffer.from([0x30, 0x4e, 0x13, 0x00]))){
+			command = 1;
+		}
+
 		let com = this.COMMANDS.find(element => element.id == command);
 		if (com !== undefined) {
 			this.consoleLog("COMMAND: " + com.label + " ID: " + command);
@@ -1363,7 +1371,9 @@ class instance extends instance_skel {
 		let lastInput;
 		if (inputName == null) {
 			//Grab input 1
-			this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]));
+			if (this.socket != undefined) {
+				this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]));
+			}
 			this.cur_input_request = 2;
 
 		} else if (this.cur_input_request > 1) {
@@ -1373,7 +1383,9 @@ class instance extends instance_skel {
 			this.input_names[lastInput] = inputName;
 			if (this.cur_input_request != 0 && this.cur_input_request <= maxInputs) {
 				input.writeInt32LE(this.cur_input_request);
-				this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, input[0], 0x00, 0x00, 0x00]));
+				if (this.socket != undefined) {
+					this.socket.send(Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, input[0], 0x00, 0x00, 0x00]));
+				}
 			}
 
 			if (this.cur_input_request <= maxInputs) {
@@ -1387,7 +1399,7 @@ class instance extends instance_skel {
 	initTCP() {
 		if (this.socket !== undefined) {
 			if (!this.model.legacy_dvip) {
-				this.socket.send(this.disconnect_packet);
+				//this.socket.send(this.disconnect_packet);
 			}
 			this.socket.destroy();
 			delete this.socket;
@@ -1395,7 +1407,7 @@ class instance extends instance_skel {
 
 		if (this.socket_realtime !== undefined) {
 			if (!this.model.legacy_dvip) {
-				this.socket_realtime.send(this.disconnect_packet);
+				//this.socket_realtime.send(this.disconnect_packet);
 			}
 			this.socket_realtime.destroy();
 			delete this.socket_realtime;
@@ -1453,16 +1465,16 @@ class instance extends instance_skel {
 		this.socket_request.on('data', (buffer) => {
 			this.socket_request.destroy();
 			if (buffer.length == 8) {
-				this.config.port = parseInt(buffer.readInt16LE(4));
-				this.config.port_cmd = this.config.port + 1;
+				this.config.port = buffer.readInt16LE(4);
+				this.config.port_cmd = parseInt(this.config.port) + 1;
 				this.consoleLog("Available Port ", this.config.port);
 				if (this.config.port == 5001 || this.config.port == 5003 || this.config.port == 5005 || this.config.port == 5007) {
 					this.setupConnection();
-				}else{
+				} else {
 					//Port value is not valid, start again
 					this.initTCP();
 				}
-			}else{
+			} else {
 				//Not expected packet length. Start again.
 				this.initTCP();
 			}

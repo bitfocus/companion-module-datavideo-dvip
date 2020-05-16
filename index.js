@@ -1273,29 +1273,31 @@ class instance extends instance_skel {
 	}
 
 	processBuffer(buffer) {
+		this.consoleLog(" ");
+		this.consoleLog(" ");
 		this.consoleLog("----Packet Start----");
 		this.consoleLog("Recieve Buffer:", buffer);
-		this.consoleLog(" ");
+		
 		let sectionID;
 		let controlID;
 		let value;
 		let controlSection;
-		let command;
+		let commandID;
 		let input = null;
 		let inputLog = "";
 
 		//Read command ID from buffer 
-		command = buffer.readInt32LE(4, true);
+		commandID = buffer.readInt32LE(4, true);
 
 		//Handle a case where the command ID for DV_COMMAND_GET_CONTROL (0) different, needs more investigation normally occurs on port 5001
 		//0x30 0x4e 0x13 0x00
-		if (command == 1265200) {
-			command = 0;
+		if (commandID == 1265200) {
+			commandID = 0;
 		}
 
-		let com = this.COMMANDS.find(element => element.id == command);
-		if (com !== undefined) {
-			this.consoleLog("COMMAND: " + com.label + " ID: " + command);
+		let command = this.COMMANDS.find(element => element.id == commandID);
+		if (command !== undefined) {
+			this.consoleLog("COMMAND: " + command.label + " ID: " + commandID);
 			for (let i = 8; i < buffer.length; i = i + 4) {
 				controlSection = buffer.slice(i, i + 4);
 				controlID = controlSection.readInt16LE(0, true);
@@ -1310,7 +1312,7 @@ class instance extends instance_skel {
 					inputLog = "- INPUT: " + input + " ";
 				}
 
-				let section = com.sections.find(element => element.id == sectionID);
+				let section = command.sections.find(element => element.id == sectionID);
 				if (section !== undefined) {
 					let control = section.controls.find(element => element.id == controlID);
 					if (control !== undefined) {

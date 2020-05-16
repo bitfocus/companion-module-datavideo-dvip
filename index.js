@@ -1273,10 +1273,8 @@ class instance extends instance_skel {
 		this.consoleLog(" ");
 		this.consoleLog("----Packet Start----");
 		this.consoleLog("Recieve Buffer:", buffer);
-		
 
 		let commandID;
-
 
 		//Read command ID from buffer 
 		commandID = buffer.readInt32LE(4, true);
@@ -1294,7 +1292,7 @@ class instance extends instance_skel {
 				let input = null;
 				let inputLog = "";
 				let value;
-				
+
 				let controlSection = buffer.slice(i, i + 4);
 				let controlID = controlSection.readInt16LE(0, true);
 				let sectionID = controlSection.readInt16LE(2, true);
@@ -1340,7 +1338,17 @@ class instance extends instance_skel {
 							}
 
 						}
+					} else {
+						//unknown control
+						value = Buffer.alloc(4);
+						value = buffer.slice(i + 4, i + 8);
+						this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + " " + inputLog + "- CONTROL: UNKNOWN ID: " + controlID + " - VALUE: " + value.readInt32LE(0), value);
 					}
+				} else {
+					//unknown section
+					value = Buffer.alloc(4);
+					value = buffer.slice(i + 4, i + 8);
+					this.consoleLog("SECTION: UNKNOWN ID: " + sectionID + " " + inputLog + "- CONTROL: UNKNOWN ID: " + controlID + " - VALUE: " + value.readInt32LE(0), value);
 				}
 				i = i + 4;
 			}

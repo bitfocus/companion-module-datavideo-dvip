@@ -881,6 +881,7 @@ class instance extends instance_skel {
 
 	init() {
 		debug = this.debug;
+		log = this.log;
 
 		this.init_feedbacks();
 		this.init_variables();
@@ -1385,13 +1386,17 @@ class instance extends instance_skel {
 
 	initTCP() {
 		if (this.socket !== undefined) {
-			this.socket.send(this.disconnect_packet);
+			if (!this.model.legacy_dvip) {
+				this.socket.send(this.disconnect_packet);
+			}
 			this.socket.destroy();
 			delete this.socket;
 		}
 
 		if (this.socket_realtime !== undefined) {
-			this.socket_realtime.send(this.disconnect_packet);
+			if (!this.model.legacy_dvip) {
+				this.socket_realtime.send(this.disconnect_packet);
+			}
 			this.socket_realtime.destroy();
 			delete this.socket_realtime;
 		}
@@ -1408,7 +1413,6 @@ class instance extends instance_skel {
 
 		if (this.config.host) {
 			//Setup socket objects
-
 			if (this.config.port == 0) {
 				//Automatic Port selection
 				if (this.model.legacy_dvip) {
@@ -1420,7 +1424,6 @@ class instance extends instance_skel {
 				}
 			} else {
 				this.config.port_cmd = parseInt(this.config.port) + 1;
-				this.consoleLog("Selected Port ", this.config.port);
 				this.setupConnection();
 			}
 
@@ -1439,7 +1442,7 @@ class instance extends instance_skel {
 
 		this.socket_request.on('error', (err) => {
 			debug('Network error', err);
-			console.log('error', 'Network error: ' + err.message);
+			this.log('error', 'Network error: ' + err.message);
 		});
 
 		this.socket_request.on('connect', () => {
@@ -1449,12 +1452,20 @@ class instance extends instance_skel {
 
 		this.socket_request.on('data', (buffer) => {
 			this.socket_request.destroy();
-
-			this.config.port = buffer.readInt16LE(4);
-			this.config.port_cmd = parseInt(this.config.port) + 1;
-			this.consoleLog("Available Port ", this.config.port);
-
-			this.setupConnection();
+			if (buffer.length == 8) {
+				this.config.port = parseInt(buffer.readInt16LE(4));
+				this.config.port_cmd = this.config.port + 1;
+				this.consoleLog("Available Port ", this.config.port);
+				if (this.config.port == 5001 || this.config.port == 5003 || this.config.port == 5005 || this.config.port == 5007) {
+					this.setupConnection();
+				}else{
+					//Port value is not valid, start again
+					this.initTCP();
+				}
+			}else{
+				//Not expected packet length. Start again.
+				this.initTCP();
+			}
 		});
 	}
 
@@ -1476,7 +1487,7 @@ class instance extends instance_skel {
 
 			this.socket_realtime.on('error', (err) => {
 				debug('Network error', err);
-				console.log('error', 'Network error: ' + err.message);
+				this.log('error', 'Network error: ' + err.message);
 			});
 
 			this.socket_realtime.on('connect', () => {
@@ -1505,7 +1516,7 @@ class instance extends instance_skel {
 
 		this.socket.on('error', (err) => {
 			debug('Network error', err);
-			console.log('error', 'Network error: ' + err.message);
+			this.log('error', 'Network error: ' + err.message);
 			//Start again if the command socket has an error
 			this.initTCP();
 		});
@@ -1593,7 +1604,6 @@ class instance extends instance_skel {
 		if (this.config.debug) {
 			if (variable == null) {
 				console.log(text);
-
 			} else {
 				console.log(text, variable);
 			}

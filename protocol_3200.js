@@ -2010,122 +2010,6 @@ module.exports = {
 				label: "SWITCHER_FLEX_SRC_FGND_ENABLE",
 				type: "flag",
 			},
-			{
-				id: 142,
-				label: "SWITCHER_FLEX_SRC_DVE1_ENABLE",
-				type: "flag",
-			},
-			{
-				id: 143,
-				label: "SWITCHER_FLEX_SRC_DVE1_POSITION_X",
-				type: "float",
-			},
-			{
-				id: 144,
-				label: "SWITCHER_FLEX_SRC_DVE1_POSITION_Y",
-				type: "float",
-			},
-			{
-				id: 145,
-				label: "SWITCHER_FLEX_SRC_DVE1_POSITION_Z",
-				type: "float",
-			},
-			{
-				id: 147,
-				label: "SWITCHER_FLEX_SRC_DVE1_SIZE_X",
-				type: "float",
-			},
-			{
-				id: 148,
-				label: "SWITCHER_FLEX_SRC_DVE1_SIZE_Y",
-				type: "float",
-			},
-			{
-				id: 149,
-				label: "SWITCHER_FLEX_SRC_DVE1_SIZE_Z",
-				type: "float",
-			},
-			{
-				id: 150,
-				label: "SWITCHER_FLEX_SRC_DVE1_CROP_SIZE",
-				type: "float",
-			},
-			{
-				id: 151,
-				label: "SWITCHER_FLEX_SRC_DVE1_CROP_LEFT",
-				type: "float",
-			},
-			{
-				id: 152,
-				label: "SWITCHER_FLEX_SRC_DVE1_CROP_RIGHT",
-				type: "float",
-			},
-			{
-				id: 153,
-				label: "SWITCHER_FLEX_SRC_DVE1_CROP_TOP",
-				type: "float",
-			},
-			{
-				id: 154,
-				label: "SWITCHER_FLEX_SRC_DVE1_CROP_BOTTOM",
-				type: "float",
-			},
-			{
-				id: 155,
-				label: "SWITCHER_FLEX_SRC_DVE1_CROP_SOFT",
-				type: "float",
-			},
-			{
-				id: 156,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_SIZE",
-				type: "float",
-			},
-			{
-				id: 157,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_LEFT",
-				type: "float",
-			},
-			{
-				id: 158,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_RIGHT",
-				type: "float",
-			},
-			{
-				id: 159,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_TOP",
-				type: "float",
-			},
-			{
-				id: 160,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_BOTTOM",
-				type: "float",
-			},
-			{
-				id: 161,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_SOFT",
-				type: "float",
-			},
-			{
-				id: 162,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_STYLE",
-				type: "float",
-			},
-			{
-				id: 163,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_HUE",
-				type: "float",
-			},
-			{
-				id: 164,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_SAT",
-				type: "float",
-			},
-			{
-				id: 165,
-				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_LUMA",
-				type: "float",
-			},
-
 		]
 	},
 	{
@@ -2241,7 +2125,6 @@ module.exports = {
 			label: "INPUT_AUDIO_REMAP",
 			type: "int",
 		},
-
 		]
 	},
 	{

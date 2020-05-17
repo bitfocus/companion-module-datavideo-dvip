@@ -1249,6 +1249,11 @@ module.exports = {
 				type: "float",
 			},
 			{
+				id: 146,
+				label: "NOT_DOCUMENTED",
+				type: "int",
+			},
+			{
 				id: 147,
 				label: "SWITCHER_FLEX_SRC_DVE1_SIZE_X",
 				type: "float",
@@ -1341,6 +1346,128 @@ module.exports = {
 			{
 				id: 165,
 				label: "SWITCHER_FLEX_SRC_DVE1_BORDER_LUMA",
+				type: "float",
+			},
+			//Undocumented PIP Lite controls, seems to replicate DVE1 controls above
+
+			{
+				id: 166,
+				label: "SWITCHER_FLEX_SRC_DVE2_ENABLE",
+				type: "flag",
+			},
+			{
+				id: 167,
+				label: "SWITCHER_FLEX_SRC_DVE2_POSITION_X",
+				type: "float",
+			},
+			{
+				id: 168,
+				label: "SWITCHER_FLEX_SRC_DVE2_POSITION_Y",
+				type: "float",
+			},
+			{
+				id: 169,
+				label: "SWITCHER_FLEX_SRC_DVE2_POSITION_Z",
+				type: "float",
+			},
+			{
+				id: 170,
+				label: "NOT_DOCUMENTED",
+				type: "int",
+			},
+			{
+				id: 171,
+				label: "SWITCHER_FLEX_SRC_DVE2_SIZE_X",
+				type: "float",
+			},
+			{
+				id: 172,
+				label: "SWITCHER_FLEX_SRC_DVE2_SIZE_Y",
+				type: "float",
+			},
+			{
+				id: 173,
+				label: "SWITCHER_FLEX_SRC_DVE2_SIZE_Z",
+				type: "float",
+			},
+			{
+				id: 174,
+				label: "SWITCHER_FLEX_SRC_DVE2_CROP_SIZE",
+				type: "float",
+			},
+			{
+				id: 175,
+				label: "SWITCHER_FLEX_SRC_DVE2_CROP_LEFT",
+				type: "float",
+			},
+			{
+				id: 176,
+				label: "SWITCHER_FLEX_SRC_DVE2_CROP_RIGHT",
+				type: "float",
+			},
+			{
+				id: 177,
+				label: "SWITCHER_FLEX_SRC_DVE2_CROP_TOP",
+				type: "float",
+			},
+			{
+				id: 178,
+				label: "SWITCHER_FLEX_SRC_DVE2_CROP_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 179,
+				label: "SWITCHER_FLEX_SRC_DVE2_CROP_SOFT",
+				type: "float",
+			},
+			{
+				id: 180,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_SIZE",
+				type: "float",
+			},
+			{
+				id: 181,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_LEFT",
+				type: "float",
+			},
+			{
+				id: 182,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_RIGHT",
+				type: "float",
+			},
+			{
+				id: 183,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_TOP",
+				type: "float",
+			},
+			{
+				id: 184,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 185,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_SOFT",
+				type: "float",
+			},
+			{
+				id: 186,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_STYLE",
+				type: "float",
+			},
+			{
+				id: 187,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_HUE",
+				type: "float",
+			},
+			{
+				id: 188,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_SAT",
+				type: "float",
+			},
+			{
+				id: 189,
+				label: "SWITCHER_FLEX_SRC_DVE2_BORDER_LUMA",
 				type: "float",
 			},
 

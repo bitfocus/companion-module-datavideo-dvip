@@ -270,6 +270,8 @@ module.exports = {
 	},
 	{
 		id: 2,
+		mainSection: 2,
+		subSection: 0,
 		label: "SECTION_SWITCHER",
 		controls: [
 			{
@@ -341,6 +343,51 @@ module.exports = {
 				id: 20,
 				label: "SWITCHER_KEY1_KEY_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "PATTERN"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				]
 			},
 			{
 				id: 21,
@@ -491,6 +538,51 @@ module.exports = {
 				id: 50,
 				label: "SWITCHER_KEY2_KEY_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "PATTERN"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				]
 			},
 			{
 				id: 51,
@@ -671,11 +763,101 @@ module.exports = {
 				id: 86,
 				label: "SWITCHER_PGM_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "PATTERN"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				]
 			},
 			{
 				id: 87,
 				label: "SWITCHER_PST_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "PATTERN"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				]
 			},
 			{
 				id: 88,
@@ -710,6 +892,51 @@ module.exports = {
 				id: 92,
 				label: "SWITCHER_DSK1_KEY_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "PATTERN"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				]
 			},
 			{
 				id: 93,
@@ -800,6 +1027,51 @@ module.exports = {
 				id: 110,
 				label: "SWITCHER_DSK2_KEY_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "PATTERN"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				]
 			},
 			{
 				id: 111,
@@ -1231,6 +1503,133 @@ module.exports = {
 				id: 5,
 				label: "OUTPUT_MULTIVIEWER_MAIN1_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
+			},
+			{
+				id: 6,
+				label: "OUTPUT_MULTIVIEWER_MAIN2_SRC",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 9,
@@ -1293,16 +1692,187 @@ module.exports = {
 				id: 15,
 				label: "OUTPUT_DVI_OUT_SELECT",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				{
+					id: 25,
+					label: "PGM_CLEAN"
+				},
+				{
+					id: 26,
+					label: "PVW_CLEAN"
+				},
+				]
 			},
 			{
 				id: 16,
 				label: "OUTPUT_MULTI_OUT1_SELECT",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				{
+					id: 25,
+					label: "PGM_CLEAN"
+				},
+				{
+					id: 26,
+					label: "PVW_CLEAN"
+				},
+				]
 			},
 			{
 				id: 17,
 				label: "OUTPUT_MULTI_OUT2_SELECT",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				{
+					id: 25,
+					label: "PGM_CLEAN"
+				},
+				{
+					id: 26,
+					label: "PVW_CLEAN"
+				},
+				]
 			},
 			{
 				id: 18,
@@ -1968,6 +2538,65 @@ module.exports = {
 			type: "int",
 		},
 		]
+	},
+	{
+		id: 13,
+		label: "SECTION_CLIP_CTRL",
+		controls: [{}]
+	},
+	{
+		id: 14,
+		label: "SECTION_CLIP_PRESENT",
+		controls: [{}]
+	},
+	{
+		id: 15,
+		label: "SECTION_LOGO_CTRL",
+		controls: [{}]
+	},
+	{
+		id: 16,
+		label: "SECTION_LOGO_PRESENT",
+		controls: [{}]
+	},
+	{
+		id: 17,
+		label: "SECTION_ANI_LOGO_CTRL",
+		controls: [{}]
+	},
+	{
+		id: 18,
+		label: "SECTION_ANI_LOGO_PRESENT",
+		controls: [{}]
+	},
+	//SUB_SECTIONS use made up ID numbers to not complicate the format
+	{
+		id: 200,
+		mainSection: 2,
+		subSection: 0,
+		label: "SWITCHER_SUB_SECTION_PINP",
+		controls: [{}]
+	},
+	{
+		id: 201,
+		mainSection: 2,
+		subSection: 2,
+		label: "SWITCHER_SUB_SECTION_FLEX_SRC",
+		controls: [{}]
+	},
+	{
+		id: 202,
+		mainSection: 2,
+		subSection: 3,
+		label: "SWITCHER_SUB_SECTION_RESERVED",
+		controls: [{}]
+	},
+	{
+		id: 203,
+		mainSection: 2,
+		subSection: 0,
+		label: "SWITCHER_SUB_SECTION_LOGO",
+		controls: [{}]
 	},
 	]
 }

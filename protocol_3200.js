@@ -185,6 +185,79 @@ module.exports = {
 			id: 33,
 			label: "STATUS_TALLY_KEY1_KEY_SRC",
 			type: "int",
+			values: [{
+				id: 0,
+				label: "BLACK"
+			},
+			{
+				id: 1,
+				label: "INPUT_1"
+			},
+			{
+				id: 2,
+				label: "INPUT_2"
+			},
+			{
+				id: 3,
+				label: "INPUT_3"
+			},
+			{
+				id: 4,
+				label: "INPUT_4"
+			},
+			{
+				id: 5,
+				label: "INPUT_5"
+			},
+			{
+				id: 6,
+				label: "INPUT_6"
+			},
+			{
+				id: 7,
+				label: "INPUT_7"
+			},
+			{
+				id: 8,
+				label: "INPUT_8"
+			},
+			{
+				id: 9,
+				label: "INPUT_9"
+			},
+			{
+				id: 10,
+				label: "INPUT_10"
+			},
+			{
+				id: 11,
+				label: "INPUT_11"
+			},
+			{
+				id: 12,
+				label: "INPUT_12"
+			},
+			{
+				id: 17,
+				label: "MATTE"
+			},
+			{
+				id: 18,
+				label: "PATTERN"
+			},
+			{
+				id: 19,
+				label: "STILL_1"
+			},
+			{
+				id: 20,
+				label: "STILL_2"
+			},
+			{
+				id: 21,
+				label: "FLEX_SRC"
+			},
+			]
 		},
 		{
 			id: 34,
@@ -195,6 +268,79 @@ module.exports = {
 			id: 35,
 			label: "STATUS_TALLY_KEY2_KEY_SRC",
 			type: "int",
+			values: [{
+				id: 0,
+				label: "BLACK"
+			},
+			{
+				id: 1,
+				label: "INPUT_1"
+			},
+			{
+				id: 2,
+				label: "INPUT_2"
+			},
+			{
+				id: 3,
+				label: "INPUT_3"
+			},
+			{
+				id: 4,
+				label: "INPUT_4"
+			},
+			{
+				id: 5,
+				label: "INPUT_5"
+			},
+			{
+				id: 6,
+				label: "INPUT_6"
+			},
+			{
+				id: 7,
+				label: "INPUT_7"
+			},
+			{
+				id: 8,
+				label: "INPUT_8"
+			},
+			{
+				id: 9,
+				label: "INPUT_9"
+			},
+			{
+				id: 10,
+				label: "INPUT_10"
+			},
+			{
+				id: 11,
+				label: "INPUT_11"
+			},
+			{
+				id: 12,
+				label: "INPUT_12"
+			},
+			{
+				id: 17,
+				label: "MATTE"
+			},
+			{
+				id: 18,
+				label: "PATTERN"
+			},
+			{
+				id: 19,
+				label: "STILL_1"
+			},
+			{
+				id: 20,
+				label: "STILL_2"
+			},
+			{
+				id: 21,
+				label: "FLEX_SRC"
+			},
+			]
 		},
 		{
 			id: 36,
@@ -205,6 +351,79 @@ module.exports = {
 			id: 37,
 			label: "STATUS_TALLY_KEY3_KEY_SRC",
 			type: "int",
+			values: [{
+				id: 0,
+				label: "BLACK"
+			},
+			{
+				id: 1,
+				label: "INPUT_1"
+			},
+			{
+				id: 2,
+				label: "INPUT_2"
+			},
+			{
+				id: 3,
+				label: "INPUT_3"
+			},
+			{
+				id: 4,
+				label: "INPUT_4"
+			},
+			{
+				id: 5,
+				label: "INPUT_5"
+			},
+			{
+				id: 6,
+				label: "INPUT_6"
+			},
+			{
+				id: 7,
+				label: "INPUT_7"
+			},
+			{
+				id: 8,
+				label: "INPUT_8"
+			},
+			{
+				id: 9,
+				label: "INPUT_9"
+			},
+			{
+				id: 10,
+				label: "INPUT_10"
+			},
+			{
+				id: 11,
+				label: "INPUT_11"
+			},
+			{
+				id: 12,
+				label: "INPUT_12"
+			},
+			{
+				id: 17,
+				label: "MATTE"
+			},
+			{
+				id: 18,
+				label: "PATTERN"
+			},
+			{
+				id: 19,
+				label: "STILL_1"
+			},
+			{
+				id: 20,
+				label: "STILL_2"
+			},
+			{
+				id: 21,
+				label: "FLEX_SRC"
+			},
+			]
 		},
 		{
 			id: 38,
@@ -215,6 +434,79 @@ module.exports = {
 			id: 39,
 			label: "STATUS_TALLY_KEY4_KEY_SRC",
 			type: "int",
+			values: [{
+				id: 0,
+				label: "BLACK"
+			},
+			{
+				id: 1,
+				label: "INPUT_1"
+			},
+			{
+				id: 2,
+				label: "INPUT_2"
+			},
+			{
+				id: 3,
+				label: "INPUT_3"
+			},
+			{
+				id: 4,
+				label: "INPUT_4"
+			},
+			{
+				id: 5,
+				label: "INPUT_5"
+			},
+			{
+				id: 6,
+				label: "INPUT_6"
+			},
+			{
+				id: 7,
+				label: "INPUT_7"
+			},
+			{
+				id: 8,
+				label: "INPUT_8"
+			},
+			{
+				id: 9,
+				label: "INPUT_9"
+			},
+			{
+				id: 10,
+				label: "INPUT_10"
+			},
+			{
+				id: 11,
+				label: "INPUT_11"
+			},
+			{
+				id: 12,
+				label: "INPUT_12"
+			},
+			{
+				id: 17,
+				label: "MATTE"
+			},
+			{
+				id: 18,
+				label: "PATTERN"
+			},
+			{
+				id: 19,
+				label: "STILL_1"
+			},
+			{
+				id: 20,
+				label: "STILL_2"
+			},
+			{
+				id: 21,
+				label: "FLEX_SRC"
+			},
+			]
 		},
 		{
 			id: 40,
@@ -225,6 +517,79 @@ module.exports = {
 			id: 41,
 			label: "STATUS_TALLY_DSK1_KEY_SRC",
 			type: "int",
+			values: [{
+				id: 0,
+				label: "BLACK"
+			},
+			{
+				id: 1,
+				label: "INPUT_1"
+			},
+			{
+				id: 2,
+				label: "INPUT_2"
+			},
+			{
+				id: 3,
+				label: "INPUT_3"
+			},
+			{
+				id: 4,
+				label: "INPUT_4"
+			},
+			{
+				id: 5,
+				label: "INPUT_5"
+			},
+			{
+				id: 6,
+				label: "INPUT_6"
+			},
+			{
+				id: 7,
+				label: "INPUT_7"
+			},
+			{
+				id: 8,
+				label: "INPUT_8"
+			},
+			{
+				id: 9,
+				label: "INPUT_9"
+			},
+			{
+				id: 10,
+				label: "INPUT_10"
+			},
+			{
+				id: 11,
+				label: "INPUT_11"
+			},
+			{
+				id: 12,
+				label: "INPUT_12"
+			},
+			{
+				id: 17,
+				label: "MATTE"
+			},
+			{
+				id: 18,
+				label: "PATTERN"
+			},
+			{
+				id: 19,
+				label: "STILL_1"
+			},
+			{
+				id: 20,
+				label: "STILL_2"
+			},
+			{
+				id: 21,
+				label: "FLEX_SRC"
+			},
+			]
 		},
 		{
 			id: 42,
@@ -235,6 +600,79 @@ module.exports = {
 			id: 43,
 			label: "STATUS_TALLY_DSK2_KEY_SRC",
 			type: "int",
+			values: [{
+				id: 0,
+				label: "BLACK"
+			},
+			{
+				id: 1,
+				label: "INPUT_1"
+			},
+			{
+				id: 2,
+				label: "INPUT_2"
+			},
+			{
+				id: 3,
+				label: "INPUT_3"
+			},
+			{
+				id: 4,
+				label: "INPUT_4"
+			},
+			{
+				id: 5,
+				label: "INPUT_5"
+			},
+			{
+				id: 6,
+				label: "INPUT_6"
+			},
+			{
+				id: 7,
+				label: "INPUT_7"
+			},
+			{
+				id: 8,
+				label: "INPUT_8"
+			},
+			{
+				id: 9,
+				label: "INPUT_9"
+			},
+			{
+				id: 10,
+				label: "INPUT_10"
+			},
+			{
+				id: 11,
+				label: "INPUT_11"
+			},
+			{
+				id: 12,
+				label: "INPUT_12"
+			},
+			{
+				id: 17,
+				label: "MATTE"
+			},
+			{
+				id: 18,
+				label: "PATTERN"
+			},
+			{
+				id: 19,
+				label: "STILL_1"
+			},
+			{
+				id: 20,
+				label: "STILL_2"
+			},
+			{
+				id: 21,
+				label: "FLEX_SRC"
+			},
+			]
 		},
 		{
 			id: 44,
@@ -407,6 +845,8 @@ module.exports = {
 	},
 	{
 		id: 2,
+		mainSection: 2,
+		subSection: 0,
 		label: "SECTION_SWITCHER",
 		controls: [
 			{
@@ -1120,11 +1560,157 @@ module.exports = {
 				id: 148,
 				label: "SWITCHER_PGM_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "PATTERN"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "FLEX_SRC"
+				},
+				]
 			},
 			{
 				id: 149,
 				label: "SWITCHER_PST_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "PATTERN"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "FLEX_SRC"
+				},
+				]
 			},
 			{
 				id: 150,
@@ -1580,11 +2166,16 @@ module.exports = {
 		},
 		{
 			id: 4,
-			label: "INPUT_INPUT_MODE",
+			label: "INPUT_STANDARD",
 			type: "int",
 		},
 		{
 			id: 5,
+			label: "INPUT_INPUT_MODE",
+			type: "int",
+		},
+		{
+			id: 6,
 			label: "INPUT_INPUT_FREEZE_MODE",
 			type: "int",
 			values: [{
@@ -1606,7 +2197,7 @@ module.exports = {
 			]
 		},
 		{
-			id: 6,
+			id: 7,
 			label: "INPUT_INPUT_FRAME_MODE",
 			type: "int",
 			values: [{
@@ -1621,18 +2212,33 @@ module.exports = {
 
 		},
 		{
-			id: 7,
+			id: 8,
 			label: "INPUT_INPUT_REMAP",
 			type: "int",
 		},
 		{
-			id: 8,
+			id: 9,
 			label: "INPUT_FREEZE_STILL_LOAD",
 			type: "int",
 		},
 		{
-			id: 9,
+			id: 10,
 			label: "INPUT_FREEZE_STILL_NUM",
+			type: "int",
+		},
+		{
+			id: 11,
+			label: "INPUT_AUDIO_GAIN",
+			type: "float",
+		},
+		{
+			id: 12,
+			label: "INPUT_AUDIO_DELAY",
+			type: "int",
+		},
+		{
+			id: 13,
+			label: "INPUT_AUDIO_REMAP",
 			type: "int",
 		},
 
@@ -1641,49 +2247,249 @@ module.exports = {
 	{
 		id: 4,
 		label: "SECTION_INPUT_CTRL",
-		controls: [{
-			id: 0,
-			label: "INPUT_DVI_INPUT_ENABLE",
-			type: "int",
-			values: [{
-				id: 0,
-				label: "DVI_INPUT_NOT_ENABLED",
+		controls: [
+			{
+				id: 4,
+				label: "INPUT_CLIP0_CLIP_VALID",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "CLIP_INVALID",
+				},
+				{
+					id: 1,
+					label: "CLIP_VALID",
+				}
+				]
 			},
 			{
-				id: 1,
-				label: "DVI_INPUT_ENABLED",
-			}
-			]
-		},
-		{
-			id: 1,
-			label: "INPUT_ENABLE_REMAP",
-			type: "int",
-			values: [{
-				id: 0,
-				label: "REMAPPING_NOT_ENABLED",
+				id: 5,
+				label: "INPUT_CLIP0_CLIP_NUM",
+				type: "int",
 			},
 			{
-				id: 1,
-				label: "REMAPPING_ENABLED",
-			}
-			]
-		},
-		{
-			id: 2,
-			label: "INPUT_ENABLE_REMAP",
-			type: "int",
-			values: [{
-				id: 0,
-				label: "REMAPPING_NOT_ENABLED",
+				id: 6,
+				label: "INPUT_CLIP0_YCK_MODE",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "Y/C",
+				},
+				{
+					id: 1,
+					label: "YCK",
+				}
+				]
 			},
 			{
-				id: 1,
-				label: "REMAPPING_ENABLED",
-			}
-			]
-		},
-
+				id: 7,
+				label: "INPUT_CLIP0_NUM_FRAMES",
+				type: "int",
+			},
+			{
+				id: 8,
+				label: "INPUT_CLIP0_STATE",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "STOPPED",
+				},
+				{
+					id: 1,
+					label: "AT_START",
+				},
+				{
+					id: 2,
+					label: "RUNNING",
+				},
+				{
+					id: 3,
+					label: "AT_END",
+				},
+				{
+					id: 4,
+					label: "PAUSED",
+				},
+				]
+			},
+			{
+				id: 9,
+				label: "INPUT_CLIP0_CURR_FRAME",
+				type: "int",
+			},
+			{
+				id: 10,
+				label: "INPUT_CLIP1_CLIP_VALID",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "CLIP_INVALID",
+				},
+				{
+					id: 1,
+					label: "CLIP_VALID",
+				}
+				]
+			},
+			{
+				id: 11,
+				label: "INPUT_CLIP1_CLIP_NUM",
+				type: "int",
+			},
+			{
+				id: 12,
+				label: "INPUT_CLIP1_YCK_MODE",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "Y/C",
+				},
+				{
+					id: 1,
+					label: "YCK",
+				}
+				]
+			},
+			{
+				id: 13,
+				label: "INPUT_CLIP1_NUM_FRAMES",
+				type: "int",
+			},
+			{
+				id: 14,
+				label: "INPUT_CLIP1_STATE",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "STOPPED",
+				},
+				{
+					id: 1,
+					label: "AT_START",
+				},
+				{
+					id: 2,
+					label: "RUNNING",
+				},
+				{
+					id: 3,
+					label: "AT_END",
+				},
+				{
+					id: 4,
+					label: "PAUSED",
+				},
+				]
+			},
+			{
+				id: 15,
+				label: "INPUT_CLIP1_CURR_FRAME",
+				type: "int",
+			},
+			{
+				id: 16,
+				label: "INPUT_STILL0_STILL_VALID",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "STILL_INVALID",
+				},
+				{
+					id: 1,
+					label: "STILL_VALID",
+				}
+				]
+			},
+			{
+				id: 17,
+				label: "INPUT_STILL0_STILL_NUM",
+				type: "int",
+			},
+			{
+				id: 18,
+				label: "INPUT_STILL1_STILL_VALID",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "STILL_INVALID",
+				},
+				{
+					id: 1,
+					label: "STILL_VALID",
+				}
+				]
+			},
+			{
+				id: 19,
+				label: "INPUT_STILL1_STILL_NUM",
+				type: "int",
+			},
+			{
+				id: 20,
+				label: "INPUT_LOGO0_LOGO_VALID",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "LOGO_INVALID",
+				},
+				{
+					id: 1,
+					label: "LOGO_VALID",
+				}
+				]
+			},
+			{
+				id: 21,
+				label: "INPUT_LOGO0_ANI_LOGO",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "NOT_ANI",
+				},
+				{
+					id: 1,
+					label: "ANI",
+				}
+				]
+			},
+			{
+				id: 22,
+				label: "INPUT_LOGO0_LOGO_NUM",
+				type: "int",
+			},
+			{
+				id: 23,
+				label: "INPUT_LOGO1_LOGO_VALID",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "LOGO_INVALID",
+				},
+				{
+					id: 1,
+					label: "LOGO_VALID",
+				}
+				]
+			},
+			{
+				id: 24,
+				label: "INPUT_LOGO1_ANI_LOGO",
+				type: "int",
+				values: [{
+					id: 0,
+					label: "NOT_ANI",
+				},
+				{
+					id: 1,
+					label: "ANI",
+				}
+				]
+			},
+			{
+				id: 25,
+				label: "INPUT_LOGO1_LOGO_NUM",
+				type: "int",
+			},
 		]
 	},
 	{
@@ -1694,21 +2500,361 @@ module.exports = {
 				id: 0,
 				label: "OUTPUT_AUX_CTRL_AUX1_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 1,
 				label: "OUTPUT_AUX_CTRL_AUX2_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 2,
 				label: "OUTPUT_AUX_CTRL_AUX3_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 3,
 				label: "OUTPUT_AUX_CTRL_AUX4_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 4,
@@ -1719,11 +2865,181 @@ module.exports = {
 				id: 5,
 				label: "OUTPUT_MULTIVIEWER_MAIN1_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 6,
 				label: "OUTPUT_MULTIVIEWER_MAIN2_SRC",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 9,
@@ -1771,26 +3087,451 @@ module.exports = {
 				id: 15,
 				label: "OUTPUT_HDMI1_OUT_SELECT",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 16,
 				label: "OUTPUT_HDMI2_OUT_SELECT",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 17,
 				label: "OUTPUT_HDMI3_OUT_SELECT",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 18,
 				label: "OUTPUT_SDI_OUT1_SELECT",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 19,
 				label: "OUTPUT_SDI_OUT2_SELECT",
 				type: "int",
+				values: [{
+					id: 0,
+					label: "BLACK"
+				},
+				{
+					id: 1,
+					label: "INPUT_1"
+				},
+				{
+					id: 2,
+					label: "INPUT_2"
+				},
+				{
+					id: 3,
+					label: "INPUT_3"
+				},
+				{
+					id: 4,
+					label: "INPUT_4"
+				},
+				{
+					id: 5,
+					label: "INPUT_5"
+				},
+				{
+					id: 6,
+					label: "INPUT_6"
+				},
+				{
+					id: 7,
+					label: "INPUT_7"
+				},
+				{
+					id: 8,
+					label: "INPUT_8"
+				},
+				{
+					id: 9,
+					label: "INPUT_9"
+				},
+				{
+					id: 10,
+					label: "INPUT_10"
+				},
+				{
+					id: 11,
+					label: "INPUT_11"
+				},
+				{
+					id: 12,
+					label: "INPUT_12"
+				},
+				{
+					id: 17,
+					label: "MATTE"
+				},
+				{
+					id: 18,
+					label: "FLEX_SRC"
+				},
+				{
+					id: 19,
+					label: "STILL_1"
+				},
+				{
+					id: 20,
+					label: "STILL_2"
+				},
+				{
+					id: 21,
+					label: "PGM_OUT"
+				},
+				{
+					id: 22,
+					label: "PVW_OUT"
+				},
+				{
+					id: 23,
+					label: "PGM_DSK1"
+				},
+				{
+					id: 24,
+					label: "PVW_DSK1"
+				},
+				]
 			},
 			{
 				id: 20,
@@ -2669,6 +4410,781 @@ module.exports = {
 	{
 		id: 18,
 		label: "SECTION_ANI_LOGO_PRESENT",
+		controls: [{}]
+	},
+	//SUB_SECTIONS use made up ID numbers to not complicate the format
+	{
+		id: 200,
+		mainSection: 2,
+		subSection: 1,
+		label: "SWITCHER_SUB_SECTION_PINP",
+		controls: [
+			//PIP1
+			{
+				id: 0,
+				label: "SWITCHER_PINP1_ENABLE",
+				type: "flag",
+			},
+			{
+				id: 1,
+				label: "SWITCHER_PINP1_POSITION_X",
+				type: "float",
+			},
+			{
+				id: 2,
+				label: "SWITCHER_PINP1_POSITION_Y",
+				type: "float",
+			},
+			{
+				id: 3,
+				label: "SWITCHER_PINP1_POSITION_Z",
+				type: "float",
+			},
+			{
+				id: 4,
+				label: "NOT_DOCUMENTED",
+				type: "int",
+			},
+			{
+				id: 5,
+				label: "SWITCHER_PINP1_SIZE_X",
+				type: "float",
+			},
+			{
+				id: 6,
+				label: "SWITCHER_PINP1_SIZE_Y",
+				type: "float",
+			},
+			{
+				id: 7,
+				label: "SWITCHER_PINP1_SIZE_Z",
+				type: "float",
+			},
+			{
+				id: 8,
+				label: "SWITCHER_PINP1_EDGE_SIZE",
+				type: "float",
+			},
+			{
+				id: 9,
+				label: "SWITCHER_PINP1_EDGE_LEFT",
+				type: "float",
+			},
+			{
+				id: 10,
+				label: "SWITCHER_PINP1_EDGE_RIGHT",
+				type: "float",
+			},
+			{
+				id: 11,
+				label: "SWITCHER_PINP1_EDGE_TOP",
+				type: "float",
+			},
+			{
+				id: 12,
+				label: "SWITCHER_PINP1_EDGE_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 13,
+				label: "SWITCHER_PINP1_EDGE_SOFT",
+				type: "float",
+			},
+			{
+				id: 14,
+				label: "SWITCHER_PINP1_BORDER_STYLE",
+				type: "int",
+			},
+			{
+				id: 15,
+				label: "SWITCHER_PINP1_BORDER_OPACITY",
+				type: "float",
+			},
+			{
+				id: 16,
+				label: "SWITCHER_PINP1_BORDER_SIZE",
+				type: "float",
+			},
+			{
+				id: 17,
+				label: "SWITCHER_PINP1_BORDER_LEFT",
+				type: "float",
+			},
+			{
+				id: 18,
+				label: "SWITCHER_PINP1_BORDER_RIGHT",
+				type: "float",
+			},
+			{
+				id: 19,
+				label: "SWITCHER_PINP1_BORDER_TOP",
+				type: "float",
+			},
+			{
+				id: 20,
+				label: "SWITCHER_PINP1_BORDER_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 21,
+				label: "SWITCHER_PINP1_BORDER_SOFT",
+				type: "float",
+			},
+			{
+				id: 22,
+				label: "SWITCHER_PINP1_BORDER_HUE",
+				type: "float",
+			},
+			{
+				id: 23,
+				label: "SWITCHER_PINP1_BORDER_SAT",
+				type: "float",
+			},
+			{
+				id: 24,
+				label: "SWITCHER_PINP1_BORDER_LUMA",
+				type: "float",
+			},
+			{
+				id: 25,
+				label: "SWITCHER_PINP1_BORDER_SHADE_HUE",
+				type: "float",
+			},
+			{
+				id: 26,
+				label: "SWITCHER_PINP1_BORDER_SHADE_SAT",
+				type: "float",
+			},
+			{
+				id: 27,
+				label: "SWITCHER_PINP1_BORDER_SHADE_LUMA",
+				type: "float",
+			},
+			{
+				id: 28,
+				label: "SWITCHER_PINP1_BORDER_SHADE_SOFT",
+				type: "float",
+			},
+			{
+				id: 29,
+				label: "SWITCHER_PINP1_BORDER_SHADE_POSITION",
+				type: "float",
+			},
+			{
+				id: 30,
+				label: "SWITCHER_PINP1_BORDER_SHADE_CORNER_SOFT",
+				type: "float",
+			},
+			{
+				id: 31,
+				label: "SWITCHER_PINP1_BORDER_DIRECTION",
+				type: "int",
+			},
+			{
+				id: 32,
+				label: "SWITCHER_PINP1_BORDER_HIGHLIGHT_HUE",
+				type: "float",
+			},
+			{
+				id: 33,
+				label: "SWITCHER_PINP1_BORDER_HIGHLIGHT_SAT",
+				type: "float",
+			},
+			{
+				id: 34,
+				label: "SWITCHER_PINP1_BORDER_HIGHLIGHT_LUMA",
+				type: "float",
+			},
+			{
+				id: 35,
+				label: "SWITCHER_PINP1_BORDER_HIGHLIGHT_OPACITY",
+				type: "float",
+			},
+			{
+				id: 36,
+				label: "SWITCHER_PINP1_BORDER_LOWLIGHT_OPACITY",
+				type: "float",
+			},
+			//PIP2
+			{
+				id: 37,
+				label: "SWITCHER_PINP2_ENABLE",
+				type: "flag",
+			},
+			{
+				id: 38,
+				label: "SWITCHER_PINP2_POSITION_X",
+				type: "float",
+			},
+			{
+				id: 39,
+				label: "SWITCHER_PINP2_POSITION_Y",
+				type: "float",
+			},
+			{
+				id: 40,
+				label: "SWITCHER_PINP2_POSITION_Z",
+				type: "float",
+			},
+			{
+				id: 41,
+				label: "NOT_DOCUMENTED",
+				type: "int",
+			},
+			{
+				id: 42,
+				label: "SWITCHER_PINP2_SIZE_X",
+				type: "float",
+			},
+			{
+				id: 43,
+				label: "SWITCHER_PINP2_SIZE_Y",
+				type: "float",
+			},
+			{
+				id: 44,
+				label: "SWITCHER_PINP2_SIZE_Z",
+				type: "float",
+			},
+			{
+				id: 45,
+				label: "SWITCHER_PINP2_EDGE_SIZE",
+				type: "float",
+			},
+			{
+				id: 46,
+				label: "SWITCHER_PINP2_EDGE_LEFT",
+				type: "float",
+			},
+			{
+				id: 47,
+				label: "SWITCHER_PINP2_EDGE_RIGHT",
+				type: "float",
+			},
+			{
+				id: 48,
+				label: "SWITCHER_PINP2_EDGE_TOP",
+				type: "float",
+			},
+			{
+				id: 49,
+				label: "SWITCHER_PINP2_EDGE_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 50,
+				label: "SWITCHER_PINP2_EDGE_SOFT",
+				type: "float",
+			},
+			{
+				id: 51,
+				label: "SWITCHER_PINP2_BORDER_STYLE",
+				type: "int",
+			},
+			{
+				id: 52,
+				label: "SWITCHER_PINP2_BORDER_OPACITY",
+				type: "float",
+			},
+			{
+				id: 53,
+				label: "SWITCHER_PINP2_BORDER_SIZE",
+				type: "float",
+			},
+			{
+				id: 54,
+				label: "SWITCHER_PINP2_BORDER_LEFT",
+				type: "float",
+			},
+			{
+				id: 55,
+				label: "SWITCHER_PINP2_BORDER_RIGHT",
+				type: "float",
+			},
+			{
+				id: 56,
+				label: "SWITCHER_PINP2_BORDER_TOP",
+				type: "float",
+			},
+			{
+				id: 57,
+				label: "SWITCHER_PINP2_BORDER_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 58,
+				label: "SWITCHER_PINP2_BORDER_SOFT",
+				type: "float",
+			},
+			{
+				id: 59,
+				label: "SWITCHER_PINP2_BORDER_HUE",
+				type: "float",
+			},
+			{
+				id: 60,
+				label: "SWITCHER_PINP2_BORDER_SAT",
+				type: "float",
+			},
+			{
+				id: 61,
+				label: "SWITCHER_PINP2_BORDER_LUMA",
+				type: "float",
+			},
+			{
+				id: 62,
+				label: "SWITCHER_PINP2_BORDER_SHADE_HUE",
+				type: "float",
+			},
+			{
+				id: 63,
+				label: "SWITCHER_PINP2_BORDER_SHADE_SAT",
+				type: "float",
+			},
+			{
+				id: 64,
+				label: "SWITCHER_PINP2_BORDER_SHADE_LUMA",
+				type: "float",
+			},
+			{
+				id: 65,
+				label: "SWITCHER_PINP2_BORDER_SHADE_SOFT",
+				type: "float",
+			},
+			{
+				id: 66,
+				label: "SWITCHER_PINP2_BORDER_SHADE_POSITION",
+				type: "float",
+			},
+			{
+				id: 67,
+				label: "SWITCHER_PINP2_BORDER_SHADE_CORNER_SOFT",
+				type: "float",
+			},
+			{
+				id: 68,
+				label: "SWITCHER_PINP2_BORDER_DIRECTION",
+				type: "int",
+			},
+			{
+				id: 69,
+				label: "SWITCHER_PINP2_BORDER_HIGHLIGHT_HUE",
+				type: "float",
+			},
+			{
+				id: 70,
+				label: "SWITCHER_PINP2_BORDER_HIGHLIGHT_SAT",
+				type: "float",
+			},
+			{
+				id: 71,
+				label: "SWITCHER_PINP2_BORDER_HIGHLIGHT_LUMA",
+				type: "float",
+			},
+			{
+				id: 72,
+				label: "SWITCHER_PINP2_BORDER_HIGHLIGHT_OPACITY",
+				type: "float",
+			},
+			{
+				id: 73,
+				label: "SWITCHER_PINP2_BORDER_LOWLIGHT_OPACITY",
+				type: "float",
+			},
+			//PIP3
+			{
+				id: 74,
+				label: "SWITCHER_PINP3_ENABLE",
+				type: "flag",
+			},
+			{
+				id: 75,
+				label: "SWITCHER_PINP3_POSITION_X",
+				type: "float",
+			},
+			{
+				id: 76,
+				label: "SWITCHER_PINP3_POSITION_Y",
+				type: "float",
+			},
+			{
+				id: 77,
+				label: "SWITCHER_PINP3_POSITION_Z",
+				type: "float",
+			},
+			{
+				id: 78,
+				label: "NOT_DOCUMENTED",
+				type: "int",
+			},
+			{
+				id: 79,
+				label: "SWITCHER_PINP3_SIZE_X",
+				type: "float",
+			},
+			{
+				id: 80,
+				label: "SWITCHER_PINP3_SIZE_Y",
+				type: "float",
+			},
+			{
+				id: 81,
+				label: "SWITCHER_PINP3_SIZE_Z",
+				type: "float",
+			},
+			{
+				id: 82,
+				label: "SWITCHER_PINP3_EDGE_SIZE",
+				type: "float",
+			},
+			{
+				id: 83,
+				label: "SWITCHER_PINP3_EDGE_LEFT",
+				type: "float",
+			},
+			{
+				id: 84,
+				label: "SWITCHER_PINP3_EDGE_RIGHT",
+				type: "float",
+			},
+			{
+				id: 85,
+				label: "SWITCHER_PINP3_EDGE_TOP",
+				type: "float",
+			},
+			{
+				id: 86,
+				label: "SWITCHER_PINP3_EDGE_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 87,
+				label: "SWITCHER_PINP3_EDGE_SOFT",
+				type: "float",
+			},
+			{
+				id: 88,
+				label: "SWITCHER_PINP3_BORDER_STYLE",
+				type: "int",
+			},
+			{
+				id: 89,
+				label: "SWITCHER_PINP3_BORDER_OPACITY",
+				type: "float",
+			},
+			{
+				id: 90,
+				label: "SWITCHER_PINP3_BORDER_SIZE",
+				type: "float",
+			},
+			{
+				id: 91,
+				label: "SWITCHER_PINP3_BORDER_LEFT",
+				type: "float",
+			},
+			{
+				id: 92,
+				label: "SWITCHER_PINP3_BORDER_RIGHT",
+				type: "float",
+			},
+			{
+				id: 93,
+				label: "SWITCHER_PINP3_BORDER_TOP",
+				type: "float",
+			},
+			{
+				id: 94,
+				label: "SWITCHER_PINP3_BORDER_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 95,
+				label: "SWITCHER_PINP3_BORDER_SOFT",
+				type: "float",
+			},
+			{
+				id: 96,
+				label: "SWITCHER_PINP3_BORDER_HUE",
+				type: "float",
+			},
+			{
+				id: 97,
+				label: "SWITCHER_PINP3_BORDER_SAT",
+				type: "float",
+			},
+			{
+				id: 98,
+				label: "SWITCHER_PINP3_BORDER_LUMA",
+				type: "float",
+			},
+			{
+				id: 99,
+				label: "SWITCHER_PINP3_BORDER_SHADE_HUE",
+				type: "float",
+			},
+			{
+				id: 100,
+				label: "SWITCHER_PINP3_BORDER_SHADE_SAT",
+				type: "float",
+			},
+			{
+				id: 101,
+				label: "SWITCHER_PINP3_BORDER_SHADE_LUMA",
+				type: "float",
+			},
+			{
+				id: 102,
+				label: "SWITCHER_PINP3_BORDER_SHADE_SOFT",
+				type: "float",
+			},
+			{
+				id: 103,
+				label: "SWITCHER_PINP3_BORDER_SHADE_POSITION",
+				type: "float",
+			},
+			{
+				id: 104,
+				label: "SWITCHER_PINP3_BORDER_SHADE_CORNER_SOFT",
+				type: "float",
+			},
+			{
+				id: 105,
+				label: "SWITCHER_PINP3_BORDER_DIRECTION",
+				type: "int",
+			},
+			{
+				id: 106,
+				label: "SWITCHER_PINP3_BORDER_HIGHLIGHT_HUE",
+				type: "float",
+			},
+			{
+				id: 107,
+				label: "SWITCHER_PINP3_BORDER_HIGHLIGHT_SAT",
+				type: "float",
+			},
+			{
+				id: 108,
+				label: "SWITCHER_PINP3_BORDER_HIGHLIGHT_LUMA",
+				type: "float",
+			},
+			{
+				id: 109,
+				label: "SWITCHER_PINP3_BORDER_HIGHLIGHT_OPACITY",
+				type: "float",
+			},
+			{
+				id: 110,
+				label: "SWITCHER_PINP3_BORDER_LOWLIGHT_OPACITY",
+				type: "float",
+			},
+			//PIP4
+			{
+				id: 111,
+				label: "SWITCHER_PINP4_ENABLE",
+				type: "flag",
+			},
+			{
+				id: 112,
+				label: "SWITCHER_PINP4_POSITION_X",
+				type: "float",
+			},
+			{
+				id: 113,
+				label: "SWITCHER_PINP4_POSITION_Y",
+				type: "float",
+			},
+			{
+				id: 114,
+				label: "SWITCHER_PINP4_POSITION_Z",
+				type: "float",
+			},
+			{
+				id: 115,
+				label: "NOT_DOCUMENTED",
+				type: "int",
+			},
+			{
+				id: 116,
+				label: "SWITCHER_PINP4_SIZE_X",
+				type: "float",
+			},
+			{
+				id: 117,
+				label: "SWITCHER_PINP4_SIZE_Y",
+				type: "float",
+			},
+			{
+				id: 118,
+				label: "SWITCHER_PINP4_SIZE_Z",
+				type: "float",
+			},
+			{
+				id: 119,
+				label: "SWITCHER_PINP4_EDGE_SIZE",
+				type: "float",
+			},
+			{
+				id: 120,
+				label: "SWITCHER_PINP4_EDGE_LEFT",
+				type: "float",
+			},
+			{
+				id: 121,
+				label: "SWITCHER_PINP4_EDGE_RIGHT",
+				type: "float",
+			},
+			{
+				id: 122,
+				label: "SWITCHER_PINP4_EDGE_TOP",
+				type: "float",
+			},
+			{
+				id: 123,
+				label: "SWITCHER_PINP4_EDGE_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 124,
+				label: "SWITCHER_PINP4_EDGE_SOFT",
+				type: "float",
+			},
+			{
+				id: 125,
+				label: "SWITCHER_PINP4_BORDER_STYLE",
+				type: "int",
+			},
+			{
+				id: 126,
+				label: "SWITCHER_PINP4_BORDER_OPACITY",
+				type: "float",
+			},
+			{
+				id: 127,
+				label: "SWITCHER_PINP4_BORDER_SIZE",
+				type: "float",
+			},
+			{
+				id: 128,
+				label: "SWITCHER_PINP4_BORDER_LEFT",
+				type: "float",
+			},
+			{
+				id: 129,
+				label: "SWITCHER_PINP4_BORDER_RIGHT",
+				type: "float",
+			},
+			{
+				id: 130,
+				label: "SWITCHER_PINP4_BORDER_TOP",
+				type: "float",
+			},
+			{
+				id: 131,
+				label: "SWITCHER_PINP4_BORDER_BOTTOM",
+				type: "float",
+			},
+			{
+				id: 132,
+				label: "SWITCHER_PINP4_BORDER_SOFT",
+				type: "float",
+			},
+			{
+				id: 133,
+				label: "SWITCHER_PINP4_BORDER_HUE",
+				type: "float",
+			},
+			{
+				id: 134,
+				label: "SWITCHER_PINP4_BORDER_SAT",
+				type: "float",
+			},
+			{
+				id: 135,
+				label: "SWITCHER_PINP4_BORDER_LUMA",
+				type: "float",
+			},
+			{
+				id: 136,
+				label: "SWITCHER_PINP4_BORDER_SHADE_HUE",
+				type: "float",
+			},
+			{
+				id: 137,
+				label: "SWITCHER_PINP4_BORDER_SHADE_SAT",
+				type: "float",
+			},
+			{
+				id: 138,
+				label: "SWITCHER_PINP4_BORDER_SHADE_LUMA",
+				type: "float",
+			},
+			{
+				id: 139,
+				label: "SWITCHER_PINP4_BORDER_SHADE_SOFT",
+				type: "float",
+			},
+			{
+				id: 140,
+				label: "SWITCHER_PINP4_BORDER_SHADE_POSITION",
+				type: "float",
+			},
+			{
+				id: 141,
+				label: "SWITCHER_PINP4_BORDER_SHADE_CORNER_SOFT",
+				type: "float",
+			},
+			{
+				id: 142,
+				label: "SWITCHER_PINP4_BORDER_DIRECTION",
+				type: "int",
+			},
+			{
+				id: 143,
+				label: "SWITCHER_PINP4_BORDER_HIGHLIGHT_HUE",
+				type: "float",
+			},
+			{
+				id: 144,
+				label: "SWITCHER_PINP4_BORDER_HIGHLIGHT_SAT",
+				type: "float",
+			},
+			{
+				id: 145,
+				label: "SWITCHER_PINP4_BORDER_HIGHLIGHT_LUMA",
+				type: "float",
+			},
+			{
+				id: 146,
+				label: "SWITCHER_PINP4_BORDER_HIGHLIGHT_OPACITY",
+				type: "float",
+			},
+			{
+				id: 147,
+				label: "SWITCHER_PINP4_BORDER_LOWLIGHT_OPACITY",
+				type: "float",
+			},
+		]
+	},
+
+	{
+		id: 201,
+		mainSection: 2,
+		subSection: 2,
+		label: "SWITCHER_SUB_SECTION_FLEX_SRC",
+		controls: [{}]
+	},
+	{
+		id: 202,
+		mainSection: 2,
+		subSection: 3,
+		label: "SWITCHER_SUB_SECTION_RESERVED",
+		controls: [{}]
+	},
+	{
+		id: 203,
+		mainSection: 2,
+		subSection: 0,
+		label: "SWITCHER_SUB_SECTION_LOGO",
 		controls: [{}]
 	},
 	]

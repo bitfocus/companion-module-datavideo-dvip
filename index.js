@@ -1288,29 +1288,64 @@ class instance extends instance_skel {
 		let command = this.COMMANDS.find(element => element.id == commandID);
 		if (command !== undefined) {
 			this.consoleLog("COMMAND: " + command.label + " ID: " + commandID);
-			for (let i = 8; i < buffer.length; i = i + 4) {
+			for (let i = 8; i < buffer.length; i = i + 8) {
 				let input = null;
+				let subSectionID = null;
 				let inputLog = "";
+				let subLog = "";
 				let value;
 
 				let controlSection = buffer.slice(i, i + 4);
 				let controlID = controlSection.readInt16LE(0, true);
 				let sectionID = controlSection.readInt16LE(2, true);
 
-				//SECTION_INPUT is weird and splits the section into inputid/section as two nibbles so we need to check
+				//SECTION_INPUT splits the section into inputid/section as two nibbles so we need to check
 				//and handle it seperately
 				if (sectionID == 3) {
 					var controlInput = controlSection.readInt8(0, true) & 0xFF;
 					controlID = controlInput & 0xF;
 					input = controlInput >> 4;
-					inputLog = "- INPUT: " + input + " ";
+					inputLog = " - INPUT: " + input;
 				}
 
+				//SECTION_SWITCHER also has switcher subsections on the SE-3200
+				//See SE-3200 Ethernet spec section 4.1.4 for details
+				//Only the main section is implemented, planning needed for how to implement sub sections in the protocol format
+				if (sectionID == 2) {
+					controlID = controlSection.readUInt8(0);
+					subSectionID = controlSection.readUInt8(1);
+					subLog = " SUB_ID: " + subSectionID;
+					//Redirect to a sub section.
+					switch (subSectionID) {
+						case 0:
+							//Main
+							sectionID = 2;
+							break;
+						case 1:
+							//PIP
+							sectionID = 200;
+							break;
+						case 2:
+							//FLEX_SRC
+							sectionID = 201;
+							break;
+						case 3:
+							//RESERVED
+							sectionID = 202;
+							break;
+						case 4:
+							//LOGO
+							sectionID = 203;
+							break;
+					}
+				}
+				//Find section from ID
 				let section = command.sections.find(element => element.id == sectionID);
 				if (section !== undefined) {
 					let control = section.controls.find(element => element.id == controlID);
 					if (control !== undefined) {
 						if (i + 4 < buffer.length) {
+							//Read value using control datatype
 							switch (control.type) {
 								case 'float':
 									value = buffer.readFloatLE(i + 4);
@@ -1319,38 +1354,53 @@ class instance extends instance_skel {
 									value = buffer.readInt32LE(i + 4, true);
 									break;
 								case 'flag':
-									value = buffer.readInt8(i + 4, true);
+									value = buffer.readUInt8(i + 4);
 									break;
 							}
 
 							if (control.values != null) {
+								//Find control from ID
 								let values = control.values.find(element => element.id == value);
 								if (values !== undefined) {
-									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + " " + inputLog + "- CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE LABEL: " + values.label);
+									//Control Value has a label
+									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + subLog + inputLog + " - CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE LABEL: " + values.label);
 									this.processControl(section.label, control.label, value, values.label, input);
 								} else {
-									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + " " + inputLog + "- CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE LABEL: UNLABELLED");
+									//Control has labels but not for this value
+									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + subLog + inputLog + " - CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE LABEL: UNLABELLED");
 									this.processControl(section.label, control.label, value, null, input);
 								}
 							} else {
-								this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + " " + inputLog + "- CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value);
+								//Control does not have labels
+								this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + subLog + inputLog + " - CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value);
 								this.processControl(section.label, control.label, value, null, input);
 							}
-
 						}
 					} else {
 						//unknown control
 						value = Buffer.alloc(4);
 						value = buffer.slice(i + 4, i + 8);
-						this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + " " + inputLog + "- CONTROL: UNKNOWN ID: " + controlID + " - VALUE: " + value.readInt32LE(0), value);
+						this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + subLog + inputLog + " - CONTROL: UNKNOWN ID: " + controlID + " - VALUE: " + value.readInt32LE(0), value);
 					}
 				} else {
 					//unknown section
 					value = Buffer.alloc(4);
 					value = buffer.slice(i + 4, i + 8);
-					this.consoleLog("SECTION: UNKNOWN ID: " + sectionID + " " + inputLog + "- CONTROL: UNKNOWN ID: " + controlID + " - VALUE: " + value.readInt32LE(0), value);
+					this.consoleLog("SECTION: UNKNOWN ID: " + sectionID + subLog + inputLog + " - CONTROL: UNKNOWN ID: " + controlID + " - VALUE: " + value.readInt32LE(0), value);
 				}
-				i = i + 4;
+			}
+		} else {
+			//unknown command
+			this.consoleLog("COMMAND: UNKOWN ID: " + commandID);
+
+			for (let i = 8; i < buffer.length; i = i + 8) {
+				let controlSection = buffer.slice(i, i + 4);
+				let controlID = controlSection.readInt16LE(0, true);
+				let sectionID = controlSection.readInt16LE(2, true);
+
+				let value = Buffer.alloc(4);
+				value = buffer.slice(i + 4, i + 8);
+				this.consoleLog("SECTION: UNKNOWN ID: " + sectionID + " - CONTROL: UNKNOWN ID: " + controlID + " - VALUE: " + value.readInt32LE(0), value);
 			}
 		}
 	}

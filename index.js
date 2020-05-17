@@ -1363,11 +1363,11 @@ class instance extends instance_skel {
 								let values = control.values.find(element => element.id == value);
 								if (values !== undefined) {
 									//Control Value has a label
-									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + subLog + inputLog + " - CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE LABEL: " + values.label);
+									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + subLog + inputLog + " - CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE_LABEL: " + values.label);
 									this.processControl(section.label, control.label, value, values.label, input);
 								} else {
 									//Control has labels but not for this value
-									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + subLog + inputLog + " - CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE LABEL: UNLABELLED");
+									this.consoleLog("SECTION: " + section.label + " ID: " + sectionID + subLog + inputLog + " - CONTROL: " + control.label + " ID: " + controlID + " - VALUE: " + value + " VALUE_LABEL: UNLABELLED");
 									this.processControl(section.label, control.label, value, null, input);
 								}
 							} else {

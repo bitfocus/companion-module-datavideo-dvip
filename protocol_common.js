@@ -263,8 +263,93 @@ module.exports = {
 		},
 		{
 			id: 6,
-			label: "NOT_DOCUMENTED",
+			label: "SYSTEM_NETWORK_IP_MODE",
 			type: "int",
+		},
+		{
+			id: 7,
+			label: "SYSTEM_NETWORK_IP_ADDR",
+			type: "int",
+		},
+		{
+			id: 8,
+			label: "SYSTEM_NETWORK_NETWORK_MASK",
+			type: "int",
+		},
+		{
+			id: 9,
+			label: "SYSTEM_NETWORK_GATEWAY",
+			type: "int",
+		},
+		{
+			id: 10,
+			label: "SYSTEM_NETWORK_MAC_ADDR0",
+			type: "int",
+		},
+		{
+			id: 11,
+			label: "SYSTEM_NETWORK_MAC_ADDR1",
+			type: "int",
+		},
+		{
+			id: 12,
+			label: "SYSTEM_NETWORK_SPARE1",
+			type: "int",
+		},
+		{
+			id: 13,
+			label: "SYSTEM_NETWORK_SPARE2",
+			type: "int",
+		},
+		{
+			id: 14,
+			label: "SYSTEM_PREF_MENU_COLOUR",
+			type: "int",
+		},
+		{
+			id: 15,
+			label: "SYSTEM_PREF_MENU_POSITION",
+			type: "int",
+		},
+		{
+			id: 16,
+			label: "SYSTEM_PREF_TRANSP_MENUS",
+			type: "int",
+		},
+		{
+			id: 17,
+			label: "SYSTEM_PREF_SMALL_MENUS",
+			type: "int",
+		},
+		{
+			id: 18,
+			label: "SYSTEM_AUTO_SAVE_ENABLE",
+			type: "int",
+		},
+		{
+			id: 19,
+			label: "SYSTEM_LANGUAGE_SELECT",
+			type: "int",
+		},
+		{
+			id: 20,
+			label: "SYSTEM_PREF_MENU_MODE",
+			type: "int",
+		},
+		{
+			id: 21,
+			label: "SYSTEM_PREF_KEYBOARD_BRIGHTNESS",
+			type: "int",
+		},
+		{
+			id: 22,
+			label: "SYSTEM_SERIAL_MODE",
+			type: "flag",
+		},
+		{
+			id: 23,
+			label: "SYSTEM_AUDIO_ANALOG_LEVEL",
+			type: "flag",
 		},
 		]
 	},
@@ -2666,10 +2751,96 @@ module.exports = {
 		},
 		]
 	},
+	//Not documented assuming it is similar to SECTION_STILL_CTRL
 	{
 		id: 13,
 		label: "SECTION_CLIP_CTRL",
-		controls: [{}]
+		controls: [{
+			id: 0,
+			label: "CLIP_SELECT",
+			type: "int",
+		},
+		{
+			id: 1,
+			label: "CLIP_BUF",
+			type: "int",
+		},
+		{
+			id: 2,
+			label: "CLIP_COMMAND",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_CLIP_READY"
+			},
+			{
+				id: 1,
+				label: "DV_CLIP_LOAD"
+			},
+			{
+				id: 2,
+				label: "DV_CLIP_STORE"
+			},
+			{
+				id: 3,
+				label: "DV_CLIP_GRAB"
+			},
+			{
+				id: 4,
+				label: "DV_CLIP_DELETE"
+			},
+			]
+		},
+		{
+			id: 3,
+			label: "CLIP_STATE",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_CLIP_STATE_READY"
+			},
+			{
+				id: 1,
+				label: "DV_CLIP_STATE_BUSY"
+			},
+			{
+				id: 2,
+				label: "DV_CLIP_STATE_ERROR"
+			}
+			]
+		},
+		{
+			id: 4,
+			label: "CLIP_RESULT",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_CLIP_RESULT_OK"
+			},
+			{
+				id: 1,
+				label: "DV_CLIP_RESULT_FAIL"
+			},
+			{
+				id: 2,
+				label: "DV_CLIP_RESULT_NOT_FOUND"
+			},
+			{
+				id: 3,
+				label: "DV_CLIP_RESULT_ILLEGAL_COMMAND"
+			},
+			{
+				id: 4,
+				label: "DV_CLIP_RESULT_ILLEGAL_VALUE"
+			},
+			]
+		},
+		{
+			id: 5,
+			label: "CLIP_EVENT",
+			type: "int",
+		},
+		]
 	},
 	{
 		id: 14,
@@ -2679,7 +2850,92 @@ module.exports = {
 	{
 		id: 15,
 		label: "SECTION_LOGO_CTRL",
-		controls: [{}]
+		controls: [{
+			id: 0,
+			label: "LOGO_SELECT",
+			type: "int",
+		},
+		{
+			id: 1,
+			label: "LOGO_BUF",
+			type: "int",
+		},
+		{
+			id: 2,
+			label: "LOGO_COMMAND",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_LOGO_READY"
+			},
+			{
+				id: 1,
+				label: "DV_LOGO_LOAD"
+			},
+			{
+				id: 2,
+				label: "DV_LOGO_STORE"
+			},
+			{
+				id: 3,
+				label: "DV_LOGO_GRAB"
+			},
+			{
+				id: 4,
+				label: "DV_LOGO_DELETE"
+			},
+			]
+		},
+		{
+			id: 3,
+			label: "LOGO_STATE",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_LOGO_STATE_READY"
+			},
+			{
+				id: 1,
+				label: "DV_LOGO_STATE_BUSY"
+			},
+			{
+				id: 2,
+				label: "DV_LOGO_STATE_ERROR"
+			}
+			]
+		},
+		{
+			id: 4,
+			label: "LOGO_RESULT",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_LOGO_RESULT_OK"
+			},
+			{
+				id: 1,
+				label: "DV_LOGO_RESULT_FAIL"
+			},
+			{
+				id: 2,
+				label: "DV_LOGO_RESULT_NOT_FOUND"
+			},
+			{
+				id: 3,
+				label: "DV_LOGO_RESULT_ILLEGAL_COMMAND"
+			},
+			{
+				id: 4,
+				label: "DV_LOGO_RESULT_ILLEGAL_VALUE"
+			},
+			]
+		},
+		{
+			id: 5,
+			label: "LOGO_EVENT",
+			type: "int",
+		},
+		]
 	},
 	{
 		id: 16,
@@ -2689,7 +2945,92 @@ module.exports = {
 	{
 		id: 17,
 		label: "SECTION_ANI_LOGO_CTRL",
-		controls: [{}]
+		controls: [{
+			id: 0,
+			label: "ANI_LOGO_SELECT",
+			type: "int",
+		},
+		{
+			id: 1,
+			label: "ANI_LOGO_BUF",
+			type: "int",
+		},
+		{
+			id: 2,
+			label: "ANI_LOGO_COMMAND",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_ANI_LOGO_READY"
+			},
+			{
+				id: 1,
+				label: "DV_ANI_LOGO_LOAD"
+			},
+			{
+				id: 2,
+				label: "DV_ANI_LOGO_STORE"
+			},
+			{
+				id: 3,
+				label: "DV_ANI_LOGO_GRAB"
+			},
+			{
+				id: 4,
+				label: "DV_ANI_LOGO_DELETE"
+			},
+			]
+		},
+		{
+			id: 3,
+			label: "ANI_LOGO_STATE",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_ANI_LOGO_STATE_READY"
+			},
+			{
+				id: 1,
+				label: "DV_ANI_LOGO_STATE_BUSY"
+			},
+			{
+				id: 2,
+				label: "DV_ANI_LOGO_STATE_ERROR"
+			}
+			]
+		},
+		{
+			id: 4,
+			label: "ANI_LOGO_RESULT",
+			type: "int",
+			values: [{
+				id: 0,
+				label: "DV_ANI_LOGO_RESULT_OK"
+			},
+			{
+				id: 1,
+				label: "DV_ANI_LOGO_RESULT_FAIL"
+			},
+			{
+				id: 2,
+				label: "DV_ANI_LOGO_RESULT_NOT_FOUND"
+			},
+			{
+				id: 3,
+				label: "DV_ANI_LOGO_RESULT_ILLEGAL_COMMAND"
+			},
+			{
+				id: 4,
+				label: "DV_ANI_LOGO_RESULT_ILLEGAL_VALUE"
+			},
+			]
+		},
+		{
+			id: 5,
+			label: "ANI_LOGO_EVENT",
+			type: "int",
+		},
+		]
 	},
 	{
 		id: 18,

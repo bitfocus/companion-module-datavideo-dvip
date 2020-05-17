@@ -201,6 +201,11 @@ module.exports = {
 			label: "STATUS_TALLY_DSK2_KEY_SRC",
 			type: "int",
 		},
+		{
+			id: 40,
+			label: "STATUS_FREE_SPACE",
+			type: "int",
+		},
 		]
 	},
 	{

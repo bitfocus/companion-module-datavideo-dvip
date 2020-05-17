@@ -5321,7 +5321,7 @@ module.exports = {
 	{
 		id: 203,
 		mainSection: 2,
-		subSection: 0,
+		subSection: 4,
 		label: "SWITCHER_SUB_SECTION_LOGO",
 		controls: [{}]
 	},

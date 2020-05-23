@@ -27,7 +27,7 @@ class instance extends instance_skel {
 		this.get_audio_src_packet = Buffer.from([0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00]);
 
 		this.legacy_req_state = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x22, 0x00, 0x00, 0x9f, 0x0d]);
-		this.legacy_connection_packet = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x23, 0x00, 0x00, 0xce, 0xcd]);
+		this.legacy_null_packet = Buffer.from([0xe2, 0xe4, 0x0f, 0x00, 0xff, 0x01, 0x23, 0x00, 0x00, 0xce, 0xcd]);
 
 		this.cur_input_request = 0;
 		this.input_names = [];
@@ -804,9 +804,12 @@ class instance extends instance_skel {
 				} else {
 					//Legacy DVIP command processing
 					this.socket.send(cmd);
-					this.socket.send(this.legacy_req_state);
+					//Make this optional as it may cause issues but we need it for testing
+					if (this.config.legacy_feedback) {
+						this.socket.send(this.legacy_req_state);
+					}
 				}
-				this.consoleLog("Send: ", cmd);
+				this.consoleLog("Send (" + id + "): ", cmd);
 			} else {
 				debug('Socket not connected :(');
 			}
@@ -851,6 +854,12 @@ class instance extends instance_skel {
 			type: 'checkbox',
 			id: 'debug',
 			label: 'Debug to console',
+			default: '0',
+		},
+		{
+			type: 'checkbox',
+			id: 'legacy_feedback',
+			label: 'Legacy feedback request (For testing)',
 			default: '0',
 		},
 		]
@@ -1605,7 +1614,7 @@ class instance extends instance_skel {
 				this.getInputNames(null);
 			} else {
 				//Send legacy connection packet
-				this.socket.send(this.legacy_connection_packet);
+				this.socket.send(this.legacy_null_packet);
 			}
 		});
 
@@ -1639,6 +1648,8 @@ class instance extends instance_skel {
 					}
 				}
 			} else {
+				//Send Legacy null packet
+				this.socket.send(this.legacy_null_packet);
 				//Legacy DVIP processing
 				this.consoleLog("Legacy Buffer: ", buffer);
 			}
@@ -1649,6 +1660,7 @@ class instance extends instance_skel {
 	updateConfig(config) {
 		var resetConnection = false;
 		this.config.debug = config.debug;
+		this.config.legacy_feedback = config.legacy_feedback;
 
 		if (this.config.label != config.label || this.config.host != config.host || this.config.port != config.port || this.config.modelID != config.modelID) {
 			resetConnection = true;

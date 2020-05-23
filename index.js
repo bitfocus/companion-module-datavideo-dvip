@@ -107,7 +107,7 @@ class instance extends instance_skel {
 		this.matte_hsl = [0, 0, 0];
 		this.matte_rgb = [0, 0, 0];
 
-		this.autoport;
+		this.auto_port;
 
 		Object.assign(this, {
 			...actions,
@@ -1511,7 +1511,7 @@ class instance extends instance_skel {
 					this.requestPort();
 				}
 			} else {
-				this.autoport = false;
+				this.auto_port = false;
 				this.config.port_cmd = parseInt(this.config.port) + 1;
 				this.setupConnection();
 			}

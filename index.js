@@ -107,6 +107,8 @@ class instance extends instance_skel {
 		this.matte_hsl = [0, 0, 0];
 		this.matte_rgb = [0, 0, 0];
 
+		this.autoport;
+
 		Object.assign(this, {
 			...actions,
 			...feedbacks,
@@ -1499,6 +1501,7 @@ class instance extends instance_skel {
 		if (this.config.host) {
 			//Setup socket objects
 			if (this.config.port == 0) {
+				this.auto_port = true;
 				//Automatic Port selection
 				if (this.model.legacy_dvip) {
 					//Legacy DVIP uses port 9000
@@ -1508,6 +1511,7 @@ class instance extends instance_skel {
 					this.requestPort();
 				}
 			} else {
+				this.autoport = false;
 				this.config.port_cmd = parseInt(this.config.port) + 1;
 				this.setupConnection();
 			}
@@ -1574,6 +1578,11 @@ class instance extends instance_skel {
 			this.socket_realtime.on('error', (err) => {
 				debug('Network error', err);
 				this.log('error', 'Network error: ' + err.message);
+				if (!this.model.legacy_dvip && this.auto_port) {
+					//Start again if the realtime socket has an error
+					//Only on the newer protcol so it goes back into the port request if it's on auto
+					this.initTCP();
+				}
 			});
 
 			this.socket_realtime.on('connect', () => {
@@ -1601,8 +1610,11 @@ class instance extends instance_skel {
 		this.socket.on('error', (err) => {
 			debug('Network error', err);
 			this.log('error', 'Network error: ' + err.message);
-			//Start again if the command socket has an error
-			this.initTCP();
+			if (!this.model.legacy_dvip && this.auto_port) {
+				//Start again if the command socket has an error
+				//Only on the newer protcol so it goes back into the port request if it's on auto
+				this.initTCP();
+			}
 		});
 
 		this.socket.on('connect', () => {

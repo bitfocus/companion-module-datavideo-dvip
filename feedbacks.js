@@ -181,21 +181,22 @@ exports.getFeedbacks = function () {
 						break;
 					case 'P-in-P PVW':
 						setOn = this.pip_pvw_state;
+						if (this.tbar_state > 0 && setOn) { transActive = 1; }
 						break;
 				}
 
 				if (setOn) {
-					if(!transActive){
-					return {
-						color: feedback.options.fg,
-						bgcolor: feedback.options.bg
-					};
-				}else{
-					return {
-						color: feedback.options.fg_trans,
-						bgcolor: feedback.options.bg_trans
-					};
-				}
+					if (!transActive) {
+						return {
+							color: feedback.options.fg,
+							bgcolor: feedback.options.bg
+						};
+					} else {
+						return {
+							color: feedback.options.fg_trans,
+							bgcolor: feedback.options.bg_trans
+						};
+					}
 				}
 			}
 		}
@@ -311,10 +312,14 @@ exports.getFeedbacks = function () {
 							bgcolor: feedback.options.bg_run
 						};
 					} else {
-						return {
-							color: feedback.options.fg,
-							bgcolor: feedback.options.bg
-						};
+						if (this.ftbenable_state == 0 && element.label == "FTB") {
+							return;
+						} else {
+							return {
+								color: feedback.options.fg,
+								bgcolor: feedback.options.bg
+							};
+						}
 					}
 				}
 			}

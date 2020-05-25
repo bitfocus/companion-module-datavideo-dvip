@@ -274,9 +274,7 @@ class instance extends instance_skel {
 		let id = action.action
 		let options = action.options;
 		let userid = Buffer.alloc(4);
-		let pktsize = Buffer.alloc(4);
 		let frames = Buffer.alloc(4);
-		let cmdsize;
 		let name;
 		let input = Buffer.alloc(4);
 		let name_size = Buffer.alloc(4);
@@ -809,13 +807,9 @@ class instance extends instance_skel {
 		if (cmd !== undefined) {
 			if (this.socket !== undefined && this.socket.connected) {
 				if (!this.model.legacy_dvip) {
-					//Calculate packet length and prepend
-					//Add 4 bytes to include pack size value
-					cmdsize = Buffer.byteLength(cmd) + 4;
-					pktsize.writeUInt32LE(cmdsize, 0);
-					cmd = Buffer.concat([pktsize, cmd]);
+					//Send command prepending the packet size
+					this.socket.send(this.prependPacketSize(cmd));
 
-					this.socket.send(cmd);
 					//Update input names on change
 					if (id == 'set_input_name') {
 						if (this.cur_input_request == 0) {
@@ -1302,9 +1296,10 @@ class instance extends instance_skel {
 	}
 
 	getKeyStates() {
+		//Uses the model keyer choices to generate a request for all key/dsk pgm and pvw states for the current model
+		//this then gets picked up by processBuffer on the return
+
 		let cmd = Buffer.from([0x00, 0x00, 0x00, 0x00]);
-		let cmdsize;
-		let pktsize = Buffer.alloc(4);
 
 		for (let i = 0; i < this.model.keyer.length; i++) {
 			let keyerCmd;
@@ -1313,14 +1308,22 @@ class instance extends instance_skel {
 			cmd = Buffer.concat([cmd, keyerCmd]);
 		}
 
+		if (this.socket !== undefined) {
+			this.socket.send(this.prependPacketSize(cmd));
+		}
+
+	}
+
+	prependPacketSize(cmd){
+		//Calculates the packet size from the provided packet and prepends the bytes
+		let cmdsize;
+		let pktsize = Buffer.alloc(4);
+
 		cmdsize = Buffer.byteLength(cmd) + 4;
 		pktsize.writeUInt32LE(cmdsize, 0);
 		cmd = Buffer.concat([pktsize, cmd]);
-		
-		if (this.socket !== undefined) {
-			this.socket.send(cmd);
-		}
 
+		return cmd;
 	}
 
 	processBuffer(buffer) {

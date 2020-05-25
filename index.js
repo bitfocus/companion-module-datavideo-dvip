@@ -767,11 +767,7 @@ class instance extends instance_skel {
 				}
 				break;
 			case 'set_bus_matte':
-				var rgb = {
-					r: (options.rgb & 0xff0000) >> 16,
-					g: (options.rgb & 0x00ff00) >> 8,
-					b: (options.rgb & 0x0000ff)
-				};
+				var rgb = this.rgbRev(options.rgb);
 				let hueID = Buffer.alloc(2);
 				let satID = Buffer.alloc(2);
 				let lumaID = Buffer.alloc(2);

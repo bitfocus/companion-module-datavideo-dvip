@@ -1318,7 +1318,6 @@ class instance extends instance_skel {
 		cmd = Buffer.concat([pktsize, cmd]);
 		
 		if (this.socket !== undefined) {
-			this.consoleLog("GET Key STATES CMD: ",cmd);
 			this.socket.send(cmd);
 		}
 

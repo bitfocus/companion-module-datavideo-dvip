@@ -298,8 +298,8 @@ exports.getVariables = function () {
 			name: 'ftbenable_state'
 		},
 		{
-			label: 'Current FTB Transition state',
-			name: 'ftb_trans_state'
+			label: 'Current FTB Level',
+			name: 'ftb_level'
 		},
 		{
 			label: 'Current KEY PRIORITY state',

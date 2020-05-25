@@ -81,7 +81,7 @@ class instance extends instance_skel {
 		this.preview_state;
 		this.bgnd_state;
 		this.ftbenable_state;
-		this.ftb_trans_state;
+		this.ftb_level;
 		this.ftb_dirn_state;
 		this.keypriority_state;
 		this.curr_wipe;
@@ -106,6 +106,10 @@ class instance extends instance_skel {
 
 		this.matte_hsl = [0, 0, 0];
 		this.matte_rgb = [0, 0, 0];
+
+		this.me_trans_state
+		this.dsk_trans_state
+		this.ftb_trans_state
 
 		this.auto_port;
 
@@ -393,13 +397,28 @@ class instance extends instance_skel {
 			case 'trans':
 				element = this.model.trans.find(element => element.id === options.trans);
 				if (element !== undefined) {
-					cmd = element.cmd;
+					if (this.model.legacy_dvip) {
+						//legacy DVIP
+						cmd = element.cmd;
+					} else {
+						cmd = Buffer.from(element.cmd);
+						switch (element.label) {
+							case 'Auto':
+								//change cmd to stop when running
+								if (this.me_trans_state == 2) { cmd[8] = 0; }
+								break;
+							case 'DSK Auto':
+								//change cmd to stop when running
+								if (this.dsk_trans_state == 2) { cmd[8] = 0; }
+								break;
+						}
+					}
 				}
 				break;
 			case 'trans_btn':
 				element = this.model.trans_btn.find(element => element.id === options.trans);
 				if (element !== undefined) {
-					cmd = element.cmd;
+					cmd = Buffer.from(element.cmd);
 					let setOn = true;
 					let toggle = false;
 					switch (element.label) {
@@ -440,13 +459,17 @@ class instance extends instance_skel {
 						//legacy DVIP
 						cmd = element.cmd;
 					} else {
-						cmd = element.cmd;
+						cmd = Buffer.from(element.cmd);
 						let setOn = true;
 						let toggle = false;
 						switch (element.label) {
 							case 'FTB ENABLE':
 								if (this.ftbenable_state == 1) { setOn = false; }
 								toggle = true;
+								break;
+							case 'FTB':
+								//Send FTB stop if ftb is running
+								if (this.ftb_trans_state == 2) { cmd[8] = 0; }
 								break;
 						}
 						if (toggle) {
@@ -627,7 +650,7 @@ class instance extends instance_skel {
 						//legacy DVIP
 						cmd = element.cmd;
 					} else {
-						cmd = element.cmd;
+						cmd = Buffer.from(element.cmd);
 						let setOn = true;
 						let toggle = false;
 						switch (element.label) {
@@ -1102,8 +1125,8 @@ class instance extends instance_skel {
 				this.checkFeedbacks('ftb_state');
 				break;
 			case 'SWITCHER_FTB_LEVEL':
-				this.ftb_trans_state = value;
-				this.setVariable('ftb_trans_state', this.ftb_trans_state);
+				this.ftb_level = value;
+				this.setVariable('ftb_level', this.ftb_level);
 				this.checkFeedbacks('ftb_state');
 				break;
 			case 'SWITCHER_FTB_DIRN':
@@ -1148,23 +1171,41 @@ class instance extends instance_skel {
 			case 'SWITCHER_WIPE_LEVEL':
 				this.tbar_state = value;
 				this.checkFeedbacks('tbar_state');
-				this.checkFeedbacks('pvw_in')
+				this.checkFeedbacks('pvw_in');
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'SWITCHER_DSK_TRANS_LEVEL':
 				this.dsk_tbar_state = value;
 				this.checkFeedbacks('dsk_tbar_state');
+				this.checkFeedbacks('keyer_state');
 				break;
 			case 'DSK_TRANS_STATE':
-			case 'ME_TRANS_STATE':
+				this.dsk_trans_state = value;
 				//Stopped	
 				if (value == 0) {
-					setTimeout(function () { this.getKeyStates() }.bind(this), 100);
+					setTimeout(function () { this.getKeyStates() }.bind(this), 10);
 				}
+				break;
+			case 'ME_TRANS_STATE':
+				this.me_trans_state = value;
+				//Stopped	
+				if (value == 0) {
+					setTimeout(function () { this.getKeyStates() }.bind(this), 10);
+				}
+				break;
+			case 'FTB_TRANS_STATE':
+				this.ftb_trans_state = value;
 				break;
 			case 'DSK_TRANS_COMMAND':
 				//READY	
 				if (value == 8) {
-					setTimeout(function () { this.getKeyStates() }.bind(this), 100);
+					setTimeout(function () { this.getKeyStates() }.bind(this), 10);
+				}
+				break;
+			case 'ME_TRANS_COMMAND':
+				//READY	
+				if (value == 8) {
+					setTimeout(function () { this.getKeyStates() }.bind(this), 10);
 				}
 				break;
 			case 'STATUS_TALLY_DSK1_FILL_SRC':
@@ -1176,7 +1217,7 @@ class instance extends instance_skel {
 			case 'STATUS_TALLY_KEY3_FILL_SRC':
 			case 'STATUS_TALLY_KEY4_FILL_SRC':
 			case 'SWITCHER_DSK_TRANS_LEVEL':
-				setTimeout(function () { this.getKeyStates() }.bind(this), 100);
+				setTimeout(function () { this.getKeyStates() }.bind(this), 10);
 				break;
 
 			case 'SWITCHER_WIPE_PATTERN_NUM':
@@ -1261,20 +1302,24 @@ class instance extends instance_skel {
 	}
 
 	getKeyStates() {
-		let cmd;
+		let cmd = Buffer.from([0x00, 0x00, 0x00, 0x00]);
 		let cmdsize;
 		let pktsize = Buffer.alloc(4);
 
 		for (let i = 0; i < this.model.keyer.length; i++) {
-			cmd = Buffer.from(this.model.keyer[i].cmd);
-			cmd = cmd.slice(0, 8);
-			cmd[0] = 0;
-			cmdsize = Buffer.byteLength(cmd) + 4;
-			pktsize.writeUInt32LE(cmdsize, 0);
-			cmd = Buffer.concat([pktsize, cmd]);
-			if (this.socket !== undefined) {
-				this.socket.send(cmd);
-			}
+			let keyerCmd;
+			keyerCmd = Buffer.from(this.model.keyer[i].cmd);
+			keyerCmd = keyerCmd.slice(4, 8);
+			cmd = Buffer.concat([cmd, keyerCmd]);
+		}
+
+		cmdsize = Buffer.byteLength(cmd) + 4;
+		pktsize.writeUInt32LE(cmdsize, 0);
+		cmd = Buffer.concat([pktsize, cmd]);
+		
+		if (this.socket !== undefined) {
+			this.consoleLog("GET Key STATES CMD: ",cmd);
+			this.socket.send(cmd);
 		}
 
 	}
@@ -1321,7 +1366,7 @@ class instance extends instance_skel {
 
 				//SECTION_SWITCHER also has switcher subsections on the SE-3200
 				//See SE-3200 Ethernet spec section 4.1.4 for details
-				//Only the main section is implemented, planning needed for how to implement sub sections in the protocol format
+				//Main section and PIP are implemented
 				if (sectionID == 2) {
 					controlID = controlSection.readUInt8(0);
 					subSectionID = controlSection.readUInt8(1);

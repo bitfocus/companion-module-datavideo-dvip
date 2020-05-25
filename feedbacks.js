@@ -110,6 +110,18 @@ exports.getFeedbacks = function () {
 			default: this.rgb(255, 0, 0),
 		},
 		{
+			type: 'colorpicker',
+			label: 'Foreground color for Transition state',
+			id: 'fg_trans',
+			default: '16777215'
+		},
+		{
+			type: 'colorpicker',
+			label: 'Background color for Transition state',
+			id: 'bg_trans',
+			default: this.rgb(255, 56, 0),
+		},
+		{
 			type: 'dropdown',
 			label: 'Input',
 			id: 'keyer',
@@ -121,6 +133,7 @@ exports.getFeedbacks = function () {
 			let element = this.model.keyer.find(element => element.id === feedback.options.keyer);
 			if (element !== undefined) {
 				let setOn = 0;
+				let transActive = 0;
 
 				switch (element.label) {
 					case 'DSK 1 PGM':
@@ -128,24 +141,28 @@ exports.getFeedbacks = function () {
 						break;
 					case 'DSK 1 PVW':
 						setOn = this.dsk1_pvw_state
+						if (this.dsk_tbar_state > 0 && setOn) { transActive = 1; }
 						break;
 					case 'DSK 2 PGM':
 						setOn = this.dsk2_pgm_state
 						break;
 					case 'DSK 2 PVW':
 						setOn = this.dsk2_pvw_state;
+						if (this.dsk_tbar_state > 0 && setOn) { transActive = 1; }
 						break;
 					case 'KEY 1 PGM':
 						setOn = this.key1_pgm_state;
 						break;
 					case 'KEY 1 PVW':
 						setOn = this.key1_pvw_state;
+						if (this.tbar_state > 0 && setOn) { transActive = 1; }
 						break;
 					case 'KEY 2 PGM':
 						setOn = this.key2_pgm_state;
 						break;
 					case 'KEY 2 PVW':
 						setOn = this.key2_pvw_state;
+						if (this.tbar_state > 0 && setOn) { transActive = 1; }
 						break;
 					case 'KEY 3 PGM':
 						setOn = this.key3_pgm_state;
@@ -168,10 +185,17 @@ exports.getFeedbacks = function () {
 				}
 
 				if (setOn) {
+					if(!transActive){
 					return {
 						color: feedback.options.fg,
 						bgcolor: feedback.options.bg
 					};
+				}else{
+					return {
+						color: feedback.options.fg_trans,
+						bgcolor: feedback.options.bg_trans
+					};
+				}
 				}
 			}
 		}
@@ -276,12 +300,12 @@ exports.getFeedbacks = function () {
 						setOn = this.ftbenable_state;
 						break;
 					case 'FTB':
-						if (this.ftb_trans_state > 0 || this.ftb_dirn_state == 1 && this.ftbenable_state == 1) { setOn = true; }
+						if (this.ftb_level > 0 || this.ftb_dirn_state == 1 && this.ftbenable_state == 1) { setOn = true; }
 						break;
 				}
 
 				if (setOn) {
-					if (this.ftb_trans_state > 0 && this.ftbenable_state == 1 && element.label == "FTB") {
+					if (this.ftb_level > 0 && this.ftbenable_state == 1 && element.label == "FTB") {
 						return {
 							color: feedback.options.fg_run,
 							bgcolor: feedback.options.bg_run
@@ -1227,16 +1251,16 @@ exports.getFeedbacks = function () {
 			}
 		}
 	}
-	
+
 	feedbacks['matte_color'] = {
 		label: 'Color for Matte',
 		description: 'Set button color to current Matte color',
 		options: [],
 		callback: (feedback, bank) => {
-				return {
-					bgcolor: this.rgb(this.matte_rgb[0], this.matte_rgb[1], this.matte_rgb[2]),
-				};
-			
+			return {
+				bgcolor: this.rgb(this.matte_rgb[0], this.matte_rgb[1], this.matte_rgb[2]),
+			};
+
 		}
 	}
 
